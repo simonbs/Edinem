@@ -7,9 +7,9 @@ const DIST_DIR = path.resolve(__dirname, '.')
 
 module.exports = {
   context: __dirname,
-  devtool: debug ? "inline-source-map" : null,
+  devtool: debug ? 'inline-source-map' : null,
   cache: true,
-  entry: SRC_DIR + "/app.jsx",
+  entry: SRC_DIR + '/app.jsx',
   module: {
     loaders: [{
       test: /\.jsx?$/,
@@ -18,11 +18,20 @@ module.exports = {
       query: {
         presets: ['react', 'env']
       }
+    }, {
+      test: /\.css$/,
+      loader: 'style-loader!css-loader'
+    }, {
+      test: /\.(eot|svg|ttf|woff|woff2)$/,
+      loader: 'file-loader?name=public/fonts/[name].[ext]'
     }]
+  },
+  resolve: {
+    extensions: ['.js', '.jsx']
   },
   output: {
     path: DIST_DIR,
-    filename: "app.min.js"
+    filename: 'app.min.js'
   },
   plugins: debug ? [] : [
     new webpack.optimize.DedupePlugin(),
