@@ -1,11 +1,11 @@
 import React from 'react'
-import Drawer from 'material-ui/Drawer'
 import PropTypes from 'prop-types'
+import Drawer from 'material-ui/Drawer'
 
 class RequestsDrawer extends React.Component {
   render() {
     return (
-      <Drawer anchor="top" open={this.requestsDrawerOpen}>
+      <Drawer anchor="top" open={this.props.open} onClose={this.props.onClose}>
         <span>Test</span>
       </Drawer>
     )
@@ -13,7 +13,8 @@ class RequestsDrawer extends React.Component {
 }
 
 RequestsDrawer.propTypes = {
-  open: PropTypes.bool.isRequired
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired
 }
 
 export default RequestsDrawer

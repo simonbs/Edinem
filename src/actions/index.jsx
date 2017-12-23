@@ -1,6 +1,11 @@
-export const toggleRequestsDrawer = open => {
+export const openRequestsDrawer = () => {
   return {
-    type: 'TOGGLE_REQUESTS_DRAWER',
-    open
+    type: 'OPEN_REQUESTS_DRAWER'
+  }
+}
+
+export const closeRequestsDrawer = () => {
+  return {
+    type: 'CLOSE_REQUESTS_DRAWER'
   }
 }

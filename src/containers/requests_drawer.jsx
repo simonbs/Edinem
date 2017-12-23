@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { closeRequestsDrawer } from '../actions'
 import RequestDrawerUI from '../components/requests_drawer'
 
 const mapStateToProps = state => {
@@ -8,7 +9,11 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-  return {}
+  return {
+    onClose: () => {
+      dispatch(closeRequestsDrawer())
+    }
+  }
 }
 
 export default connect(

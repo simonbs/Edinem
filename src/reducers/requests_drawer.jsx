@@ -1,14 +1,20 @@
 const initialState = {
   open: false
 }
-const requests_drawer_open = (state = initialState, action) => {
+
+const requestsDrawer = (state = initialState, action) => {
   switch (action.type) {
-    case 'TOGGLE_REQUESTS_DRAWER':
-      state.open = action.open
-      return 
+    case 'OPEN_REQUESTS_DRAWER':
+      return {
+        open: true
+      }
+    case 'CLOSE_REQUESTS_DRAWER':
+      return {
+        open: false
+      }
     default:
       return state
   }
 }
 
-export default requests_drawer_open
+export default requestsDrawer
