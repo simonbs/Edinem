@@ -1,8 +1,7 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import { blueGrey, deepPurple } from 'material-ui/colors'
 import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles'
-import Index from './pages/index'
+import RequestsDrawer from '../containers/requests_drawer'
 
 const theme = createMuiTheme({
   palette: {
@@ -15,11 +14,11 @@ class App extends React.Component {
   render() {
     return (
       <MuiThemeProvider theme={theme}>
-        <Index/>
+        <RequestsDrawer/>
+        <span>Hello</span>
       </MuiThemeProvider>
     )
   }
 }
 
-const appDom = document.getElementById('app')
-ReactDOM.render(<App/>, appDom);
+export default App

@@ -9,7 +9,7 @@ module.exports = {
   context: __dirname,
   devtool: debug ? 'inline-source-map' : null,
   cache: true,
-  entry: SRC_DIR + '/app.jsx',
+  entry: SRC_DIR + '/index.jsx',
   module: {
     loaders: [{
       test: /\.jsx?$/,
