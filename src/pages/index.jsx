@@ -9,7 +9,7 @@ class Index extends React.Component {
         <Typography type="display1" gutterBottom>
           Testing testing
         </Typography>
-        <Button raised color="accent" onClick={this.handleClick}>
+        <Button raised color="primary" onClick={this.handleClick}>
           Super Secret Password
         </Button>
       </div>

@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { indigo, deepPurple } from 'material-ui/colors'
+import { blueGrey, deepPurple } from 'material-ui/colors'
 import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles'
 import Index from './pages/index'
 
 const theme = createMuiTheme({
   palette: {
-    primary: indigo,
+    primary: blueGrey,
     secondary: deepPurple,
   }
 })
