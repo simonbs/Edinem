@@ -7,17 +7,11 @@ import Toolbar from 'material-ui/Toolbar'
 import IconButton from 'material-ui/IconButton'
 import MenuIcon from 'material-ui-icons/Menu'
 
-const styles = {
-  root: {
-    width: '100%'
-  }
-}
-
 class TitleBar extends React.Component {
   render() {
     const { classes } = this.props
     return (
-      <AppBar position="static">
+      <AppBar position="static" elevation={0}>
         <Toolbar>
           <IconButton 
           onClick={this.props.onMenuClick} 
@@ -40,4 +34,4 @@ TitleBar.propTypes = {
   onMenuClick: PropTypes.func.isRequired
 }
 
-export default withStyles(styles)(TitleBar)
+export default withStyles()(TitleBar)

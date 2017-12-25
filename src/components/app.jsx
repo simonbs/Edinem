@@ -1,14 +1,15 @@
 import React from 'react'
-import { blueGrey, deepPurple } from 'material-ui/colors'
+import { indigo, deepOrange } from 'material-ui/colors'
 import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles'
 import Grid from 'material-ui/Grid'
 import RequestsDrawer from '../containers/requests_drawer'
 import TitleBar from '../containers/title_bar'
+import EditPage from '../containers/edit_page'
 
 const theme = createMuiTheme({
   palette: {
-    primary: blueGrey,
-    secondary: deepPurple,
+    primary: indigo,
+    secondary: deepOrange
   }
 })
 
@@ -19,7 +20,7 @@ class App extends React.Component {
         <RequestsDrawer/>
         <Grid container>
           <TitleBar title="Edinem"/>
-          <span>Hello</span>
+          <EditPage/>
         </Grid>
       </MuiThemeProvider>
     )
