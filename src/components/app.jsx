@@ -1,7 +1,6 @@
 import React from 'react'
 import { indigo, deepOrange } from 'material-ui/colors'
 import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles'
-import Grid from 'material-ui/Grid'
 import RequestsDrawer from '../containers/requests_drawer'
 import TitleBar from '../containers/title_bar'
 import EditPage from '../containers/edit_page'
@@ -18,10 +17,14 @@ class App extends React.Component {
     return (
       <MuiThemeProvider theme={theme}>
         <RequestsDrawer/>
-        <Grid container>
-          <TitleBar title="Edinem"/>
+        <div style={{ display: 'flex', flexFlow: 'column', width: '100%' }}>
+          <div style={{ display: 'flex', flex: '0 1 auto' }}>
+            <TitleBar title="Edinem" style={{ flex: '0 1 auto' }} />
+          </div>
+          <div style={{ display: 'flex', flex: '1 1 auto' }}>
           <EditPage/>
-        </Grid>
+          </div>
+        </div>
       </MuiThemeProvider>
     )
   }

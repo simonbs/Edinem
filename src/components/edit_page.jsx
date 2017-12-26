@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import Typography from 'material-ui/Typography'
-import Grid from 'material-ui/Grid'
 import EditRequestTab from '../containers/edit_request_tab'
 import EditResponseTab from './edit_response_tab'
 
@@ -18,19 +17,23 @@ function TabContainer(props) {
 class EditPage extends React.Component {
   render() {
     return (
-      <Grid container>
-        <AppBar position="static" elevation={0}>
-          <Tabs 
-          value={this.props.requestResponseTabIndex} 
-          onChange={this.props.onRequestResponseTabIndexChange} 
-          centered>
-            <Tab label="Request" />
-            <Tab label="Response" />
-          </Tabs>
-        </AppBar>
-        { this.props.requestResponseTabIndex === 0 && <EditRequestTab/> }
-        { this.props.requestResponseTabIndex === 1 && <EditResponseTab/> }
-      </Grid>
+      <div style={{ display: 'flex', flexFlow: 'column', width: '100%' }}>
+        <div style={{ display: 'flex', flex: '0 1 auto' }}>
+          <AppBar position="static" elevation={0}>
+            <Tabs 
+            value={this.props.requestResponseTabIndex} 
+            onChange={this.props.onRequestResponseTabIndexChange} 
+            centered>
+              <Tab label="Request" />
+              <Tab label="Response" />
+            </Tabs>
+          </AppBar>
+        </div>
+        <div style={{ display: 'flex', flex: '1 1 auto' }}>
+          {this.props.requestResponseTabIndex === 0 && <EditRequestTab/>}
+          {this.props.requestResponseTabIndex === 1 && <EditResponseTab/>}
+        </div>
+      </div>
     )
   }
 }

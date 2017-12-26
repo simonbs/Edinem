@@ -16,8 +16,8 @@ class TitleBar extends React.Component {
           <IconButton 
           onClick={this.props.onMenuClick} 
           className={classes.menuButton} 
-          color="contrast" 
-          aria-label="Menu">
+          color="contrast"
+          style={{ marginLeft: '-22px' }}>
             <MenuIcon/>
           </IconButton>
           <Typography type="title" color="inherit" className={classes.flex}>
