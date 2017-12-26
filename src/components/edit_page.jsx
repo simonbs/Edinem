@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import Typography from 'material-ui/Typography'
@@ -14,11 +15,27 @@ function TabContainer(props) {
   )
 }
 
+const styles = {
+  wrapper: {
+    display: 'flex',
+    flexFlow: 'column',
+    width: '100%'
+  },
+  fixedHeight: {
+    display: 'flex',
+    flex: '0 1 auto'
+  },
+  dynamicHeight: {
+    display: 'flex',
+    flex: '1 1 auto'
+  }
+}
+
 class EditPage extends React.Component {
   render() {
     return (
-      <div style={{ display: 'flex', flexFlow: 'column', width: '100%' }}>
-        <div style={{ display: 'flex', flex: '0 1 auto' }}>
+      <div className={this.props.classes.wrapper}>
+        <div className={this.props.classes.fixedHeight}>
           <AppBar position="static" elevation={0}>
             <Tabs 
             value={this.props.requestResponseTabIndex} 
@@ -29,7 +46,7 @@ class EditPage extends React.Component {
             </Tabs>
           </AppBar>
         </div>
-        <div style={{ display: 'flex', flex: '1 1 auto' }}>
+        <div className={this.props.classes.dynamicHeight}>
           {this.props.requestResponseTabIndex === 0 && <EditRequestTab/>}
           {this.props.requestResponseTabIndex === 1 && <EditResponseTab/>}
         </div>
@@ -43,4 +60,4 @@ EditPage.propTypes = {
   onRequestResponseTabIndexChange: PropTypes.func.isRequired
 }
 
-export default EditPage
+export default withStyles(styles)(EditPage)

@@ -7,6 +7,12 @@ import Toolbar from 'material-ui/Toolbar'
 import IconButton from 'material-ui/IconButton'
 import MenuIcon from 'material-ui-icons/Menu'
 
+const styles = {
+  menuButton: {
+    marginLeft: '-22px'
+  }
+}
+
 class TitleBar extends React.Component {
   render() {
     const { classes } = this.props
@@ -17,7 +23,7 @@ class TitleBar extends React.Component {
           onClick={this.props.onMenuClick} 
           className={classes.menuButton} 
           color="contrast"
-          style={{ marginLeft: '-22px' }}>
+          className={this.props.classes.menuButton}>
             <MenuIcon/>
           </IconButton>
           <Typography type="title" color="inherit" className={classes.flex}>
@@ -34,4 +40,4 @@ TitleBar.propTypes = {
   onMenuClick: PropTypes.func.isRequired
 }
 
-export default withStyles()(TitleBar)
+export default withStyles(styles)(TitleBar)

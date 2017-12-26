@@ -1,37 +1,58 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import Typography from 'material-ui/Typography'
-import Grid from 'material-ui/Grid'
 import TextField from 'material-ui/TextField'
+import EditHeaders from './edit_headers'
 
-function TabContainer(props) {
-  return (
-    <Typography component="div" style={{ padding: 12, paddingLeft: 24, paddingRight: 24 }}>
-      {props.children}
-    </Typography>
-  )
+const styles = {
+  wrapper: {
+    display: 'flex',
+    flexFlow: 'column',
+    width: '100%'
+  },
+  urlContainer: {
+    padding: 12,
+    paddingLeft: 24,
+    paddingRight: 24
+  },
+  tabsContainer: {
+    maxHeight: '250px',
+    overflow: 'auto'
+  },
+  bodyContainer: {
+    padding: 12,
+    paddingLeft: 24,
+    paddingRight: 24,
+    flex: '1 1 auto'
+  }
 }
 
 class EditRequestTab extends React.Component {
   render() {
     return (
-      <div style={{ display: 'flex', flexFlow: 'column', width: '100%' }}>
-        <div style={{ flex: '0 1 auto' }}>
-          <div style={{ padding: 12, paddingLeft: 24, paddingRight: 24 }}>
+      <div className={this.props.classes.wrapper}>
+        <div>
+          <div className={this.props.classes.urlContainer}>
             <TextField label="URL" placeholder="URL" fullWidth />
           </div>
           <AppBar position="static" color="default" elevation={0}>
-            <Tabs value={this.props.detailsTabIndex} onChange={this.props.onDetailsTabIndexChange} centered>
+            <Tabs 
+            value={this.props.detailsTabIndex}
+            onChange={this.props.onDetailsTabIndexChange} 
+            centered>
               <Tab label="Headers" />
               <Tab label="Query" />
             </Tabs>
           </AppBar>
-          {this.props.detailsTabIndex === 0 && <TabContainer>Headers</TabContainer>}
-          {this.props.detailsTabIndex === 1 && <TabContainer>Query</TabContainer>}
+          <div className={this.props.classes.tabsContainer}>
+            {this.props.detailsTabIndex === 0 && <EditHeaders/>}
+            {this.props.detailsTabIndex === 1 && <div>Query</div>}
+          </div>
         </div>
-        <div style={{ padding: 12, paddingLeft: 24, paddingRight: 24, flex: '1 1 auto' }}>
+        <div className={this.props.classes.bodyContainer}>
           Fill rest
         </div>
       </div>
@@ -44,4 +65,4 @@ EditRequestTab.propTypes = {
   onDetailsTabIndexChange: PropTypes.func.isRequired
 }
 
-export default EditRequestTab
+export default withStyles(styles)(EditRequestTab)

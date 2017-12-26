@@ -16,13 +16,13 @@ class App extends React.Component {
   render() {
     return (
       <MuiThemeProvider theme={theme}>
-        <RequestsDrawer/>
+        <RequestsDrawer />
         <div style={{ display: 'flex', flexFlow: 'column', width: '100%' }}>
           <div style={{ display: 'flex', flex: '0 1 auto' }}>
             <TitleBar title="Edinem" style={{ flex: '0 1 auto' }} />
           </div>
           <div style={{ display: 'flex', flex: '1 1 auto' }}>
-          <EditPage/>
+            <EditPage />
           </div>
         </div>
       </MuiThemeProvider>
