@@ -6,6 +6,7 @@ import Tabs, { Tab } from 'material-ui/Tabs'
 import Typography from 'material-ui/Typography'
 import TextField from 'material-ui/TextField'
 import EditHeaders from './edit_headers'
+import Editor from './editor'
 
 const styles = {
   wrapper: {
@@ -23,11 +24,10 @@ const styles = {
     overflow: 'auto'
   },
   bodyContainer: {
-    padding: 12,
-    paddingLeft: 24,
-    paddingRight: 24,
+    padding: 0,
+    display: 'flex',
     flex: '1 1 auto',
-    overflow: 'auto'
+    backgroundColor: 'orange'
   }
 }
 
@@ -40,25 +40,24 @@ class EditRequestTab extends React.Component {
             <TextField label="URL" placeholder="URL" fullWidth />
           </div>
           <AppBar position="static" color="default" elevation={0}>
-            <Tabs 
-            value={this.props.detailsTabIndex}
-            onChange={this.props.onDetailsTabIndexChange} 
-            centered>
+            <Tabs
+              value={this.props.detailsTabIndex}
+              onChange={this.props.onDetailsTabIndexChange}
+              centered>
               <Tab label="Headers" />
               <Tab label="Query" />
             </Tabs>
           </AppBar>
           <div className={this.props.classes.tabsContainer}>
-            {this.props.detailsTabIndex === 0 && <EditHeaders/>}
+            {this.props.detailsTabIndex === 0 && <EditHeaders />}
             {this.props.detailsTabIndex === 1 && <div>Query</div>}
           </div>
         </div>
         <div className={this.props.classes.bodyContainer}>
-          <TextField
-            label="Body"
-            multiline
-            fullWidth
-            underlineStyle={{display: 'none'}} />
+          {/* <div style={{ backgroundColor: 'red', flex: 1 }}>
+            Test
+          </div> */}
+          <Editor/>
         </div>
       </div>
     )
