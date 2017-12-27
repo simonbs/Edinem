@@ -26,7 +26,8 @@ const styles = {
     padding: 12,
     paddingLeft: 24,
     paddingRight: 24,
-    flex: '1 1 auto'
+    flex: '1 1 auto',
+    overflow: 'auto'
   }
 }
 
@@ -53,7 +54,11 @@ class EditRequestTab extends React.Component {
           </div>
         </div>
         <div className={this.props.classes.bodyContainer}>
-          Fill rest
+          <TextField
+            label="Body"
+            multiline
+            fullWidth
+            underlineStyle={{display: 'none'}} />
         </div>
       </div>
     )
