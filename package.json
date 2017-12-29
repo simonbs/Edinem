@@ -33,7 +33,8 @@
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "typeface-roboto": "0.0.45",
-    "webpack": "^3.10.0"
+    "webpack": "^3.10.0",
+    "xml2js": "^0.4.19"
   },
   "build": {
     "appId": "dk.simonbs.edinem",
