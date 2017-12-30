@@ -1,5 +1,6 @@
 const initialState = {
-  activeSession: null
+  activeSession: null,
+  openError: null
 }
 
 export default (state = initialState, action) => {
@@ -8,13 +9,18 @@ export default (state = initialState, action) => {
       return {
         ...state,
         activeSession: action.session,
-        error: null
+        openError: null
       }
     case 'FAILED_OPENING_SESSION':
       return {
         ...state,
         activeSession: null,
-        error: action.error
+        openError: action.error
+      }
+    case 'CLOSE_OPEN_SESSION_ERROR':
+      return {
+        ...state,
+        openError: null
       }
     default:
       return state

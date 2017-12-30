@@ -6,6 +6,7 @@ import RequestsDrawer from '../containers/requests_drawer'
 import TitleBar from '../containers/title_bar'
 import OpenSessionPage from '../containers/open_session_page'
 import EditPage from '../containers/edit_page'
+import ErrorDialog from '../components/error_dialog'
 
 const theme = createMuiTheme({
   palette: {
@@ -26,6 +27,10 @@ class App extends React.Component {
           <div style={{ display: 'flex', flex: '1 1 auto' }}>
             {this.props.showOpenSessionPage && <OpenSessionPage/>}
             {this.props.showEditPage && <EditPage/>}
+            <ErrorDialog 
+            open={this.props.showOpenSessionError}
+            onClose={this.props.onCloseOpenSessionError}
+            text="The session could not be opened."/>
           </div>
         </div>
       </MuiThemeProvider>
@@ -35,6 +40,8 @@ class App extends React.Component {
 
 App.propTypes = {
   showOpenSessionPage: PropTypes.bool.isRequired,
+  showOpenSessionError: PropTypes.bool.isRequired,
+  onCloseOpenSessionError: PropTypes.func.isRequired,
   showEditPage: PropTypes.bool.isRequired
 }
 

@@ -60,3 +60,9 @@ export const openSession = () => {
     })
   }
 }
+
+export const closeOpenSessionError = () => {
+  return {
+    type: 'CLOSE_OPEN_SESSION_ERROR'
+  }
+}
