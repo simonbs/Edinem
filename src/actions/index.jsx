@@ -60,17 +60,23 @@ export const openSession = () => {
     const parentWindow = (process.platform == 'darwin') ? null : BrowserWindow.getFocusedWindow()
     dialog.showOpenDialog(parentWindow, properties, (f) => {
       if (f !== undefined) {
-        dispatch(initiateOpeningSession())
         const filePath = f[0]
-        const xmlSessionMapper = new XMLSessionMapper()
-        xmlSessionMapper.map(filePath, (err, session) => {
-          if (err) {
-            dispatch(failedOpeningSession(err))
-          } else {
-            dispatch(succeededOpeningSession(session))            
-          }
-        })
-      } 
+        dispatch(parseSession(filePath))
+      }
+    })
+  }
+}
+
+export const parseSession = (filePath) => {
+  return (dispatch) => {
+    dispatch(initiateOpeningSession())    
+    const xmlSessionMapper = new XMLSessionMapper()
+    xmlSessionMapper.map(filePath, (err, session) => {
+      if (err) {
+        dispatch(failedOpeningSession(err))
+      } else {
+        dispatch(succeededOpeningSession(session))
+      }
     })
   }
 }

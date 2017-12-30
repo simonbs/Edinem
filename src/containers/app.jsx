@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import AppUI from '../components/app'
-import { closeOpenSessionError } from '../actions'
+import { closeOpenSessionError, parseSession } from '../actions'
+const isDev = require('electron-is-dev')
 
 const mapStateToProps = state => {
   return {
@@ -12,6 +13,9 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
+  if (isDev) {
+    dispatch(parseSession('/Users/simonbs/Downloads/charles.xml'))
+  }
   return {
     onCloseOpenSessionError: () => {
       dispatch(closeOpenSessionError())
