@@ -4,7 +4,9 @@ import EditRequestTabUI from '../components/edit_request_tab'
 
 const mapStateToProps = state => {
   return {
-    detailsTabIndex: state.editPage.requestDetailsTabIndex
+    detailsTabIndex: state.editPage.requestDetailsTabIndex,
+    url: state.session.selectedTransaction.getFullURL(),
+    body: state.session.selectedTransaction.request.body
   }
 }
 

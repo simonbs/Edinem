@@ -23,12 +23,15 @@ class Editor extends React.Component {
         theme="tomorrow"
         showPrintMargin={false}
         tabSize={2}
-        fontSize={14}
-        style={{ width: 'auto', height: 'auto', flex: 1 }} />
+        fontSize={13}
+        style={{ width: 'auto', height: 'auto', flex: 1 }}
+        value={this.props.value} />
     )
   }
 }
 
-Editor.propTypes = {}
+Editor.propTypes = {
+  value: PropTypes.string
+}
 
 export default Editor

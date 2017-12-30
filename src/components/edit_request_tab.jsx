@@ -37,7 +37,7 @@ class EditRequestTab extends React.Component {
       <div className={this.props.classes.wrapper}>
         <div>
           <div className={this.props.classes.urlContainer}>
-            <TextField label="URL" placeholder="URL" fullWidth />
+            <TextField label="URL" placeholder="URL" value={this.props.url} fullWidth />
           </div>
           <AppBar position="static" color="default" elevation={0}>
             <Tabs
@@ -54,7 +54,7 @@ class EditRequestTab extends React.Component {
           </div>
         </div>
         <div className={this.props.classes.bodyContainer}>
-          <Editor/>
+          <Editor value={this.props.body} />
         </div>
       </div>
     )
@@ -63,7 +63,9 @@ class EditRequestTab extends React.Component {
 
 EditRequestTab.propTypes = {
   detailsTabIndex: PropTypes.number.isRequired,
-  onDetailsTabIndexChange: PropTypes.func.isRequired
+  onDetailsTabIndexChange: PropTypes.func.isRequired,
+  url: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired
 }
 
 export default withStyles(styles)(EditRequestTab)

@@ -11,7 +11,8 @@ const initialState = {
   activeSession: null,
   openError: null,
   selectedTransactionGroupId: null,
-  selectedTransactionIndex: null
+  selectedTransactionIndex: null,
+  selectedTransaction: null
 }
 
 export default (state = initialState, action) => {
@@ -19,17 +20,17 @@ export default (state = initialState, action) => {
     case INITIATE_OPENING_SESSION:
       return {
         ...state,
-        isOpening: true,
-        selectedTransactionGroupId: null,
-        selectedTransactionIndex: null
+        isOpening: true
       }
     case SUCCEEDED_OPENING_SESSION:
-      let selectedTransactionGroupId = null
-      let selectedTransactionIndex = null
+      var selectedTransactionGroupId = null
+      var selectedTransactionIndex = null
+      var selectedTransaction = null
       if (action.session.transactionGroups.length > 0) {
         const transactionGroup = action.session.transactionGroups[0]
         selectedTransactionGroupId = transactionGroup.id
         selectedTransactionIndex = 0
+        selectedTransaction = transactionGroup.transactions[0]
       }
       return {
         ...state,
@@ -37,7 +38,8 @@ export default (state = initialState, action) => {
         activeSession: action.session,
         openError: null,
         selectedTransactionGroupId: selectedTransactionGroupId,
-        selectedTransactionIndex: selectedTransactionIndex
+        selectedTransactionIndex: selectedTransactionIndex,
+        selectedTransaction: selectedTransaction
       }
     case FAILED_OPENING_SESSION:
       return {
@@ -46,18 +48,27 @@ export default (state = initialState, action) => {
         activeSession: null,
         openError: action.error,
         selectedTransactionGroupId: null,
-        selectedTransactionIndex: null
+        selectedTransactionIndex: null,
+        selectedTransaction: null
       }
     case CLOSE_OPEN_SESSION_ERROR:
       return {
         ...state,
         openError: null
       }
-    case SELECT_TRANSACTION:
+    case SELECT_TRANSACTION:      
+      var selectedTransaction = null
+      for (const transactionGroup of state.activeSession.transactionGroups) {
+        if (transactionGroup.id == action.transactionGroupId) {
+          selectedTransaction = transactionGroup.transactions[action.transactionIndex]
+          break
+        }
+      }
       return {
         ...state,
         selectedTransactionGroupId: action.transactionGroupId,
-        selectedTransactionIndex: action.transactionIndex
+        selectedTransactionIndex: action.transactionIndex,
+        selectedTransaction: selectedTransaction
       }
     default:
       return state
