@@ -3,19 +3,15 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
-import Typography from 'material-ui/Typography'
+import IconButton from 'material-ui/IconButton'
+import MenuIcon from 'material-ui-icons/Menu'
 import EditRequestTab from '../containers/edit_request_tab'
 import EditResponseTab from './edit_response_tab'
 
-function TabContainer(props) {
-  return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
-      {props.children}
-    </Typography>
-  )
-}
-
 const styles = {
+  menuButton: {
+    position: 'absolute'
+  },
   wrapper: {
     display: 'flex',
     flexFlow: 'column',
@@ -36,19 +32,25 @@ class EditPage extends React.Component {
     return (
       <div className={this.props.classes.wrapper}>
         <div className={this.props.classes.fixedHeight}>
-          <AppBar position="static" elevation={0}>
-            <Tabs 
-            value={this.props.requestResponseTabIndex} 
-            onChange={this.props.onRequestResponseTabIndexChange} 
-            centered>
+          <AppBar position="static" elevation={0}>      
+            <Tabs
+              value={this.props.requestResponseTabIndex}
+              onChange={this.props.onRequestResponseTabIndexChange}
+              centered>
               <Tab label="Request" />
               <Tab label="Response" />
             </Tabs>
+            <IconButton
+              onClick={this.props.onMenuClick}
+              className={this.props.classes.menuButton}
+              color="contrast">
+              <MenuIcon/>
+            </IconButton>
           </AppBar>
         </div>
         <div className={this.props.classes.dynamicHeight}>
-          {this.props.requestResponseTabIndex === 0 && <EditRequestTab/>}
-          {this.props.requestResponseTabIndex === 1 && <EditResponseTab/>}
+          {this.props.requestResponseTabIndex === 0 && <EditRequestTab />}
+          {this.props.requestResponseTabIndex === 1 && <EditResponseTab />}
         </div>
       </div>
     )
@@ -57,7 +59,8 @@ class EditPage extends React.Component {
 
 EditPage.propTypes = {
   requestResponseTabIndex: PropTypes.number.isRequired,
-  onRequestResponseTabIndexChange: PropTypes.func.isRequired
+  onRequestResponseTabIndexChange: PropTypes.func.isRequired,
+  onMenuClick: PropTypes.func.isRequired
 }
 
 export default withStyles(styles)(EditPage)

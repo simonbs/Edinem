@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { changeRequestResponseTabIndex } from '../actions'
+import { changeRequestResponseTabIndex, openRequestsDrawer } from '../actions'
 import EditPageUI from '../components/edit_page'
 
 const mapStateToProps = state => {
@@ -16,6 +16,9 @@ const mapDispatchToProps = dispatch => {
     },
     onRequestDetailsTabIndexChange: (event, index) => {
       dispatch(changeRequestDetailsTabIndex(index))
+    },
+    onMenuClick: () => {
+      dispatch(openRequestsDrawer())
     }
   }
 }
