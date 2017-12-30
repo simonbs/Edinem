@@ -1,8 +1,10 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { indigo, deepOrange } from 'material-ui/colors'
 import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles'
 import RequestsDrawer from '../containers/requests_drawer'
 import TitleBar from '../containers/title_bar'
+import OpenSessionPage from '../containers/open_session_page'
 import EditPage from '../containers/edit_page'
 
 const theme = createMuiTheme({
@@ -22,12 +24,18 @@ class App extends React.Component {
             <TitleBar title="Edinem" style={{ flex: '0 1 auto' }} />
           </div>
           <div style={{ display: 'flex', flex: '1 1 auto' }}>
-            <EditPage />
+            {this.props.showOpenSessionPage && <OpenSessionPage/>}
+            {this.props.showEditPage && <EditPage/>}
           </div>
         </div>
       </MuiThemeProvider>
     )
   }
+}
+
+App.propTypes = {
+  showOpenSessionPage: PropTypes.bool.isRequired,
+  showEditPage: PropTypes.bool.isRequired
 }
 
 export default App

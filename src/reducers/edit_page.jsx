@@ -3,7 +3,7 @@ const initialState = {
   requestDetailsTabIndex: 0
 }
 
-const editPage = (state = initialState, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case 'CHANGE_REQUEST_RESPONSE_TAB_INDEX':
       return {
@@ -19,5 +19,3 @@ const editPage = (state = initialState, action) => {
       return state
   }
 }
-
-export default editPage

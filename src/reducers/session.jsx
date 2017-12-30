@@ -1,18 +1,20 @@
 const initialState = {
-  open: false
+  activeSession: null
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'OPEN_REQUESTS_DRAWER':
+    case 'SUCCEEDED_OPENING_SESSION':
       return {
         ...state,
-        open: true
+        activeSession: action.session,
+        error: null
       }
-    case 'CLOSE_REQUESTS_DRAWER':
+    case 'FAILED_OPENING_SESSION':
       return {
         ...state,
-        open: false
+        activeSession: null,
+        error: action.error
       }
     default:
       return state

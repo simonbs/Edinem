@@ -10,6 +10,7 @@ module.exports = {
   devtool: debug ? 'inline-source-map' : null,
   cache: true,
   entry: SRC_DIR + '/index.jsx',
+  target: 'electron',
   module: {
     loaders: [{
       test: /\.jsx?$/,
