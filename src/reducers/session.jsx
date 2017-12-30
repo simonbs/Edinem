@@ -1,3 +1,9 @@
+import { 
+  SUCCEEDED_OPENING_SESSION,
+  FAILED_OPENING_SESSION,
+  CLOSE_OPEN_SESSION_ERROR
+} from '../actions'
+
 const initialState = {
   activeSession: null,
   openError: null
@@ -5,19 +11,19 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'SUCCEEDED_OPENING_SESSION':
+    case SUCCEEDED_OPENING_SESSION:
       return {
         ...state,
         activeSession: action.session,
         openError: null
       }
-    case 'FAILED_OPENING_SESSION':
+    case FAILED_OPENING_SESSION:
       return {
         ...state,
         activeSession: null,
         openError: action.error
       }
-    case 'CLOSE_OPEN_SESSION_ERROR':
+    case CLOSE_OPEN_SESSION_ERROR:
       return {
         ...state,
         openError: null
