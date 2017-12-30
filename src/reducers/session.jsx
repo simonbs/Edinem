@@ -8,7 +8,9 @@ import {
 const initialState = {
   isOpening: false,
   activeSession: null,
-  openError: null
+  openError: null,
+  selectedTransactionGroupId: null,
+  selectedTransactionIndex: null
 }
 
 export default (state = initialState, action) => {
@@ -16,21 +18,34 @@ export default (state = initialState, action) => {
     case INITIATE_OPENING_SESSION:
       return {
         ...state,
-        isOpening: true
+        isOpening: true,
+        selectedTransactionGroupId: null,
+        selectedTransactionIndex: null
       }
     case SUCCEEDED_OPENING_SESSION:
+      let selectedTransactionGroupId = null
+      let selectedTransactionIndex = null
+      if (action.session.transactionGroups.length > 0) {
+        const transactionGroup = action.session.transactionGroups[0]
+        selectedTransactionGroupId = transactionGroup.id
+        selectedTransactionIndex = 0
+      }
       return {
         ...state,
         isOpening: false,
         activeSession: action.session,
-        openError: null
+        openError: null,
+        selectedTransactionGroupId: selectedTransactionGroupId,
+        selectedTransactionIndex: selectedTransactionIndex
       }
     case FAILED_OPENING_SESSION:
       return {
         ...state,
         isOpening: false,
         activeSession: null,
-        openError: action.error
+        openError: action.error,
+        selectedTransactionGroupId: null,
+        selectedTransactionIndex: null
       }
     case CLOSE_OPEN_SESSION_ERROR:
       return {

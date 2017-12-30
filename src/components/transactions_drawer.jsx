@@ -7,7 +7,6 @@ import List, { ListItem, ListItemText, ListItemIcon, ListItemSecondaryAction } f
 import IconButton from 'material-ui/IconButton'
 import DoneIcon from 'material-ui-icons/Done'
 import DeleteIcon from 'material-ui-icons/Delete'
-const slug = require('../lib/slug')
 
 const styles = {
   list: {
@@ -27,15 +26,18 @@ class TransactionsDrawer extends React.Component {
         onClose={this.props.onClose}>
         <List className={this.props.classes.list}>
           {this.props.session.transactionGroups.map(transactionGroup => (
-            <div key={`section-${slug(transactionGroup.name)}`}>
+            <div key={`section-${transactionGroup.id}`}>
               <ListSubheader className={this.props.classes.subheader}>
                 {transactionGroup.name}
               </ListSubheader>
               {transactionGroup.transactions.map((transaction, idx) => (
-                <ListItem button key={`item-${slug(transactionGroup.name)}-${idx}`}>
-                  <ListItemIcon>
-                    <DoneIcon />
-                  </ListItemIcon>
+                <ListItem button key={`item-${transactionGroup.id}-${idx}`}>
+                  {this.props.selectedTransactionGroupId == transactionGroup.id &&
+                   this.props.selectedTransactionIndex == idx &&
+                    <ListItemIcon>
+                      <DoneIcon />
+                    </ListItemIcon>
+                  }
                   <ListItemText inset primary={`${transaction.method} ${transaction.path}`} />
                   <ListItemSecondaryAction>
                     <IconButton aria-label="Delete">
@@ -55,7 +57,9 @@ class TransactionsDrawer extends React.Component {
 TransactionsDrawer.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  session: PropTypes.object.isRequired
+  session: PropTypes.object.isRequired,
+  selectedTransactionGroupId: PropTypes.string.isRequired,
+  selectedTransactionIndex: PropTypes.number.isRequired
 }
 
 export default withStyles(styles)(TransactionsDrawer)
