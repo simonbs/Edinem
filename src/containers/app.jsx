@@ -4,9 +4,10 @@ import { closeOpenSessionError } from '../actions'
 
 const mapStateToProps = state => {
   return {
-    showOpenSessionPage: state.session.activeSession == null,
-    showOpenSessionError: state.session.openError != null,
-    showEditPage: state.session.activeSession != null
+    showOpenSessionPage: !state.session.isOpening && state.session.activeSession == null,    
+    showEditPage: !state.session.isOpening && state.session.activeSession != null,
+    showLoadingPage: state.session.isOpening,
+    showOpenSessionError: state.session.openError != null
   }
 }
 

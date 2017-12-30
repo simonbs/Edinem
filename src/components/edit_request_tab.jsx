@@ -54,9 +54,6 @@ class EditRequestTab extends React.Component {
           </div>
         </div>
         <div className={this.props.classes.bodyContainer}>
-          {/* <div style={{ backgroundColor: 'red', flex: 1 }}>
-            Test
-          </div> */}
           <Editor/>
         </div>
       </div>

@@ -7,6 +7,7 @@ import TitleBar from '../containers/title_bar'
 import OpenSessionPage from '../containers/open_session_page'
 import EditPage from '../containers/edit_page'
 import ErrorDialog from '../components/error_dialog'
+import LoadingPage from '../components/loading_page'
 
 const theme = createMuiTheme({
   palette: {
@@ -27,6 +28,7 @@ class App extends React.Component {
           <div style={{ display: 'flex', flex: '1 1 auto' }}>
             {this.props.showOpenSessionPage && <OpenSessionPage/>}
             {this.props.showEditPage && <EditPage/>}
+            {this.props.showLoadingPage && <LoadingPage/>}
             <ErrorDialog 
             open={this.props.showOpenSessionError}
             onClose={this.props.onCloseOpenSessionError}
@@ -41,6 +43,7 @@ class App extends React.Component {
 App.propTypes = {
   showOpenSessionPage: PropTypes.bool.isRequired,
   showOpenSessionError: PropTypes.bool.isRequired,
+  showLoadingPage: PropTypes.bool.isRequired,
   onCloseOpenSessionError: PropTypes.func.isRequired,
   showEditPage: PropTypes.bool.isRequired
 }

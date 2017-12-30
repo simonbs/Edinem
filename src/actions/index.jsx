@@ -31,6 +31,13 @@ export const changeRequestDetailsTabIndex = (index) => {
   }
 }
 
+export const INITIATE_OPENING_SESSION = 'INITIATE_OPENING_SESSION'
+export const initiateOpeningSession = () => {
+  return {
+    type: INITIATE_OPENING_SESSION,
+  }
+}
+
 export const SUCCEEDED_OPENING_SESSION = 'SUCCEEDED_OPENING_SESSION'
 export const succeededOpeningSession = (session) => {
   return {
@@ -53,6 +60,7 @@ export const openSession = () => {
     const parentWindow = (process.platform == 'darwin') ? null : BrowserWindow.getFocusedWindow()
     dialog.showOpenDialog(parentWindow, properties, (f) => {
       if (f !== undefined) {
+        dispatch(initiateOpeningSession())
         const filePath = f[0]
         const xmlSessionMapper = new XMLSessionMapper()
         xmlSessionMapper.map(filePath, (err, session) => {

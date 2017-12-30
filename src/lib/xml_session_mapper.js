@@ -9,7 +9,7 @@ const Header = require('./header')
 function XMLSessionMapper() {}
 
 XMLSessionMapper.prototype.map = (xmlPath, callback) => {
-  const parser = new xml2js.Parser()
+  const parser = new xml2js.Parser({ async: true })
   fs.readFile(xmlPath, (err, data) => {
     parser.parseString(data, (err, result) => {
       if (err) {
