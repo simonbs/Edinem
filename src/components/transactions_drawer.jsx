@@ -17,7 +17,7 @@ const styles = {
   }
 }
 
-class RequestsDrawer extends React.Component {
+class TransactionsDrawer extends React.Component {
   render() {
     return (
       <Drawer
@@ -53,9 +53,9 @@ class RequestsDrawer extends React.Component {
   }
 }
 
-RequestsDrawer.propTypes = {
+TransactionsDrawer.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired
 }
 
-export default withStyles(styles)(RequestsDrawer)
+export default withStyles(styles)(TransactionsDrawer)

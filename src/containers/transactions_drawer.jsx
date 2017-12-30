@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { closeRequestsDrawer } from '../actions'
-import RequestDrawerUI from '../components/requests_drawer'
+import TransactionsDrawerUI from '../components/transactions_drawer'
 
 const mapStateToProps = state => {
   return {
@@ -19,4 +19,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(RequestDrawerUI)
+)(TransactionsDrawerUI)

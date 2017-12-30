@@ -5,6 +5,7 @@ import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import IconButton from 'material-ui/IconButton'
 import MenuIcon from 'material-ui-icons/Menu'
+import TransactionsDrawer from '../containers/transactions_drawer'
 import EditRequestTab from '../containers/edit_request_tab'
 import EditResponseTab from './edit_response_tab'
 
@@ -31,8 +32,9 @@ class EditPage extends React.Component {
   render() {
     return (
       <div className={this.props.classes.wrapper}>
+        <TransactionsDrawer />
         <div className={this.props.classes.fixedHeight}>
-          <AppBar position="static" elevation={0}>      
+          <AppBar position="static" elevation={0}>
             <Tabs
               value={this.props.requestResponseTabIndex}
               onChange={this.props.onRequestResponseTabIndexChange}
@@ -44,7 +46,7 @@ class EditPage extends React.Component {
               onClick={this.props.onMenuClick}
               className={this.props.classes.menuButton}
               color="contrast">
-              <MenuIcon/>
+              <MenuIcon />
             </IconButton>
           </AppBar>
         </div>
