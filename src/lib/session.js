@@ -1,5 +1,5 @@
-function Session(transactions) {
-  this.transactions = transactions
+function Session(transactionGroups) {
+  this.transactionGroups = transactionGroups
 }
 
 module.exports = Session

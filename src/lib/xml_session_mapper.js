@@ -2,6 +2,7 @@ const fs = require('fs')
 const xml2js = require('xml2js')
 const Session = require('./session')
 const Transaction = require('./transaction')
+const TransactionGroup = require('./transaction_group')
 const Request = require('./request')
 const Response = require('./response')
 const Header = require('./header')
@@ -22,16 +23,39 @@ XMLSessionMapper.prototype.map = (xmlPath, callback) => {
 }
 
 function mapXMLSession(xmlSession) {
-  return new Session(xmlSession['transaction'].map(mapXMLTransaction))
+  const transactions = xmlSession['transaction'].map(mapXMLTransaction)
+  const transactionGroups = groupTransactions(transactions)
+  return new Session(transactionGroups)
+}
+
+function groupTransactions(transactions) {
+  const groups = {}
+  for (const transaction of transactions) {
+    const baseURL = transaction.getBaseURL()
+    if (baseURL in groups) {
+      groups[baseURL].push(transaction)
+    } else {
+      groups[baseURL] = [ transaction ]
+    }
+  }
+  return Object.keys(groups).map((key) => {
+    return new TransactionGroup(key, groups[key])
+  })
 }
 
 function mapXMLTransaction(xmlTransaction) {
+  const metadata = xmlTransaction['$']
   return new Transaction(
+    metadata['method'],
+    metadata['protocol'],
+    metadata['host'],
+    metadata['actualPort'],
+    metadata['path'],
     mapXMLRequest(xmlTransaction['request'][0]),
     mapXMLResponse(xmlTransaction['response'][0]))
 }
 
-function mapXMLRequest(xmlRequest) {
+function mapXMLRequest(xmlRequest) {  
   return new Request(
     bodyFromXMLTransactionPart(xmlRequest),
     headersFromXMLTransactionPart(xmlRequest))

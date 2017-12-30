@@ -4,7 +4,8 @@ import TransactionsDrawerUI from '../components/transactions_drawer'
 
 const mapStateToProps = state => {
   return {
-    open: state.requestsDrawer.open
+    open: state.requestsDrawer.open,
+    session: state.session.activeSession
   }
 }
 

@@ -7,6 +7,7 @@ import List, { ListItem, ListItemText, ListItemIcon, ListItemSecondaryAction } f
 import IconButton from 'material-ui/IconButton'
 import DoneIcon from 'material-ui-icons/Done'
 import DeleteIcon from 'material-ui-icons/Delete'
+const slug = require('../lib/slug')
 
 const styles = {
   list: {
@@ -25,19 +26,17 @@ class TransactionsDrawer extends React.Component {
         open={this.props.open}
         onClose={this.props.onClose}>
         <List className={this.props.classes.list}>
-          {[0, 1, 2, 3, 4].map(sectionId => (
-            <div key={`section-${sectionId}`}>
+          {this.props.session.transactionGroups.map(transactionGroup => (
+            <div key={`section-${slug(transactionGroup.name)}`}>
               <ListSubheader className={this.props.classes.subheader}>
-                nordiskfilmapp.dk
+                {transactionGroup.name}
               </ListSubheader>
-              {[0, 1, 2, 3, 4].map(item => (
-                <ListItem button key={`item-${sectionId}-${item}`}>
-                  {sectionId == 0 && item == 1 &&
-                    <ListItemIcon>
-                      <DoneIcon />
-                    </ListItemIcon>
-                  }
-                  <ListItemText inset primary="GET /movies" />
+              {transactionGroup.transactions.map((transaction, idx) => (
+                <ListItem button key={`item-${slug(transactionGroup.name)}-${idx}`}>
+                  <ListItemIcon>
+                    <DoneIcon />
+                  </ListItemIcon>
+                  <ListItemText inset primary={`${transaction.method} ${transaction.path}`} />
                   <ListItemSecondaryAction>
                     <IconButton aria-label="Delete">
                       <DeleteIcon />
@@ -55,7 +54,8 @@ class TransactionsDrawer extends React.Component {
 
 TransactionsDrawer.propTypes = {
   open: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
+  session: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(TransactionsDrawer)
