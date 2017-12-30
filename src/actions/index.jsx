@@ -87,3 +87,12 @@ export const closeOpenSessionError = () => {
     type: CLOSE_OPEN_SESSION_ERROR
   }
 }
+
+export const SELECT_TRANSACTION = 'SELECT_TRANSACTION'
+export const selectTransaction = (transactionGroupId, transactionIndex) => {
+  return {
+    type: SELECT_TRANSACTION,
+    transactionGroupId: transactionGroupId,
+    transactionIndex: transactionIndex
+  }
+}

@@ -2,7 +2,8 @@ import {
   INITIATE_OPENING_SESSION,
   SUCCEEDED_OPENING_SESSION,
   FAILED_OPENING_SESSION,
-  CLOSE_OPEN_SESSION_ERROR
+  CLOSE_OPEN_SESSION_ERROR,
+  SELECT_TRANSACTION
 } from '../actions'
 
 const initialState = {
@@ -51,6 +52,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         openError: null
+      }
+    case SELECT_TRANSACTION:
+      return {
+        ...state,
+        selectedTransactionGroupId: action.transactionGroupId,
+        selectedTransactionIndex: action.transactionIndex
       }
     default:
       return state

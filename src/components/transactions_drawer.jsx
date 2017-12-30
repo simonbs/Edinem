@@ -31,7 +31,10 @@ class TransactionsDrawer extends React.Component {
                 {transactionGroup.name}
               </ListSubheader>
               {transactionGroup.transactions.map((transaction, idx) => (
-                <ListItem button key={`item-${transactionGroup.id}-${idx}`}>
+                <ListItem
+                button
+                onClick={() => {this.props.onSelect(transactionGroup.id, idx)}}
+                key={`item-${transactionGroup.id}-${idx}`}>
                   {this.props.selectedTransactionGroupId == transactionGroup.id &&
                    this.props.selectedTransactionIndex == idx &&
                     <ListItemIcon>
@@ -57,6 +60,7 @@ class TransactionsDrawer extends React.Component {
 TransactionsDrawer.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
   session: PropTypes.object.isRequired,
   selectedTransactionGroupId: PropTypes.string.isRequired,
   selectedTransactionIndex: PropTypes.number.isRequired

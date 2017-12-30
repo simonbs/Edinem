@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { closeRequestsDrawer } from '../actions'
+import { closeRequestsDrawer, selectTransaction } from '../actions'
 import TransactionsDrawerUI from '../components/transactions_drawer'
 
 const mapStateToProps = state => {
@@ -14,6 +14,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onClose: () => {
+      dispatch(closeRequestsDrawer())
+    },
+    onSelect: (transactionGroupId, transactionIndex) => {
+      dispatch(selectTransaction(transactionGroupId, transactionIndex))
       dispatch(closeRequestsDrawer())
     }
   }
