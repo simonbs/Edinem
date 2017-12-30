@@ -5,6 +5,7 @@ import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import Typography from 'material-ui/Typography'
 import EditHeaders from './edit_headers'
+import Editor from './editor'
 
 const styles = {
   wrapper: {
@@ -17,10 +18,10 @@ const styles = {
     overflow: 'auto'
   },
   bodyContainer: {
-    padding: 12,
-    paddingLeft: 24,
-    paddingRight: 24,
-    flex: '1 1 auto'
+    padding: 0,
+    display: 'flex',
+    flex: '1 1 auto',
+    backgroundColor: 'orange'
   }
 }
 
@@ -37,7 +38,7 @@ class EditResponseTab extends React.Component {
           <EditHeaders/>
         </div>
         <div className={this.props.classes.bodyContainer}>
-          Fill rest
+          <Editor/>
         </div>
       </div>
     )
