@@ -22,7 +22,7 @@ class Editor extends React.Component {
         theme="tomorrow"
         showPrintMargin={false}
         tabSize={2}
-        fontSize={13}
+        fontSize='11pt'
         style={{ width: 'auto', height: 'auto', flex: 1 }}
         value={this.props.value} />
     )

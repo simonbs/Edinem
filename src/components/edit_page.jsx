@@ -16,7 +16,7 @@ import EditResponseTab from '../containers/edit_response_tab'
 const styles = (theme) => ({
   menuButton: {
     marginLeft: -22,
-    top: -4
+    top: -5
   },
   wrapper: {
     display: 'flex',
