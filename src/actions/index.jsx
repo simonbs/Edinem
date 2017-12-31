@@ -96,3 +96,11 @@ export const selectTransaction = (transactionGroupId, transactionIndex) => {
     transactionIndex: transactionIndex
   }
 }
+
+export const TOGGLE_TRANSACTION_GROUP_EXPANDED = 'TOGGLE_TRANSACTION_GROUP_EXPANDED'
+export const toggleTransactionGroupExpanded = (transactionGroupId) => {
+  return {
+    type: TOGGLE_TRANSACTION_GROUP_EXPANDED,
+    transactionGroupId: transactionGroupId
+  }
+}

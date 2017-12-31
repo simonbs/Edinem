@@ -1,10 +1,14 @@
 import { connect } from 'react-redux'
-import { closeRequestsDrawer, selectTransaction } from '../actions'
+import {
+  closeRequestsDrawer, 
+  selectTransaction, 
+  toggleTransactionGroupExpanded
+} from '../actions'
 import TransactionsDrawerUI from '../components/transactions_drawer'
 
 const mapStateToProps = state => {
   return {
-    open: state.requestsDrawer.open,
+    open: state.transactionsDrawer.open,
     session: state.session.activeSession,
     selectedTransactionGroupId: state.session.selectedTransactionGroupId,
     selectedTransactionIndex: state.session.selectedTransactionIndex
@@ -16,7 +20,10 @@ const mapDispatchToProps = dispatch => {
     onClose: () => {
       dispatch(closeRequestsDrawer())
     },
-    onSelect: (transactionGroupId, transactionIndex) => {
+    onClickHeader: (transactionGroupId) => {
+      dispatch(toggleTransactionGroupExpanded(transactionGroupId))
+    },
+    onClickItem: (transactionGroupId, transactionIndex) => {
       dispatch(selectTransaction(transactionGroupId, transactionIndex))
       dispatch(closeRequestsDrawer())
     }
