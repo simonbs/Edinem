@@ -1,4 +1,4 @@
-const { dialog } = require('electron').remote
+const { remote, dialog } = require('electron')
 const XMLSessionMapper = require('../lib/xml_session_mapper')
 
 export const OPEN_REQUESTS_DRAWER = 'OPEN_REQUESTS_DRAWER'
@@ -55,7 +55,9 @@ export const failedOpeningSession = (error) => {
 }
 
 export const FINALIZE_OPENING_SESSION = 'FINALIZE_OPENING_SESSION'
-export const finalizeOpeningSession = () => {
+export const finalizeOpeningSession = (filePath) => {
+  var filename = filePath.replace(/^.*[\\\/]/, '')
+  remote.getCurrentWindow().setTitle(filename) 
   return {
     type: FINALIZE_OPENING_SESSION
   }
@@ -88,7 +90,7 @@ export const parseSession = (filePath) => {
           dispatch(selectTransaction(transactionGroup.id, 0))
           dispatch(toggleTransactionGroupExpanded(transactionGroup.id))
         }
-        dispatch(finalizeOpeningSession())
+        dispatch(finalizeOpeningSession(filePath))        
       }
     })
   }
