@@ -22,13 +22,6 @@ class EditKeyValuePairs extends React.Component {
   render() {
     return (
       <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell className={this.props.classes.headerCell}>Name</TableCell>
-            <TableCell className={this.props.classes.headerCell}>Value</TableCell>
-            <TableCell className={this.props.classes.deleteCell}></TableCell>
-          </TableRow>
-        </TableHead>
         <TableBody>
           {Object.keys(this.props.pairs).map((key, idx) => (
             <TableRow key={`row-${idx}`}>
