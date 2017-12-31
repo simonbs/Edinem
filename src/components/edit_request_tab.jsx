@@ -14,11 +14,6 @@ const styles = {
     flexFlow: 'column',
     width: '100%'
   },
-  urlContainer: {
-    padding: 12,
-    paddingLeft: 24,
-    paddingRight: 24
-  },
   tabsContainer: {
     maxHeight: '250px',
     overflow: 'auto'
@@ -36,9 +31,6 @@ class EditRequestTab extends React.Component {
     return (
       <div className={this.props.classes.wrapper}>
         <div>
-          <div className={this.props.classes.urlContainer}>
-            <TextField label="URL" placeholder="URL" value={this.props.url} fullWidth />
-          </div>
           <AppBar position="static" color="default" elevation={0}>
             <Tabs
               value={this.props.detailsTabIndex}
@@ -64,7 +56,6 @@ class EditRequestTab extends React.Component {
 EditRequestTab.propTypes = {
   detailsTabIndex: PropTypes.number.isRequired,
   onDetailsTabIndexChange: PropTypes.func.isRequired,
-  url: PropTypes.string.isRequired,
   body: PropTypes.string,
   headers: PropTypes.array.isRequired
 }

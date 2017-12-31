@@ -5,7 +5,9 @@ import EditPageUI from '../components/edit_page'
 const mapStateToProps = state => {
   return {
     requestResponseTabIndex: state.editPage.requestResponseTabIndex,
-    requestDetailsTabIndex: state.editPage.requestDetailsTabIndex
+    requestDetailsTabIndex: state.editPage.requestDetailsTabIndex,
+    method: state.session.selectedTransaction.method,
+    url: state.session.selectedTransaction.getFullURL()
   }
 }
 
