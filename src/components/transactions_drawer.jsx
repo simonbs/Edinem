@@ -2,26 +2,26 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer'
-import ListSubheader from 'material-ui/List/ListSubheader'
 import List, { ListItem, ListItemText, ListItemIcon, ListItemSecondaryAction } from 'material-ui/List'
 import Collapse from 'material-ui/transitions/Collapse'
 import IconButton from 'material-ui/IconButton'
+import Avatar from 'material-ui/Avatar'
 import DoneIcon from 'material-ui-icons/Done'
 import DeleteIcon from 'material-ui-icons/Delete'
 import ExpandLess from 'material-ui-icons/ExpandLess'
 import ExpandMore from 'material-ui-icons/ExpandMore'
 
-const styles = {
+const styles = (theme) => ({
   list: {
     maxHeight: '600px'
   },
-  subheader: {
-    backgroundColor: 'white'
+  transactionCount: {
+    backgroundColor: theme.palette.primary[500]
   },
-  subheaderText: {
+  headerText: {
     fontWeight: 'bold'
   }
-}
+})
 
 class TransactionsDrawer extends React.Component {
   isTransactionGroupExpanded(transactionGroupId) {
@@ -29,7 +29,7 @@ class TransactionsDrawer extends React.Component {
   }
 
   toggleTransactionGroup(transactionGroupId) {
-    this.props.onClickHeader(transactionGroupId)    
+    this.props.onClickHeader(transactionGroupId)
     this.forceUpdate()
   }
 
@@ -43,18 +43,21 @@ class TransactionsDrawer extends React.Component {
           {this.props.session.transactionGroups.map(transactionGroup => (
             <div key={`section-${transactionGroup.id}`}>
               <ListItem button onClick={() => { this.toggleTransactionGroup(transactionGroup.id) }}>
+                <Avatar className={this.props.classes.transactionCount}>
+                  {transactionGroup.transactions.length}
+                </Avatar>
                 <ListItemText
-                  primary={transactionGroup.name}                  
+                  primary={transactionGroup.name}
                   classes={{
-                    text: this.props.classes.subheaderText
+                    text: this.props.classes.headerText
                   }} />
-                { this.isTransactionGroupExpanded(transactionGroup.id) ? <ExpandLess/> : <ExpandMore/> }
+                {this.isTransactionGroupExpanded(transactionGroup.id) ? <ExpandLess /> : <ExpandMore />}
               </ListItem>
               <Collapse
-              component="li"
-              in={this.isTransactionGroupExpanded(transactionGroup.id)}
-              timeout="auto"
-              unmountOnExit>
+                component="li"
+                in={this.isTransactionGroupExpanded(transactionGroup.id)}
+                timeout="auto"
+                unmountOnExit>
                 <List disablePadding>
                   {transactionGroup.transactions.map((transaction, idx) => (
                     <ListItem
@@ -92,11 +95,11 @@ TransactionsDrawer.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onClickHeader: PropTypes.func.isRequired,
-  onClickItem: PropTypes.func.isRequired,  
+  onClickItem: PropTypes.func.isRequired,
   session: PropTypes.object.isRequired,
   expandedTransactionGroupIds: PropTypes.array.isRequired,
   selectedTransactionGroupId: PropTypes.string.isRequired,
-  selectedTransactionIndex: PropTypes.number.isRequired,  
+  selectedTransactionIndex: PropTypes.number.isRequired,
 }
 
 export default withStyles(styles)(TransactionsDrawer)
