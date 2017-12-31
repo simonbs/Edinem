@@ -24,26 +24,13 @@ const styles = {
 }
 
 class TransactionsDrawer extends React.Component {
-  state = {
-    expandedTransactionGroupIds: []
-  }
-  
   isTransactionGroupExpanded(transactionGroupId) {
-    return this.state.expandedTransactionGroupIds.includes(transactionGroupId)
+    return this.props.expandedTransactionGroupIds.includes(transactionGroupId)
   }
 
   toggleTransactionGroup(transactionGroupId) {
-    const expandedTransactionGroupIds = this.state.expandedTransactionGroupIds
-    const idx = expandedTransactionGroupIds.indexOf(transactionGroupId)
-    if (idx == -1) {
-      expandedTransactionGroupIds.push(transactionGroupId)
-    } else {
-      expandedTransactionGroupIds.splice(idx, 1)
-    }      
-    this.setState({
-      ...this.state,
-      expandedTransactionGroupIds: expandedTransactionGroupIds
-    })
+    this.props.onClickHeader(transactionGroupId)    
+    this.forceUpdate()
   }
 
   render() {
@@ -74,16 +61,16 @@ class TransactionsDrawer extends React.Component {
                       button
                       onClick={() => { this.props.onClickItem(transactionGroup.id, idx) }}
                       key={`item-${transactionGroup.id}-${idx}`}>
-                      <ListItemText
-                        inset
-                        primary={`${transaction.method} ${transaction.path}`}
-                        secondary={transactionGroup.name} />
                       {this.props.selectedTransactionGroupId == transactionGroup.id &&
                         this.props.selectedTransactionIndex == idx &&
                         <ListItemIcon>
                           <DoneIcon />
                         </ListItemIcon>
                       }
+                      <ListItemText
+                        inset
+                        primary={`${transaction.method} ${transaction.path}`}
+                        secondary={transactionGroup.name} />                      
                       <ListItemSecondaryAction>
                         <IconButton aria-label="Delete">
                           <DeleteIcon />
@@ -107,6 +94,7 @@ TransactionsDrawer.propTypes = {
   onClickHeader: PropTypes.func.isRequired,
   onClickItem: PropTypes.func.isRequired,  
   session: PropTypes.object.isRequired,
+  expandedTransactionGroupIds: PropTypes.array.isRequired,
   selectedTransactionGroupId: PropTypes.string.isRequired,
   selectedTransactionIndex: PropTypes.number.isRequired,  
 }

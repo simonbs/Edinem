@@ -54,6 +54,13 @@ export const failedOpeningSession = (error) => {
   }
 }
 
+export const FINALIZE_OPENING_SESSION = 'FINALIZE_OPENING_SESSION'
+export const finalizeOpeningSession = () => {
+  return {
+    type: FINALIZE_OPENING_SESSION
+  }
+}
+
 export const openSession = () => {
   return (dispatch) => {
     const properties = ['multiSelections', 'createDirectory', 'openFile']
@@ -69,13 +76,19 @@ export const openSession = () => {
 
 export const parseSession = (filePath) => {
   return (dispatch) => {
-    dispatch(initiateOpeningSession())    
+    dispatch(initiateOpeningSession())
     const xmlSessionMapper = new XMLSessionMapper()
     xmlSessionMapper.map(filePath, (err, session) => {
       if (err) {
         dispatch(failedOpeningSession(err))
       } else {
         dispatch(succeededOpeningSession(session))
+        if (session.transactionGroups.length > 0) {
+          const transactionGroup = session.transactionGroups[0]
+          dispatch(selectTransaction(transactionGroup.id, 0))
+          dispatch(toggleTransactionGroupExpanded(transactionGroup.id))
+        }
+        dispatch(finalizeOpeningSession())
       }
     })
   }

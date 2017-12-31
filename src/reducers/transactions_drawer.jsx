@@ -7,7 +7,8 @@ import {
 } from '../actions'
 
 const initialState = {
-  open: false
+  open: false,
+  expandedTransactionGroupIds: []
 }
 
 export default (state = initialState, action) => {
@@ -21,6 +22,28 @@ export default (state = initialState, action) => {
       return {
         ...state,
         open: false
+      }
+    case SUCCEEDED_OPENING_SESSION:
+      return {
+        ...state,
+        expandedTransactionGroupIds: []
+      }
+    case FAILED_OPENING_SESSION:
+      return {
+        ...state,
+        expandedTransactionGroupIds: []
+      }
+    case TOGGLE_TRANSACTION_GROUP_EXPANDED:
+      const expandedTransactionGroupIds = state.expandedTransactionGroupIds
+      const idx = expandedTransactionGroupIds.indexOf(action.transactionGroupId)
+      if (idx == -1) {
+        expandedTransactionGroupIds.push(action.transactionGroupId)
+      } else {
+        expandedTransactionGroupIds.splice(idx, 1)
+      }
+      return {
+        ...state,
+        expandedTransactionGroupIds: expandedTransactionGroupIds
       }
     default:
       return state

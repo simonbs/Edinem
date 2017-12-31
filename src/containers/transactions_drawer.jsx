@@ -10,6 +10,7 @@ const mapStateToProps = state => {
   return {
     open: state.transactionsDrawer.open,
     session: state.session.activeSession,
+    expandedTransactionGroupIds: state.transactionsDrawer.expandedTransactionGroupIds,
     selectedTransactionGroupId: state.session.selectedTransactionGroupId,
     selectedTransactionIndex: state.session.selectedTransactionIndex
   }
