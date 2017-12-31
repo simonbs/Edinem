@@ -35,7 +35,10 @@ class EditResponseTab extends React.Component {
           </Tabs>
         </AppBar>
         <div className={this.props.classes.tabsContainer}>
-          <EditKeyValuePairs pairs={this.props.headers} />
+          <EditKeyValuePairs
+          pairs={this.props.headers}
+          addTitle="Add header"
+          onAddClick={this.props.onAddHeaderClick} />
         </div>
         <div className={this.props.classes.bodyContainer}>
           <Editor value={this.props.body || ""} />
@@ -47,7 +50,8 @@ class EditResponseTab extends React.Component {
 
 EditResponseTab.propTypes = {
   body: PropTypes.string,
-  headers: PropTypes.object.isRequired
+  headers: PropTypes.object.isRequired,
+  onAddHeaderClick: PropTypes.func.isRequired
 }
 
 EditResponseTab.defaultProps = {

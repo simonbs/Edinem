@@ -21,6 +21,12 @@ const mapDispatchToProps = dispatch => {
   return {
     onDetailsTabIndexChange: (event, index) => {
       dispatch(changeRequestDetailsTabIndex(index))
+    },
+    onAddHeaderClick: () => {
+
+    },
+    onAddQueryParameterClick: () => {
+      
     }
   }
 }
