@@ -4,7 +4,7 @@ import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import Typography from 'material-ui/Typography'
-import EditHeaders from './edit_headers'
+import EditKeyValuePairs from './edit_key_value_pairs'
 import Editor from './editor'
 
 const styles = {
@@ -35,7 +35,7 @@ class EditResponseTab extends React.Component {
           </Tabs>
         </AppBar>
         <div className={this.props.classes.tabsContainer}>
-          <EditHeaders headers={this.props.headers} />
+          <EditKeyValuePairs pairs={this.props.headers} />
         </div>
         <div className={this.props.classes.bodyContainer}>
           <Editor value={this.props.body || ""} />
@@ -47,11 +47,11 @@ class EditResponseTab extends React.Component {
 
 EditResponseTab.propTypes = {
   body: PropTypes.string,
-  headers: PropTypes.array.isRequired
+  headers: PropTypes.object.isRequired
 }
 
 EditResponseTab.defaultProps = {
-  headers: []
+  headers: {}
 }
 
 export default withStyles(styles)(EditResponseTab)

@@ -6,6 +6,8 @@ const TransactionGroup = require('./transaction_group')
 const Request = require('./request')
 const Response = require('./response')
 const Header = require('./header')
+const QueryParameter = require('./query_parameter')
+const URLParser = require('./url_parser')
 
 function XMLSessionMapper() {}
 
@@ -51,14 +53,15 @@ function mapXMLTransaction(xmlTransaction) {
     metadata['host'],
     metadata['actualPort'],
     metadata['path'],
-    mapXMLRequest(xmlTransaction['request'][0]),
+    mapXMLRequest(xmlTransaction['request'][0], metadata.query),
     mapXMLResponse(xmlTransaction['response'][0]))
 }
 
-function mapXMLRequest(xmlRequest) {  
+function mapXMLRequest(xmlRequest, queryString) {
   return new Request(
     bodyFromXMLTransactionPart(xmlRequest),
-    headersFromXMLTransactionPart(xmlRequest))
+    headersFromXMLTransactionPart(xmlRequest),
+    new URLParser().parseQueryString(queryString))
 }
 
 function mapXMLResponse(xmlResponse) {

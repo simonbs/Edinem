@@ -5,7 +5,10 @@ import EditResponseTabUI from '../components/edit_response_tab'
 const mapStateToProps = state => {
   return {
     body: state.session.selectedTransaction.response.body,
-    headers: state.session.selectedTransaction.response.headers
+    headers: state.session.selectedTransaction.response.headers.reduce((map, obj) => {
+      map[obj.name] = obj.value
+      return map
+    }, {})
   }
 }
 

@@ -18,7 +18,7 @@ const styles = {
   }
 }
 
-class EditHeaders extends React.Component {
+class EditKeyValuePairs extends React.Component {
   render() {
     return (
       <Table>
@@ -30,12 +30,12 @@ class EditHeaders extends React.Component {
           </TableRow>
         </TableHead>
         <TableBody>
-          {this.props.headers.map((header, idx) => (
+          {Object.keys(this.props.pairs).map((key, idx) => (
             <TableRow key={`row-${idx}`}>
               <TableCell>
                 <TextField
                   placeholder="Name"
-                  value={header.name}
+                  value={key}
                   fullWidth
                   InputProps={{
                     disableUnderline: true,
@@ -47,7 +47,7 @@ class EditHeaders extends React.Component {
               <TableCell>
                 <TextField
                   placeholder="Value"
-                  value={header.value}
+                  value={this.props.pairs[key]}
                   fullWidth
                   InputProps={{
                     disableUnderline: true,
@@ -69,8 +69,8 @@ class EditHeaders extends React.Component {
   }
 }
 
-EditHeaders.propTypes = {
-  headers: PropTypes.array.isRequired
+EditKeyValuePairs.propTypes = {
+  pairs: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(EditHeaders)
+export default withStyles(styles)(EditKeyValuePairs)

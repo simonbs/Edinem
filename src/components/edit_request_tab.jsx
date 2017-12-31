@@ -5,7 +5,7 @@ import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import Typography from 'material-ui/Typography'
 import TextField from 'material-ui/TextField'
-import EditHeaders from './edit_headers'
+import EditKeyValuePairs from './edit_key_value_pairs'
 import Editor from './editor'
 
 const styles = {
@@ -41,8 +41,8 @@ class EditRequestTab extends React.Component {
             </Tabs>
           </AppBar>
           <div className={this.props.classes.tabsContainer}>
-            {this.props.detailsTabIndex === 0 && <EditHeaders headers={this.props.headers} />}
-            {this.props.detailsTabIndex === 1 && <div>Query</div>}
+            {this.props.detailsTabIndex === 0 && <EditKeyValuePairs pairs={this.props.headers} />}
+            {this.props.detailsTabIndex === 1 && <EditKeyValuePairs pairs={this.props.queryParameters} />}
           </div>
         </div>
         <div className={this.props.classes.bodyContainer}>
@@ -57,11 +57,13 @@ EditRequestTab.propTypes = {
   detailsTabIndex: PropTypes.number.isRequired,
   onDetailsTabIndexChange: PropTypes.func.isRequired,
   body: PropTypes.string,
-  headers: PropTypes.array.isRequired
+  headers: PropTypes.object.isRequired,
+  queryParameters: PropTypes.object.isRequired
 }
 
 EditRequestTab.defaultProps = {
-  headers: []
+  headers: {},
+  queryParameters: {}
 }
 
 export default withStyles(styles)(EditRequestTab)

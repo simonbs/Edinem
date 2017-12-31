@@ -6,7 +6,14 @@ const mapStateToProps = state => {
   return {
     detailsTabIndex: state.editPage.requestDetailsTabIndex,
     body: state.session.selectedTransaction.request.body,
-    headers: state.session.selectedTransaction.request.headers
+    headers: state.session.selectedTransaction.request.headers.reduce((map, obj) => {
+      map[obj.name] = obj.value
+      return map
+    }, {}),
+    queryParameters: state.session.selectedTransaction.request.queryParameters.reduce((map, obj) => {
+      map[obj.name] = obj.value
+      return map
+    }, {})
   }
 }
 
