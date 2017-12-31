@@ -1,4 +1,4 @@
-function Transaction(method, protocol, host, port, path, url, request, response) {
+function Transaction(method, protocol, host, port, path, request, response) {
   this.method = method
   this.protocol = protocol
   this.host = host

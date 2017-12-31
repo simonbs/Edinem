@@ -24,21 +24,25 @@ class EditHeaders extends React.Component {
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow>
-            <TableCell>Content-Type</TableCell>
-            <TableCell>application/json</TableCell>
-            <TableCell className={this.props.classes.deleteCell}>
-              <IconButton color="default">
-                <DeleteIcon/>
-              </IconButton>
-            </TableCell>
-          </TableRow>
+          {this.props.headers.map((header, idx) => (
+            <TableRow key={`row-${idx}`}>
+              <TableCell>{header.name}</TableCell>
+              <TableCell>{header.value}</TableCell>
+              <TableCell className={this.props.classes.deleteCell}>
+                <IconButton color="default">
+                  <DeleteIcon />
+                </IconButton>
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     )
   }
 }
 
-EditHeaders.propTypes = {}
+EditHeaders.propTypes = {
+  headers: PropTypes.array.isRequired
+}
 
 export default withStyles(styles)(EditHeaders)

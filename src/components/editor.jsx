@@ -12,7 +12,6 @@ class Editor extends React.Component {
     const prevActive = prevProps.active
     if (error !== prevError || active !== prevActive) {
       window.dispatchEvent(new Event('resize'))
-      console.log("Here")
     }
   }
 

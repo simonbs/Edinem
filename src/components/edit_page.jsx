@@ -7,7 +7,7 @@ import IconButton from 'material-ui/IconButton'
 import MenuIcon from 'material-ui-icons/Menu'
 import TransactionsDrawer from '../containers/transactions_drawer'
 import EditRequestTab from '../containers/edit_request_tab'
-import EditResponseTab from './edit_response_tab'
+import EditResponseTab from '../containers/edit_response_tab'
 
 const styles = {
   menuButton: {

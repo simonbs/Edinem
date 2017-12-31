@@ -11,7 +11,6 @@ import Dialog, {
 
 class ErrorDialog extends React.Component {
   handleClose = () => {
-    console.log('Close')
     this.setState({ open: false })
   }
 

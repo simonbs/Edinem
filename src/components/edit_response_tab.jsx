@@ -35,16 +35,23 @@ class EditResponseTab extends React.Component {
           </Tabs>
         </AppBar>
         <div className={this.props.classes.tabsContainer}>
-          <EditHeaders/>
+          <EditHeaders headers={this.props.headers} />
         </div>
         <div className={this.props.classes.bodyContainer}>
-          <Editor/>
+          <Editor value={this.props.body || ""} />
         </div>
       </div>
     )
   }
 }
 
-EditResponseTab.propTypes = {}
+EditResponseTab.propTypes = {
+  body: PropTypes.string,
+  headers: PropTypes.array.isRequired
+}
+
+EditResponseTab.defaultProps = {
+  headers: []
+}
 
 export default withStyles(styles)(EditResponseTab)

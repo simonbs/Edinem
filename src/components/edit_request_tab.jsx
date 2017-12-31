@@ -49,12 +49,12 @@ class EditRequestTab extends React.Component {
             </Tabs>
           </AppBar>
           <div className={this.props.classes.tabsContainer}>
-            {this.props.detailsTabIndex === 0 && <EditHeaders />}
+            {this.props.detailsTabIndex === 0 && <EditHeaders headers={this.props.headers} />}
             {this.props.detailsTabIndex === 1 && <div>Query</div>}
           </div>
         </div>
         <div className={this.props.classes.bodyContainer}>
-          <Editor value={this.props.body} />
+          <Editor value={this.props.body || ""} />
         </div>
       </div>
     )
@@ -65,7 +65,12 @@ EditRequestTab.propTypes = {
   detailsTabIndex: PropTypes.number.isRequired,
   onDetailsTabIndexChange: PropTypes.func.isRequired,
   url: PropTypes.string.isRequired,
-  body: PropTypes.string.isRequired
+  body: PropTypes.string,
+  headers: PropTypes.array.isRequired
+}
+
+EditRequestTab.defaultProps = {
+  headers: []
 }
 
 export default withStyles(styles)(EditRequestTab)

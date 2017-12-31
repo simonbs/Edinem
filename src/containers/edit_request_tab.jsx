@@ -6,7 +6,8 @@ const mapStateToProps = state => {
   return {
     detailsTabIndex: state.editPage.requestDetailsTabIndex,
     url: state.session.selectedTransaction.getFullURL(),
-    body: state.session.selectedTransaction.request.body
+    body: state.session.selectedTransaction.request.body,
+    headers: state.session.selectedTransaction.request.headers
   }
 }
 
