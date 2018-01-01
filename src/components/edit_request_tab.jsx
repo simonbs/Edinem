@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
+import { grey } from 'material-ui/colors'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import Typography from 'material-ui/Typography'
@@ -8,7 +9,7 @@ import TextField from 'material-ui/TextField'
 import EditKeyValuePairs from './edit_key_value_pairs'
 import Editor from './editor'
 
-const styles = {
+const styles = (theme) => ({
   wrapper: {
     display: 'flex',
     flexFlow: 'column',
@@ -18,13 +19,16 @@ const styles = {
     maxHeight: '250px',
     overflow: 'auto'
   },
+  bodySeparator: {
+    height: 1,
+    backgroundColor: grey[500]
+  },
   bodyContainer: {
     padding: 0,
     display: 'flex',
-    flex: '1 1 auto',
-    backgroundColor: 'orange'
+    flex: '1 1 auto'
   }
-}
+})
 
 class EditRequestTab extends React.Component {
   render() {
@@ -55,6 +59,7 @@ class EditRequestTab extends React.Component {
             }
           </div>
         </div>
+        <div className={this.props.classes.bodySeparator} />
         <div className={this.props.classes.bodyContainer}>
           <Editor value={this.props.body || ""} />
         </div>

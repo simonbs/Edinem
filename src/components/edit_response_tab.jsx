@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
+import { grey } from 'material-ui/colors'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import Typography from 'material-ui/Typography'
@@ -16,6 +17,10 @@ const styles = {
   tabsContainer: {
     maxHeight: '250px',
     overflow: 'auto'
+  },
+  bodySeparator: {
+    height: 1,
+    backgroundColor: grey[500]
   },
   bodyContainer: {
     padding: 0,
@@ -40,6 +45,7 @@ class EditResponseTab extends React.Component {
           addTitle="Add header"
           onAddClick={this.props.onAddHeaderClick} />
         </div>
+        <div className={this.props.classes.bodySeparator} />
         <div className={this.props.classes.bodyContainer}>
           <Editor value={this.props.body || ""} />
         </div>
