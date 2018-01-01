@@ -59,6 +59,8 @@ const styles = (theme) => ({
   }
 })
 
+const methods = ["GET", "POST", "PUT", "DELETE", "HEAD", "CONNECT", "OPTIONS", "TRACE", "PATCH"]
+
 class EditPage extends React.Component {
   render() {
     return (
@@ -75,13 +77,14 @@ class EditPage extends React.Component {
           <InputLabel htmlFor="method"></InputLabel>
           <Select
             value={this.props.method}
+            onChange={(event) => this.props.onMethodChange(event.target.value)}
             input={<Input name="method" id="method" />}
             disableUnderline
             className={this.props.classes.methodSelect}
             classes={{
               icon: this.props.classes.methodSelectIcon
             }}>
-            {["GET", "POST", "PUT", "DELETE", "HEAD", "CONNECT", "OPTIONS", "TRACE", "PATCH"].map(method => (
+            {methods.map(method => (
               <MenuItem key={method} value={method}>{method}</MenuItem>
             ))}
           </Select>
@@ -119,11 +122,12 @@ class EditPage extends React.Component {
 }
 
 EditPage.propTypes = {
-  requestResponseTabIndex: PropTypes.number.isRequired,
+  requestResponseTabIndex: PropTypes.number.isRequired,  
+  method: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   onRequestResponseTabIndexChange: PropTypes.func.isRequired,
   onMenuClick: PropTypes.func.isRequired,
-  method: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired
+  onMethodChange: PropTypes.func.isRequired
 }
 
 export default withStyles(styles)(EditPage)

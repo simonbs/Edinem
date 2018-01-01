@@ -1,5 +1,9 @@
 import { connect } from 'react-redux'
-import { changeRequestResponseTabIndex, openRequestsDrawer } from '../actions'
+import { 
+  changeRequestResponseTabIndex,
+  openRequestsDrawer,
+  changeTransactionMethod
+} from '../actions'
 import EditPageUI from '../components/edit_page'
 
 const mapStateToProps = state => {
@@ -21,6 +25,9 @@ const mapDispatchToProps = dispatch => {
     },
     onMenuClick: () => {
       dispatch(openRequestsDrawer())
+    },
+    onMethodChange: (method) => {
+      dispatch(changeTransactionMethod(method))
     }
   }
 }

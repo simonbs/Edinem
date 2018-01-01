@@ -220,3 +220,11 @@ export const changeResponseBody = (newValue) => {
     newValue: newValue
   }
 }
+
+export const CHANGE_TRANSACTION_METHOD = 'CHANGE_TRANSACTION_METHOD'
+export const changeTransactionMethod = (method) => {
+  return {
+    type: CHANGE_TRANSACTION_METHOD,
+    method: method
+  }
+}
