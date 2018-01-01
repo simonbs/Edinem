@@ -204,3 +204,19 @@ export const changeResponseHeaderValue = (idx, newValue) => {
     newValue: newValue
   }
 }
+
+export const CHANGE_REQUEST_BODY = 'CHANGE_REQUEST_BODY'
+export const changeRequestBody = (newValue) => {
+  return {
+    type: CHANGE_REQUEST_BODY,
+    newValue: newValue
+  }
+}
+
+export const CHANGE_RESPONSE_BODY = 'CHANGE_RESPONSE_BODY'
+export const changeResponseBody = (newValue) => {
+  return {
+    type: CHANGE_RESPONSE_BODY,
+    newValue: newValue
+  }
+}

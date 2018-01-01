@@ -24,13 +24,15 @@ class Editor extends React.Component {
         tabSize={2}
         fontSize='11pt'
         style={{ width: 'auto', height: 'auto', flex: 1 }}
-        value={this.props.value} />
+        value={this.props.value}
+        onChange={this.props.onChange} />
     )
   }
 }
 
 Editor.propTypes = {
-  value: PropTypes.string
+  value: PropTypes.string,
+  onChange: PropTypes.func.isRequired
 }
 
 export default Editor

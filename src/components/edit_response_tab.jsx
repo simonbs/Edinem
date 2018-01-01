@@ -50,7 +50,9 @@ class EditResponseTab extends React.Component {
         </div>
         <div className={this.props.classes.bodySeparator} />
         <div className={this.props.classes.bodyContainer}>
-          <Editor value={this.props.body || ""} />
+          <Editor
+          value={this.props.body || ""}
+          onChange={(newValue, e) => this.props.onBodyChange(newValue)} />
         </div>
       </div>
     )
@@ -63,7 +65,8 @@ EditResponseTab.propTypes = {
   onHeaderNameChange: PropTypes.func.isRequired,
   onHeaderValueChange: PropTypes.func.isRequired,
   onDeleteHeaderClick: PropTypes.func.isRequired,
-  onAddHeaderClick: PropTypes.func.isRequired
+  onAddHeaderClick: PropTypes.func.isRequired,
+  onBodyChange: PropTypes.func.isRequired
 }
 
 EditResponseTab.defaultProps = {

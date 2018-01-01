@@ -3,7 +3,8 @@ import {
   changeRequestDetailsTabIndex,
   deleteResponseHeader,
   changeResponseHeaderName,
-  changeResponseHeaderValue
+  changeResponseHeaderValue,
+  changeResponseBody
 } from '../actions'
 import EditResponseTabUI from '../components/edit_response_tab'
 
@@ -33,6 +34,9 @@ const mapDispatchToProps = dispatch => {
     },
     onAddHeaderClick: () => {
       
+    },
+    onBodyChange: (newValue) => {
+      dispatch(changeResponseBody(newValue))
     }
   }
 }

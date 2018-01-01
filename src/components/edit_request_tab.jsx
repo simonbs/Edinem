@@ -67,7 +67,9 @@ class EditRequestTab extends React.Component {
         </div>
         <div className={this.props.classes.bodySeparator} />
         <div className={this.props.classes.bodyContainer}>
-          <Editor value={this.props.body || ""} />
+          <Editor
+          value={this.props.body || ""}
+          onChange={(newValue, e) => this.props.onBodyChange(newValue)} />
         </div>
       </div>
     )
@@ -87,7 +89,8 @@ EditRequestTab.propTypes = {
   onQueryParameterNameChange: PropTypes.func.isRequired,
   onQueryParameterValueChange: PropTypes.func.isRequired,
   onDeleteQueryParameterClick: PropTypes.func.isRequired,
-  onAddQueryParameterClick: PropTypes.func.isRequired
+  onAddQueryParameterClick: PropTypes.func.isRequired,
+  onBodyChange: PropTypes.func.isRequired
 }
 
 EditRequestTab.defaultProps = {

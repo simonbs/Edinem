@@ -13,7 +13,9 @@ import {
   CHANGE_REQUEST_QUERY_PARAMETER_NAME,
   CHANGE_REQUEST_QUERY_PARAMETER_VALUE,
   CHANGE_RESPONSE_HEADER_NAME,
-  CHANGE_RESPONSE_HEADER_VALUE
+  CHANGE_RESPONSE_HEADER_VALUE,
+  CHANGE_REQUEST_BODY,
+  CHANGE_RESPONSE_BODY
 } from '../actions'
 
 const initialState = {
@@ -136,6 +138,20 @@ export default (state = initialState, action) => {
     }
     case CHANGE_RESPONSE_HEADER_VALUE: {
       state.selectedTransaction.response.changeHeaderValue(action.index, action.newValue)
+      return {
+        ...state,
+        selectedTransaction: state.selectedTransaction
+      }
+    }
+    case CHANGE_REQUEST_BODY: {
+      state.selectedTransaction.request.body = action.newValue
+      return {
+        ...state,
+        selectedTransaction: state.selectedTransaction
+      }
+    }
+    case CHANGE_RESPONSE_BODY: {
+      state.selectedTransaction.response.body = action.newValue
       return {
         ...state,
         selectedTransaction: state.selectedTransaction
