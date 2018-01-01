@@ -38,11 +38,15 @@ class EditResponseTab extends React.Component {
   }
 
   promptDeleteHeader = (idx, name, value) => {
-    this.setState({
-      ...this.state,
-      headerDeletionIndex: idx,
-      headerDeletionName: name
-    })
+    if (name == null && value == null) {
+      this.props.onDeleteHeaderClick(idx)
+    } else {
+      this.setState({
+        ...this.state,
+        headerDeletionIndex: idx,
+        headerDeletionName: name
+      })
+    }
   }
 
   deleteHeaderPromptConfirm = () => {
@@ -85,7 +89,11 @@ class EditResponseTab extends React.Component {
         </div>
         <AlertDialog
         open={this.state.headerDeletionIndex != null}
-        title={`Delete header \"${this.state.headerDeletionName}\"?`}
+        title={
+          this.state.headerDeletionName != null
+          ? `Delete header \"${this.state.headerDeletionName}\"?`
+          : `Delete header?`
+        }
         message="Are you sure you want to delete the header?"
         confirmTitle="Delete"
         onConfirm={this.deleteHeaderPromptConfirm}
