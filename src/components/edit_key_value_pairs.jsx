@@ -10,12 +10,9 @@ import AddIcon from 'material-ui-icons/Add'
 import { green } from 'material-ui/colors'
 
 const styles = {
-  headerCell: {
-    fontSize: '11pt'
-  },
   deleteCell: {
     width: '40px'
-  }, 
+  },
   input: {
     fontSize: '11pt'
   },
@@ -42,7 +39,7 @@ class EditKeyValuePairs extends React.Component {
                 <TableCell>
                   <TextField
                     placeholder="Name"
-                    value={key}
+                    defaultValue={key}
                     fullWidth
                     InputProps={{
                       disableUnderline: true,
@@ -54,7 +51,7 @@ class EditKeyValuePairs extends React.Component {
                 <TableCell>
                   <TextField
                     placeholder="Value"
-                    value={this.props.pairs[key]}
+                    defaultValue={this.props.pairs[key]}
                     fullWidth
                     InputProps={{
                       disableUnderline: true,
@@ -63,9 +60,9 @@ class EditKeyValuePairs extends React.Component {
                       }
                     }} />
                 </TableCell>
-                <TableCell className={this.props.classes.deleteCell}>
-                  <IconButton color="default">
-                    <DeleteIcon />
+                <TableCell>
+                  <IconButton color="default" tabIndex="-1">
+                    <DeleteIcon/>
                   </IconButton>
                 </TableCell>
               </TableRow>
@@ -73,8 +70,8 @@ class EditKeyValuePairs extends React.Component {
           </TableBody>
         </Table>
         <div className={this.props.classes.addContainer}>
-          <Button onClick={this.props.onAddClick} className={this.props.classes.addButton}>
-            <AddIcon />
+          <Button onClick={this.props.onAddClick} className={this.props.classes.addButton} tabIndex="-1">
+            <AddIcon/>
             {this.props.addTitle}
           </Button>
         </div>

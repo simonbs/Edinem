@@ -36,8 +36,8 @@ class EditRequestTab extends React.Component {
               value={this.props.detailsTabIndex}
               onChange={this.props.onDetailsTabIndexChange}
               centered>
-              <Tab label="Headers" />
-              <Tab label="Query" />
+              <Tab label="Headers" tabIndex="-1" />
+              <Tab label="Query" tabIndex="-1" />
             </Tabs>
           </AppBar>
           <div className={this.props.classes.tabsContainer}>

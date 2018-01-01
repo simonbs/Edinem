@@ -68,7 +68,8 @@ class EditPage extends React.Component {
           <IconButton
             onClick={this.props.onMenuClick}
             className={this.props.classes.menuButton}
-            color="contrast">
+            color="contrast"
+            tabIndex="-1">
             <MenuIcon />
           </IconButton>
           <InputLabel htmlFor="method"></InputLabel>
@@ -103,8 +104,8 @@ class EditPage extends React.Component {
               value={this.props.requestResponseTabIndex}
               onChange={this.props.onRequestResponseTabIndexChange}
               centered>
-              <Tab label="Request" />
-              <Tab label="Response" />
+              <Tab label="Request" tabIndex="-1" />
+              <Tab label="Response" tabIndex="-1" />
             </Tabs>
           </AppBar>
         </div>

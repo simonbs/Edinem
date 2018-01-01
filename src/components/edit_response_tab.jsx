@@ -31,7 +31,7 @@ class EditResponseTab extends React.Component {
       <div className={this.props.classes.wrapper}>
         <AppBar position="static" color="default" elevation={0}>
           <Tabs value={0} centered>
-            <Tab label="Headers" />
+            <Tab label="Headers" tabIndex="-1" />
           </Tabs>
         </AppBar>
         <div className={this.props.classes.tabsContainer}>
