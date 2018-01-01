@@ -43,6 +43,8 @@ class EditResponseTab extends React.Component {
           <EditKeyValuePairs
           pairs={this.props.headers}
           addTitle="Add header"
+          onKeyChange={this.props.onHeaderNameChange}
+          onValueChange={this.props.onHeaderValueChange}
           onDeleteClick={this.props.onDeleteHeaderClick}
           onAddClick={this.props.onAddHeaderClick} />
         </div>
@@ -57,7 +59,9 @@ class EditResponseTab extends React.Component {
 
 EditResponseTab.propTypes = {
   body: PropTypes.string,
-  headers: PropTypes.object.isRequired,
+  headers: PropTypes.array.isRequired,
+  onHeaderNameChange: PropTypes.func.isRequired,
+  onHeaderValueChange: PropTypes.func.isRequired,
   onDeleteHeaderClick: PropTypes.func.isRequired,
   onAddHeaderClick: PropTypes.func.isRequired
 }

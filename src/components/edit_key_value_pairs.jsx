@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
+import { green } from 'material-ui/colors'
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table'
 import TextField from 'material-ui/TextField'
 import IconButton from 'material-ui/IconButton'
 import Button from 'material-ui/Button'
 import DeleteIcon from 'material-ui-icons/Delete'
 import AddIcon from 'material-ui-icons/Add'
-import { green } from 'material-ui/colors'
 
 const styles = {
   deleteCell: {
@@ -34,12 +34,13 @@ class EditKeyValuePairs extends React.Component {
       <div>
         <Table>
           <TableBody>
-            {Object.keys(this.props.pairs).map((key, idx) => (
-              <TableRow key={`row-${key}-${idx}`}>
+            {this.props.pairs.map((pair, idx) => (
+              <TableRow key={`row-${pair.id}`}>
                 <TableCell>
                   <TextField
                     placeholder="Name"
-                    defaultValue={key}
+                    defaultValue={pair.key}
+                    onChange={(e) => { this.props.onKeyChange(idx, e.target.value) }}
                     fullWidth
                     InputProps={{
                       disableUnderline: true,
@@ -51,7 +52,8 @@ class EditKeyValuePairs extends React.Component {
                 <TableCell>
                   <TextField
                     placeholder="Value"
-                    defaultValue={this.props.pairs[key]}
+                    defaultValue={pair.value}
+                    onChange={(e) => { this.props.onValueChange(idx, e.target.value) }}
                     fullWidth
                     InputProps={{
                       disableUnderline: true,
@@ -62,10 +64,10 @@ class EditKeyValuePairs extends React.Component {
                 </TableCell>
                 <TableCell className={this.props.classes.deleteCell}>
                   <IconButton
-                  color="default"
-                  onClick={() => { this.props.onDeleteClick(idx) }}
-                  tabIndex="-1">
-                    <DeleteIcon/>
+                    color="default"
+                    onClick={() => { this.props.onDeleteClick(idx) }}
+                    tabIndex="-1">
+                    <DeleteIcon />
                   </IconButton>
                 </TableCell>
               </TableRow>
@@ -74,10 +76,10 @@ class EditKeyValuePairs extends React.Component {
         </Table>
         <div className={this.props.classes.addContainer}>
           <Button
-          onClick={this.props.onAddClick}
-          className={this.props.classes.addButton}
-          tabIndex="-1">
-            <AddIcon/>
+            onClick={this.props.onAddClick}
+            className={this.props.classes.addButton}
+            tabIndex="-1">
+            <AddIcon />
             {this.props.addTitle}
           </Button>
         </div>
@@ -87,8 +89,10 @@ class EditKeyValuePairs extends React.Component {
 }
 
 EditKeyValuePairs.propTypes = {
-  pairs: PropTypes.object.isRequired,
+  pairs: PropTypes.array.isRequired,
   addTitle: PropTypes.string.isRequired,
+  onKeyChange: PropTypes.func.isRequired,
+  onValueChange: PropTypes.func.isRequired,
   onDeleteClick: PropTypes.func.isRequired,
   onAddClick: PropTypes.func.isRequired
 }

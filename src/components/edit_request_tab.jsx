@@ -49,6 +49,8 @@ class EditRequestTab extends React.Component {
               <EditKeyValuePairs 
               pairs={this.props.headers}
               addTitle="Add header"
+              onKeyChange={this.props.onHeaderNameChange}
+              onValueChange={this.props.onHeaderValueChange}
               onDeleteClick={this.props.onDeleteHeaderClick}
               onAddClick={this.props.onAddHeaderClick} />
             }
@@ -56,6 +58,8 @@ class EditRequestTab extends React.Component {
               <EditKeyValuePairs
               pairs={this.props.queryParameters}
               addTitle="Add query parameter"
+              onKeyChange={this.props.onQueryParameterNameChange}
+              onValueChange={this.props.onQueryParameterValueChange}
               onDeleteClick={this.props.onDeleteQueryParameterClick}
               onAddClick={this.props.onAddQueryParameterClick} />
             }
@@ -74,10 +78,14 @@ EditRequestTab.propTypes = {
   detailsTabIndex: PropTypes.number.isRequired,
   onDetailsTabIndexChange: PropTypes.func.isRequired,
   body: PropTypes.string,
-  headers: PropTypes.object.isRequired,
-  queryParameters: PropTypes.object.isRequired,
+  headers: PropTypes.array.isRequired,
+  queryParameters: PropTypes.array.isRequired,
+  onHeaderNameChange: PropTypes.func.isRequired,
+  onHeaderValueChange: PropTypes.func.isRequired,
   onDeleteHeaderClick: PropTypes.func.isRequired,
   onAddHeaderClick: PropTypes.func.isRequired,
+  onQueryParameterNameChange: PropTypes.func.isRequired,
+  onQueryParameterValueChange: PropTypes.func.isRequired,
   onDeleteQueryParameterClick: PropTypes.func.isRequired,
   onAddQueryParameterClick: PropTypes.func.isRequired
 }

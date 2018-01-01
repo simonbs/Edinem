@@ -7,7 +7,13 @@ import {
   SELECT_TRANSACTION,
   DELETE_REQUEST_HEADER,
   DELETE_REQUEST_QUERY_PARAMETER,
-  DELETE_RESPONSE_HEADER
+  DELETE_RESPONSE_HEADER,
+  CHANGE_REQUEST_HEADER_NAME,
+  CHANGE_REQUEST_HEADER_VALUE,
+  CHANGE_REQUEST_QUERY_PARAMETER_NAME,
+  CHANGE_REQUEST_QUERY_PARAMETER_VALUE,
+  CHANGE_RESPONSE_HEADER_NAME,
+  CHANGE_RESPONSE_HEADER_VALUE
 } from '../actions'
 
 const initialState = {
@@ -51,14 +57,20 @@ export default (state = initialState, action) => {
         ...state,
         openError: null
       }
-    case SELECT_TRANSACTION: {      
-      let selectedTransaction = null
-      for (const transactionGroup of state.activeSession.transactionGroups) {
-        if (transactionGroup.id == action.transactionGroupId) {
-          selectedTransaction = transactionGroup.transactions[action.transactionIndex]
-          break
-        }
+    case SELECT_TRANSACTION: {
+      // Copy currently selected transaction back into session
+      if (state.selectedTransactionGroupId != null 
+          && state.selectedTransactionIndex != null 
+          && state.selectedTransaction != null) {
+            state.activeSession.replaceTransaction(
+              state.selectedTransactionGroupId,
+              state.selectedTransactionIndex,
+              state.selectedTransaction)
       }
+      // Find new transaction
+      let selectedTransaction = state.activeSession.findTransaction(
+        action.transactionGroupId,
+        action.transactionIndex)
       return {
         ...state,
         selectedTransactionGroupId: action.transactionGroupId,
@@ -67,28 +79,66 @@ export default (state = initialState, action) => {
       }
     }
     case DELETE_REQUEST_HEADER: {
-      console.log(action.index)
-      const selectedTransaction = state.selectedTransaction
-      selectedTransaction.request.deleteHeader(action.index)
+      state.selectedTransaction.request.deleteHeader(action.index)
       return {
         ...state,
-        selectedTransaction: selectedTransaction
+        selectedTransaction: state.selectedTransaction
       }
     }
     case DELETE_REQUEST_QUERY_PARAMETER: {
-      const selectedTransaction = state.selectedTransaction
-      selectedTransaction.request.deleteQueryParameter(action.index)
+      state.selectedTransaction.request.deleteQueryParameter(action.index)
       return {
         ...state,
-        selectedTransaction: selectedTransaction
+        selectedTransaction: state.selectedTransaction
       }
     }
     case DELETE_RESPONSE_HEADER: {
-      const selectedTransaction = state.selectedTransaction
-      selectedTransaction.response.deleteHeader(action.index)
+      state.selectedTransaction.response.deleteHeader(action.index)
       return {
         ...state,
-        selectedTransaction: selectedTransaction
+        selectedTransaction: state.selectedTransaction
+      }
+    }
+    case CHANGE_REQUEST_HEADER_NAME: {
+      state.selectedTransaction.request.changeHeaderName(action.index, action.newValue)
+      return {
+        ...state,
+        selectedTransaction: state.selectedTransaction
+      }
+    }
+    case CHANGE_REQUEST_HEADER_VALUE: {
+      state.selectedTransaction.request.changeHeaderValue(action.index, action.newValue)
+      return {
+        ...state,
+        selectedTransaction: state.selectedTransaction
+      }
+    }
+    case CHANGE_REQUEST_QUERY_PARAMETER_NAME: {
+      state.selectedTransaction.request.changeQueryParameterName(action.index, action.newValue)
+      return {
+        ...state,
+        selectedTransaction: state.selectedTransaction
+      }
+    }
+    case CHANGE_REQUEST_QUERY_PARAMETER_VALUE: {
+      state.selectedTransaction.request.changeQueryParameterValue(action.index, action.newValue)
+      return {
+        ...state,
+        selectedTransaction: state.selectedTransaction
+      }
+    }
+    case CHANGE_RESPONSE_HEADER_NAME: {
+      state.selectedTransaction.response.changeHeaderName(action.index, action.newValue)
+      return {
+        ...state,
+        selectedTransaction: state.selectedTransaction
+      }
+    }
+    case CHANGE_RESPONSE_HEADER_VALUE: {
+      state.selectedTransaction.response.changeHeaderValue(action.index, action.newValue)
+      return {
+        ...state,
+        selectedTransaction: state.selectedTransaction
       }
     }
     default:

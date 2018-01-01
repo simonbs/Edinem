@@ -150,3 +150,57 @@ export const deleteResponseHeader = (idx) => {
     index: idx
   }
 }
+
+export const CHANGE_REQUEST_HEADER_NAME = 'CHANGE_REQUEST_HEADER_NAME'
+export const changeRequestHeaderName = (idx, newValue) => {
+  return {
+    type: CHANGE_REQUEST_HEADER_NAME,
+    index: idx,
+    newValue: newValue
+  }
+}
+
+export const CHANGE_REQUEST_HEADER_VALUE = 'CHANGE_REQUEST_HEADER_VALUE'
+export const changeRequestHeaderValue = (idx, newValue) => {
+  return {
+    type: CHANGE_REQUEST_HEADER_VALUE,
+    index: idx,
+    newValue: newValue
+  }
+}
+
+export const CHANGE_REQUEST_QUERY_PARAMETER_NAME = 'CHANGE_REQUEST_QUERY_PARAMETER_NAME'
+export const changeRequestQueryParameterName = (idx, newValue) => {
+  return {
+    type: CHANGE_REQUEST_QUERY_PARAMETER_NAME,
+    index: idx,
+    newValue: newValue
+  }
+}
+
+export const CHANGE_REQUEST_QUERY_PARAMETER_VALUE = 'CHANGE_REQUEST_QUERY_PARAMETER_VALUE'
+export const changeRequestQueryParameterValue = (idx, newValue) => {
+  return {
+    type: CHANGE_REQUEST_QUERY_PARAMETER_VALUE,
+    index: idx,
+    newValue: newValue
+  }
+}
+
+export const CHANGE_RESPONSE_HEADER_NAME = 'CHANGE_RESPONSE_HEADER_NAME'
+export const changeResponseHeaderName = (idx, newValue) => {
+  return {
+    type: CHANGE_RESPONSE_HEADER_NAME,
+    index: idx,
+    newValue: newValue
+  }
+}
+
+export const CHANGE_RESPONSE_HEADER_VALUE = 'CHANGE_RESPONSE_HEADER_VALUE'
+export const changeResponseHeaderValue = (idx, newValue) => {
+  return {
+    type: CHANGE_RESPONSE_HEADER_VALUE,
+    index: idx,
+    newValue: newValue
+  }
+}
