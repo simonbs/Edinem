@@ -1,4 +1,5 @@
-const { remote, dialog } = require('electron')
+const { remote } = require('electron')
+const { dialog } = require('electron').remote
 const XMLSessionMapper = require('../lib/xml_session_mapper')
 
 export const OPEN_REQUESTS_DRAWER = 'OPEN_REQUESTS_DRAWER'
@@ -65,9 +66,15 @@ export const finalizeOpeningSession = (filePath) => {
 
 export const openSession = () => {
   return (dispatch) => {
-    const properties = ['multiSelections', 'createDirectory', 'openFile']
+    const options = {
+      filters: [{
+        name: 'XML',
+        extensions: ['xml']
+      }],
+      properties: ['openFile']
+    }
     const parentWindow = (process.platform == 'darwin') ? null : BrowserWindow.getFocusedWindow()
-    dialog.showOpenDialog(parentWindow, properties, (f) => {
+    dialog.showOpenDialog(parentWindow, options, (f) => {
       if (f !== undefined) {
         const filePath = f[0]
         dispatch(parseSession(filePath))
@@ -89,9 +96,9 @@ export const parseSession = (filePath) => {
           const transactionGroup = session.transactionGroups[0]
           dispatch(selectTransaction(transactionGroup.id, 0))
           dispatch(toggleTransactionGroupExpanded(transactionGroup.id))
-        }
-        dispatch(finalizeOpeningSession(filePath))        
+        }        
       }
+      dispatch(finalizeOpeningSession(filePath))
     })
   }
 }
