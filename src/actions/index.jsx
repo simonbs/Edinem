@@ -228,3 +228,24 @@ export const changeTransactionMethod = (method) => {
     method: method
   }
 }
+
+export const ADD_REQUEST_HEADER = 'ADD_REQUEST_HEADER'
+export const addRequestHeader = () => {
+  return {
+    type: ADD_REQUEST_HEADER
+  }
+}
+
+export const ADD_REQUEST_QUERY_PARAMETER = 'ADD_REQUEST_QUERY_PARAMETER'
+export const addRequestQueryParameter = () => {
+  return {
+    type: ADD_REQUEST_QUERY_PARAMETER
+  }
+}
+
+export const ADD_RESPONSE_HEADER = 'ADD_RESPONSE_HEADER'
+export const addResponseHeader = () => {
+  return {
+    type: ADD_RESPONSE_HEADER
+  }
+}

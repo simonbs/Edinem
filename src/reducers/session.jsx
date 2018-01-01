@@ -16,7 +16,10 @@ import {
   CHANGE_RESPONSE_HEADER_VALUE,
   CHANGE_REQUEST_BODY,
   CHANGE_RESPONSE_BODY,
-  CHANGE_TRANSACTION_METHOD
+  CHANGE_TRANSACTION_METHOD,
+  ADD_REQUEST_HEADER,
+  ADD_REQUEST_QUERY_PARAMETER,
+  ADD_RESPONSE_HEADER
 } from '../actions'
 
 const initialState = {
@@ -149,6 +152,24 @@ export default (state = initialState, action) => {
       }
     case CHANGE_TRANSACTION_METHOD:
       state.selectedTransaction.method = action.method
+      return {
+        ...state,
+        selectedTransaction: state.selectedTransaction
+      }
+    case ADD_REQUEST_HEADER:
+      state.selectedTransaction.request.addHeader()
+      return {
+        ...state,
+        selectedTransaction: state.selectedTransaction
+      }
+    case ADD_REQUEST_QUERY_PARAMETER:
+      state.selectedTransaction.request.addQueryParameter()
+      return {
+        ...state,
+        selectedTransaction: state.selectedTransaction
+      }
+    case ADD_RESPONSE_HEADER:
+      state.selectedTransaction.response.addHeader()
       return {
         ...state,
         selectedTransaction: state.selectedTransaction

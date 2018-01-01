@@ -1,3 +1,6 @@
+const Header = require('./header')
+const QueryParameter = require('./query_parameter')
+
 function Request(body, headers, queryParameters) {
   this.body = body
   this.headers = headers
@@ -30,6 +33,14 @@ Request.prototype.deleteQueryParameter = function(idx) {
   let queryParameters = this.queryParameters
   queryParameters.splice(idx, 1)
   this.headqueryParametersers = queryParameters
+}
+
+Request.prototype.addHeader = function() {
+  this.headers.push(new Header())
+}
+
+Request.prototype.addQueryParameter = function() {
+  this.queryParameters.push(new QueryParameter())
 }
 
 module.exports = Request

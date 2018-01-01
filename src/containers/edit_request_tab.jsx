@@ -4,9 +4,11 @@ import {
   changeRequestHeaderName,
   changeRequestHeaderValue,
   deleteRequestHeader,
+  addRequestHeader,
   changeRequestQueryParameterName,
   changeRequestQueryParameterValue,
   deleteRequestQueryParameter,
+  addRequestQueryParameter,
   changeRequestBody
 } from '../actions'
 import EditRequestTabUI from '../components/edit_request_tab'
@@ -47,7 +49,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(deleteRequestHeader(idx))
     },
     onAddHeaderClick: () => {
-
+      dispatch(addRequestHeader())
     },
     onQueryParameterNameChange: (idx, newValue) => {
       dispatch(changeRequestQueryParameterName(idx, newValue))
@@ -59,7 +61,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(deleteRequestQueryParameter(idx))
     },
     onAddQueryParameterClick: () => {
-
+      dispatch(addRequestQueryParameter())
     },
     onBodyChange: (newValue) => {
       dispatch(changeRequestBody(newValue))

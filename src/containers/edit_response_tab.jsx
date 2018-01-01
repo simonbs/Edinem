@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { 
   changeRequestDetailsTabIndex,
   deleteResponseHeader,
+  addResponseHeader,
   changeResponseHeaderName,
   changeResponseHeaderValue,
   changeResponseBody
@@ -33,7 +34,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(deleteResponseHeader(idx))
     },
     onAddHeaderClick: () => {
-      
+      dispatch(addResponseHeader())
     },
     onBodyChange: (newValue) => {
       dispatch(changeResponseBody(newValue))
