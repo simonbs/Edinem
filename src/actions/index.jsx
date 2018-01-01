@@ -96,7 +96,7 @@ export const parseSession = (filePath) => {
           const transactionGroup = session.transactionGroups[0]
           dispatch(selectTransaction(transactionGroup.id, 0))
           dispatch(toggleTransactionGroupExpanded(transactionGroup.id))
-        }        
+        }
       }
       dispatch(finalizeOpeningSession(filePath))
     })
@@ -247,5 +247,14 @@ export const ADD_RESPONSE_HEADER = 'ADD_RESPONSE_HEADER'
 export const addResponseHeader = () => {
   return {
     type: ADD_RESPONSE_HEADER
+  }
+}
+
+export const DELETE_TRANSACTION = 'DELETE_TRANSACTION'
+export const deleteTransaction = (transactionGroupId, transactionIndex) => {
+  return {
+    type: DELETE_TRANSACTION,
+    transactionGroupId: transactionGroupId,
+    transactionIndex: transactionIndex
   }
 }

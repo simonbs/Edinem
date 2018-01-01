@@ -2,7 +2,8 @@ import { connect } from 'react-redux'
 import {
   closeRequestsDrawer, 
   selectTransaction, 
-  toggleTransactionGroupExpanded
+  toggleTransactionGroupExpanded,
+  deleteTransaction
 } from '../actions'
 import TransactionsDrawerUI from '../components/transactions_drawer'
 
@@ -27,6 +28,9 @@ const mapDispatchToProps = dispatch => {
     onClickItem: (transactionGroupId, transactionIndex) => {
       dispatch(selectTransaction(transactionGroupId, transactionIndex))
       dispatch(closeRequestsDrawer())
+    },
+    onDeleteTransactionClick: (transactionGroupId, transactionIndex) => {
+      dispatch(deleteTransaction(transactionGroupId, transactionIndex))
     }
   }
 }

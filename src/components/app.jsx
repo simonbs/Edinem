@@ -4,6 +4,7 @@ import { indigo, deepOrange } from 'material-ui/colors'
 import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles'
 import OpenSessionPage from '../containers/open_session_page'
 import EditPage from '../containers/edit_page'
+import TransactionUnavailablePage from '../containers/transaction_unavailable_page'
 import ErrorDialog from '../components/error_dialog'
 import LoadingPage from '../components/loading_page'
 
@@ -22,6 +23,7 @@ class App extends React.Component {
           <div style={{ display: 'flex', flex: '1 1 auto' }}>
             {this.props.showOpenSessionPage && <OpenSessionPage/>}
             {this.props.showEditPage && <EditPage/>}
+            {this.props.showTransactionUnavailablePage && <TransactionUnavailablePage/>}
             {this.props.showLoadingPage && <LoadingPage/>}
             <ErrorDialog 
             open={this.props.showOpenSessionError}
@@ -39,7 +41,8 @@ App.propTypes = {
   showOpenSessionError: PropTypes.bool.isRequired,
   showLoadingPage: PropTypes.bool.isRequired,
   onCloseOpenSessionError: PropTypes.func.isRequired,
-  showEditPage: PropTypes.bool.isRequired
+  showEditPage: PropTypes.bool.isRequired,
+  showTransactionUnavailablePage: PropTypes.bool.isRequired
 }
 
 export default App

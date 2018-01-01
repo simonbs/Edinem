@@ -10,6 +10,7 @@ import DoneIcon from 'material-ui-icons/Done'
 import DeleteIcon from 'material-ui-icons/Delete'
 import ExpandLess from 'material-ui-icons/ExpandLess'
 import ExpandMore from 'material-ui-icons/ExpandMore'
+import AlertDialog from './alert_dialog'
 
 const styles = (theme) => ({
   list: {
@@ -24,6 +25,40 @@ const styles = (theme) => ({
 })
 
 class TransactionsDrawer extends React.Component {
+  state = {
+    transactionDeletionTransactionGroupId: null,
+    transactionDeletionIndex: null,
+    transactionDeletionMethod: null,
+    transactionDeletionPath: null
+  }
+
+  promptDeleteTransaction = (transactionGroupId, transactionIndex, method, name) => {
+    this.setState({
+      ...this.state,
+      transactionDeletionTransactionGroupId: transactionGroupId,
+      transactionDeletionIndex: transactionIndex,
+      transactionDeletionMethod: method,
+      transactionDeletionPath: name
+    })
+  }
+
+  deleteTransactionPromptConfirm = () => {
+    this.props.onDeleteTransactionClick(
+      this.state.transactionDeletionTransactionGroupId,
+      this.state.transactionDeletionIndex)
+    this.setState({
+      ...this.state,
+      transactionDeletionIndex: null
+    })
+  }
+
+  deleteTransactionPromptCancel = () => {
+    this.setState({
+      ...this.state,
+      transactionDeletionIndex: null
+    })
+  }
+
   isTransactionGroupExpanded(transactionGroupId) {
     return this.props.expandedTransactionGroupIds.includes(transactionGroupId)
   }
@@ -35,71 +70,88 @@ class TransactionsDrawer extends React.Component {
 
   render() {
     return (
-      <Drawer
-        anchor="top"
-        open={this.props.open}
-        onClose={this.props.onClose}>
-        <List className={this.props.classes.list}>
-          {this.props.session.transactionGroups.map(transactionGroup => (
-            <div key={`section-${transactionGroup.id}`}>
-              <ListItem button onClick={() => { this.toggleTransactionGroup(transactionGroup.id) }}>
-                <Avatar className={this.props.classes.transactionCount}>
-                  {transactionGroup.transactions.length}
-                </Avatar>
-                <ListItemText
-                  primary={transactionGroup.name}
-                  classes={{
-                    text: this.props.classes.headerText
-                  }} />
-                {this.isTransactionGroupExpanded(transactionGroup.id) ? <ExpandLess /> : <ExpandMore />}
-              </ListItem>
-              <Collapse
-                component="li"
-                in={this.isTransactionGroupExpanded(transactionGroup.id)}
-                timeout="auto"
-                unmountOnExit>
-                <List disablePadding>
-                  {transactionGroup.transactions.map((transaction, idx) => (
-                    <ListItem
-                      button
-                      onClick={() => { this.props.onClickItem(transactionGroup.id, idx) }}
-                      key={`item-${transactionGroup.id}-${idx}`}>
-                      {this.props.selectedTransactionGroupId == transactionGroup.id &&
-                        this.props.selectedTransactionIndex == idx &&
-                        <ListItemIcon>
-                          <DoneIcon />
-                        </ListItemIcon>
-                      }
-                      <ListItemText
-                        inset
-                        primary={`${transaction.method} ${transaction.path}`}
-                        secondary={transactionGroup.name} />                      
-                      <ListItemSecondaryAction>
-                        <IconButton aria-label="Delete">
-                          <DeleteIcon />
-                        </IconButton>
-                      </ListItemSecondaryAction>
-                    </ListItem>
-                  ))}
-                </List>
-              </Collapse>
-            </div>
-          ))}
-        </List>
-      </Drawer>
+      <div>
+        <Drawer
+          anchor="top"
+          open={this.props.open}
+          onClose={this.props.onClose}>
+          <List className={this.props.classes.list}>
+            {this.props.session.transactionGroups.map(transactionGroup => (
+              <div key={`section-${transactionGroup.id}`}>
+                <ListItem button onClick={() => { this.toggleTransactionGroup(transactionGroup.id) }}>
+                  <Avatar className={this.props.classes.transactionCount}>
+                    {transactionGroup.transactions.length}
+                  </Avatar>
+                  <ListItemText
+                    primary={transactionGroup.name}
+                    classes={{
+                      text: this.props.classes.headerText
+                    }} />
+                  {this.isTransactionGroupExpanded(transactionGroup.id) ? <ExpandLess /> : <ExpandMore />}
+                </ListItem>
+                <Collapse
+                  component="li"
+                  in={this.isTransactionGroupExpanded(transactionGroup.id)}
+                  timeout="auto"
+                  unmountOnExit>
+                  <List disablePadding>
+                    {transactionGroup.transactions.map((transaction, idx) => (
+                      <ListItem
+                        button
+                        onClick={() => { this.props.onClickItem(transactionGroup.id, idx) }}
+                        key={`item-${transactionGroup.id}-${idx}`}>
+                        {this.props.selectedTransactionGroupId == transactionGroup.id &&
+                          this.props.selectedTransactionIndex == idx &&
+                          <ListItemIcon>
+                            <DoneIcon />
+                          </ListItemIcon>
+                        }
+                        <ListItemText
+                          inset
+                          primary={`${transaction.method} ${transaction.path}`}
+                          secondary={transactionGroup.name} />
+                        <ListItemSecondaryAction>
+                          <IconButton onClick={() => this.promptDeleteTransaction(
+                            transactionGroup.id,
+                            idx,
+                            transaction.method,
+                            transaction.path
+                          )}>
+                            <DeleteIcon />
+                          </IconButton>
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                    ))}
+                  </List>
+                </Collapse>
+              </div>
+            ))}
+          </List>
+        </Drawer>
+        <AlertDialog
+          open={this.state.transactionDeletionTransactionGroupId != null &&
+                this.state.transactionDeletionIndex != null}
+          title={`Delete \"${this.state.transactionDeletionMethod} ${this.state.transactionDeletionPath}\"?`}
+          message="Are you sure you want to delete the request and response?"
+          confirmTitle="Delete"
+          onConfirm={this.deleteTransactionPromptConfirm}
+          onCancel={this.deleteTransactionPromptCancel}
+          destructiveConfirm />
+      </div>
     )
   }
 }
 
 TransactionsDrawer.propTypes = {
   open: PropTypes.bool.isRequired,
+  session: PropTypes.object.isRequired,
+  expandedTransactionGroupIds: PropTypes.array.isRequired,
+  selectedTransactionGroupId: PropTypes.string,
+  selectedTransactionIndex: PropTypes.number,
   onClose: PropTypes.func.isRequired,
   onClickHeader: PropTypes.func.isRequired,
   onClickItem: PropTypes.func.isRequired,
-  session: PropTypes.object.isRequired,
-  expandedTransactionGroupIds: PropTypes.array.isRequired,
-  selectedTransactionGroupId: PropTypes.string.isRequired,
-  selectedTransactionIndex: PropTypes.number.isRequired,
+  onDeleteTransactionClick: PropTypes.func.isRequired
 }
 
 export default withStyles(styles)(TransactionsDrawer)

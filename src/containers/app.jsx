@@ -5,10 +5,15 @@ const isDev = require('electron-is-dev')
 
 const mapStateToProps = state => {
   return {
-    showOpenSessionPage: !state.session.isOpening && state.session.activeSession == null,    
-    showEditPage: !state.session.isOpening && state.session.activeSession != null,
+    showOpenSessionPage: !state.session.isOpening && state.session.activeSession == null,        
     showLoadingPage: state.session.isOpening,
-    showOpenSessionError: state.session.openError != null
+    showOpenSessionError: state.session.openError != null,
+    showEditPage: !state.session.isOpening 
+      && state.session.activeSession != null 
+      && state.session.selectedTransaction != null,
+    showTransactionUnavailablePage: !state.session.isOpening
+     && state.session.activeSession != null
+     && state.session.selectedTransaction == null
   }
 }
 

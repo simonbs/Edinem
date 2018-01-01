@@ -39,6 +39,10 @@ const styles = (theme) => ({
     paddingRight: 24,
     backgroundColor: theme.palette.primary[500]
   },
+  methodAndURLContainer: {
+    display: 'flex',
+    flexGrow: 1
+  },
   methodSelect: {
     color: 'white',
     fontSize: '18pt',
@@ -56,6 +60,12 @@ const styles = (theme) => ({
   urlInput: {
     color: 'white',
     fontSize: '18pt'
+  },
+  requestAndResponseContainer: {
+    display: 'flex',
+    flexFlow: 'column',
+    width: '100%',
+    height: '100%'
   }
 })
 
@@ -74,33 +84,49 @@ class EditPage extends React.Component {
             tabIndex="-1">
             <MenuIcon />
           </IconButton>
-          <InputLabel htmlFor="method"></InputLabel>
-          <Select
-            value={this.props.method}
-            onChange={(event) => this.props.onMethodChange(event.target.value)}
-            input={<Input name="method" id="method" />}
-            disableUnderline
-            className={this.props.classes.methodSelect}
-            classes={{
-              icon: this.props.classes.methodSelectIcon
-            }}>
-            {methods.map(method => (
-              <MenuItem key={method} value={method}>{method}</MenuItem>
-            ))}
-          </Select>
-          <div className={this.props.classes.urlInputContainer}>
-            <TextField
-              placeholder="URL"
-              value={this.props.url}
-              fullWidth
-              InputProps={{
-                disableUnderline: true,
-                classes: {
-                  input: this.props.classes.urlInput
-                }
-              }} />
-          </div>
+          {this.renderMethodAndURL()}
         </div>
+        {this.renderRequestAndResponse()}
+      </div>
+    )
+  }
+
+  renderMethodAndURL() {
+    return (
+      <div className={this.props.classes.methodAndURLContainer}>
+        <InputLabel htmlFor="method"></InputLabel>
+        <Select
+          value={this.props.method}
+          onChange={(event) => this.props.onMethodChange(event.target.value)}
+          input={<Input name="method" id="method" />}
+          disableUnderline
+          className={this.props.classes.methodSelect}
+          classes={{
+            icon: this.props.classes.methodSelectIcon
+          }}>
+          {methods.map(method => (
+            <MenuItem key={method} value={method}>{method}</MenuItem>
+          ))}
+        </Select>
+        <div className={this.props.classes.urlInputContainer}>
+          <TextField
+            placeholder="URL"
+            value={this.props.url}
+            fullWidth
+            InputProps={{
+              disableUnderline: true,
+              classes: {
+                input: this.props.classes.urlInput
+              }
+            }} />
+        </div>
+      </div>
+    )
+  }
+
+  renderRequestAndResponse() {
+    return (
+      <div className={this.props.classes.requestAndResponseContainer}>
         <div className={this.props.classes.fixedHeight}>
           <AppBar position="static" elevation={0}>
             <Tabs
@@ -122,7 +148,7 @@ class EditPage extends React.Component {
 }
 
 EditPage.propTypes = {
-  requestResponseTabIndex: PropTypes.number.isRequired,  
+  requestResponseTabIndex: PropTypes.number.isRequired,
   method: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   onRequestResponseTabIndexChange: PropTypes.func.isRequired,

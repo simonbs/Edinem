@@ -19,7 +19,8 @@ import {
   CHANGE_TRANSACTION_METHOD,
   ADD_REQUEST_HEADER,
   ADD_REQUEST_QUERY_PARAMETER,
-  ADD_RESPONSE_HEADER
+  ADD_RESPONSE_HEADER,
+  DELETE_TRANSACTION
 } from '../actions'
 
 const initialState = {
@@ -173,6 +174,24 @@ export default (state = initialState, action) => {
       return {
         ...state,
         selectedTransaction: state.selectedTransaction
+      }
+    case DELETE_TRANSACTION:
+      state.activeSession.deleteTransaction(action.transactionGroupId, action.transactionIndex)
+      let isSelectedTransaction = state.selectedTransactionGroupId == action.transactionGroupId
+        && state.selectedTransactionIndex == action.transactionIndex
+      if (isSelectedTransaction) {
+        return {
+          ...state,
+          session: state.activeSession,
+          selectedTransactionGroupId: null,
+          selectedTransactionIndex: null,
+          selectedTransaction: null
+        }
+      } else {
+        return {
+          ...state,
+          session: state.activeSession
+        }
       }
     default:
       return state
