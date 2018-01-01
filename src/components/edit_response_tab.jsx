@@ -7,6 +7,7 @@ import Tabs, { Tab } from 'material-ui/Tabs'
 import Typography from 'material-ui/Typography'
 import EditKeyValuePairs from './edit_key_value_pairs'
 import Editor from './editor'
+import AlertDialog from './alert_dialog'
 
 const styles = {
   wrapper: {
@@ -31,6 +32,34 @@ const styles = {
 }
 
 class EditResponseTab extends React.Component {
+  state = {
+    headerDeletionIndex: null,
+    headerDeletionName: null
+  }
+
+  promptDeleteHeader = (idx, name, value) => {
+    this.setState({
+      ...this.state,
+      headerDeletionIndex: idx,
+      headerDeletionName: name
+    })
+  }
+
+  deleteHeaderPromptConfirm = () => {
+    this.props.onDeleteHeaderClick(this.state.headerDeletionIndex)
+    this.setState({
+      ...this.state,
+      headerDeletionIndex: null
+    })    
+  }
+
+  deleteHeaderPromptCancel = () => {
+    this.setState({
+      ...this.state,
+      headerDeletionIndex: null
+    })
+  }
+
   render() {
     return (
       <div className={this.props.classes.wrapper}>
@@ -45,7 +74,7 @@ class EditResponseTab extends React.Component {
           addTitle="Add header"
           onKeyChange={this.props.onHeaderNameChange}
           onValueChange={this.props.onHeaderValueChange}
-          onDeleteClick={this.props.onDeleteHeaderClick}
+          onDeleteClick={this.promptDeleteHeader}
           onAddClick={this.props.onAddHeaderClick} />
         </div>
         <div className={this.props.classes.bodySeparator} />
@@ -54,6 +83,14 @@ class EditResponseTab extends React.Component {
           value={this.props.body || ""}
           onChange={(newValue, e) => this.props.onBodyChange(newValue)} />
         </div>
+        <AlertDialog
+        open={this.state.headerDeletionIndex != null}
+        title={`Delete header \"${this.state.headerDeletionName}\"?`}
+        message="Are you sure you want to delete the header?"
+        confirmTitle="Delete"
+        onConfirm={this.deleteHeaderPromptConfirm}
+        onCancel={this.deleteHeaderPromptCancel}
+        destructiveConfirm />
       </div>
     )
   }

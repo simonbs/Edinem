@@ -8,6 +8,7 @@ import Typography from 'material-ui/Typography'
 import TextField from 'material-ui/TextField'
 import EditKeyValuePairs from './edit_key_value_pairs'
 import Editor from './editor'
+import AlertDialog from './alert_dialog'
 
 const styles = (theme) => ({
   wrapper: {
@@ -31,6 +32,59 @@ const styles = (theme) => ({
 })
 
 class EditRequestTab extends React.Component {
+  state = {
+    headerDeletionIndex: null,
+    headerDeletionName: null,
+    queryParameterDeletionIndex: null,
+    queryParameterDeletionName: null
+  }
+
+  promptDeleteHeader = (idx, name, value) => {
+    this.setState({
+      ...this.state,
+      headerDeletionIndex: idx,
+      headerDeletionName: name
+    })
+  }
+
+  deleteHeaderPromptConfirm = () => {
+    this.props.onDeleteHeaderClick(this.state.headerDeletionIndex)
+    this.setState({
+      ...this.state,
+      headerDeletionIndex: null
+    })    
+  }
+
+  deleteHeaderPromptCancel = () => {
+    this.setState({
+      ...this.state,
+      headerDeletionIndex: null
+    })
+  }
+
+  promptDeleteQueryParameter = (idx, name, value) => {
+    this.setState({
+      ...this.state,
+      queryParameterDeletionIndex: idx,
+      queryParameterDeletionName: name
+    })
+  }
+
+  deleteQueryParameterPromptConfirm = () => {
+    this.props.onDeleteQueryParameterClick(this.state.queryParameterDeletionIndex)
+    this.setState({
+      ...this.state,
+      queryParameterDeletionIndex: null
+    })    
+  }
+
+  deleteQueryParameterPromptCancel = () => {
+    this.setState({
+      ...this.state,
+      queryParameterDeletionIndex: null
+    })
+  }
+
   render() {
     return (
       <div className={this.props.classes.wrapper}>
@@ -51,7 +105,7 @@ class EditRequestTab extends React.Component {
               addTitle="Add header"
               onKeyChange={this.props.onHeaderNameChange}
               onValueChange={this.props.onHeaderValueChange}
-              onDeleteClick={this.props.onDeleteHeaderClick}
+              onDeleteClick={this.promptDeleteHeader}
               onAddClick={this.props.onAddHeaderClick} />
             }
             {this.props.detailsTabIndex === 1 &&
@@ -60,7 +114,7 @@ class EditRequestTab extends React.Component {
               addTitle="Add query parameter"
               onKeyChange={this.props.onQueryParameterNameChange}
               onValueChange={this.props.onQueryParameterValueChange}
-              onDeleteClick={this.props.onDeleteQueryParameterClick}
+              onDeleteClick={this.promptDeleteQueryParameter}
               onAddClick={this.props.onAddQueryParameterClick} />
             }
           </div>
@@ -71,6 +125,22 @@ class EditRequestTab extends React.Component {
           value={this.props.body || ""}
           onChange={(newValue, e) => this.props.onBodyChange(newValue)} />
         </div>
+        <AlertDialog
+        open={this.state.headerDeletionIndex != null}
+        title={`Delete header \"${this.state.headerDeletionName}\"?`}
+        message="Are you sure you want to delete the header?"
+        confirmTitle="Delete"
+        onConfirm={this.deleteHeaderPromptConfirm}
+        onCancel={this.deleteHeaderPromptCancel}
+        destructiveConfirm />
+        <AlertDialog
+        open={this.state.queryParameterDeletionIndex != null}
+        title={`Delete query parameter \"${this.state.queryParameterDeletionName}\"?`}
+        message="Are you sure you want to delete the query parameter?"
+        confirmTitle="Delete"
+        onConfirm={this.deleteQueryParameterPromptConfirm}
+        onCancel={this.deleteQueryParameterPromptCancel}
+        destructiveConfirm />
       </div>
     )
   }

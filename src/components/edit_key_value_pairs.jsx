@@ -65,7 +65,7 @@ class EditKeyValuePairs extends React.Component {
                 <TableCell className={this.props.classes.deleteCell}>
                   <IconButton
                     color="default"
-                    onClick={() => { this.props.onDeleteClick(idx) }}
+                    onClick={() => { this.props.onDeleteClick(idx, pair.key, pair.value) }}
                     tabIndex="-1">
                     <DeleteIcon />
                   </IconButton>

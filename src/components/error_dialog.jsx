@@ -9,11 +9,7 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog'
 
-class ErrorDialog extends React.Component {
-  handleClose = () => {
-    this.setState({ open: false })
-  }
-
+class ErrorDialog extends React.Component {  
   render() {
     return (
       <Dialog open={this.props.open} onClose={this.props.onClose}>
@@ -36,6 +32,10 @@ ErrorDialog.propTypes = {
   text: PropTypes.string.isRequired,
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired
+}
+
+ErrorDialog.defaultProps = {
+  open: true
 }
 
 export default withStyles()(ErrorDialog)
