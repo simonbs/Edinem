@@ -35,7 +35,7 @@ class EditKeyValuePairs extends React.Component {
         <Table>
           <TableBody>
             {Object.keys(this.props.pairs).map((key, idx) => (
-              <TableRow key={`row-${idx}`}>
+              <TableRow key={`row-${key}-${idx}`}>
                 <TableCell>
                   <TextField
                     placeholder="Name"
@@ -61,7 +61,10 @@ class EditKeyValuePairs extends React.Component {
                     }} />
                 </TableCell>
                 <TableCell>
-                  <IconButton color="default" tabIndex="-1">
+                  <IconButton
+                  color="default"
+                  onClick={() => { this.props.onDeleteClick(idx) }}
+                  tabIndex="-1">
                     <DeleteIcon/>
                   </IconButton>
                 </TableCell>
@@ -70,7 +73,10 @@ class EditKeyValuePairs extends React.Component {
           </TableBody>
         </Table>
         <div className={this.props.classes.addContainer}>
-          <Button onClick={this.props.onAddClick} className={this.props.classes.addButton} tabIndex="-1">
+          <Button
+          onClick={this.props.onAddClick}
+          className={this.props.classes.addButton}
+          tabIndex="-1">
             <AddIcon/>
             {this.props.addTitle}
           </Button>
@@ -83,6 +89,7 @@ class EditKeyValuePairs extends React.Component {
 EditKeyValuePairs.propTypes = {
   pairs: PropTypes.object.isRequired,
   addTitle: PropTypes.string.isRequired,
+  onDeleteClick: PropTypes.func.isRequired,
   onAddClick: PropTypes.func.isRequired
 }
 

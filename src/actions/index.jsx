@@ -126,3 +126,27 @@ export const toggleTransactionGroupExpanded = (transactionGroupId) => {
     transactionGroupId: transactionGroupId
   }
 }
+
+export const DELETE_REQUEST_HEADER = 'DELETE_REQUEST_HEADER'
+export const deleteRequestHeader = (idx) => {
+  return {
+    type: DELETE_REQUEST_HEADER,
+    index: idx
+  }
+}
+
+export const DELETE_REQUEST_QUERY_PARAMETER = 'DELETE_REQUEST_QUERY_PARAMETER'
+export const deleteRequestQueryParameter = (idx) => {
+  return {
+    type: DELETE_REQUEST_QUERY_PARAMETER,
+    index: idx
+  }
+}
+
+export const DELETE_RESPONSE_HEADER = 'DELETE_RESPONSE_HEADER'
+export const deleteResponseHeader = (idx) => {
+  return {
+    type: DELETE_RESPONSE_HEADER,
+    index: idx
+  }
+}

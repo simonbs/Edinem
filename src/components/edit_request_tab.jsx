@@ -49,12 +49,14 @@ class EditRequestTab extends React.Component {
               <EditKeyValuePairs 
               pairs={this.props.headers}
               addTitle="Add header"
+              onDeleteClick={this.props.onDeleteHeaderClick}
               onAddClick={this.props.onAddHeaderClick} />
             }
             {this.props.detailsTabIndex === 1 &&
               <EditKeyValuePairs
               pairs={this.props.queryParameters}
               addTitle="Add query parameter"
+              onDeleteClick={this.props.onDeleteQueryParameterClick}
               onAddClick={this.props.onAddQueryParameterClick} />
             }
           </div>
@@ -74,7 +76,9 @@ EditRequestTab.propTypes = {
   body: PropTypes.string,
   headers: PropTypes.object.isRequired,
   queryParameters: PropTypes.object.isRequired,
+  onDeleteHeaderClick: PropTypes.func.isRequired,
   onAddHeaderClick: PropTypes.func.isRequired,
+  onDeleteQueryParameterClick: PropTypes.func.isRequired,
   onAddQueryParameterClick: PropTypes.func.isRequired
 }
 

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { changeRequestDetailsTabIndex } from '../actions'
+import { changeRequestDetailsTabIndex, deleteResponseHeader } from '../actions'
 import EditResponseTabUI from '../components/edit_response_tab'
 
 const mapStateToProps = state => {
@@ -14,6 +14,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    onDeleteHeaderClick: (idx) => {
+      dispatch(deleteResponseHeader(idx))
+    },
     onAddHeaderClick: () => {
       
     }

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { changeRequestDetailsTabIndex } from '../actions'
+import { changeRequestDetailsTabIndex, deleteRequestHeader } from '../actions'
 import EditRequestTabUI from '../components/edit_request_tab'
 
 const mapStateToProps = state => {
@@ -22,8 +22,14 @@ const mapDispatchToProps = dispatch => {
     onDetailsTabIndexChange: (event, index) => {
       dispatch(changeRequestDetailsTabIndex(index))
     },
+    onDeleteHeaderClick: (idx) => {
+      dispatch(deleteRequestHeader(idx))
+    },
     onAddHeaderClick: () => {
 
+    },
+    onDeleteQueryParameterClick: (idx) => {
+      dispatch(deleteRequestQueryParameter(idx))
     },
     onAddQueryParameterClick: () => {
       
