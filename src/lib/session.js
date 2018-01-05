@@ -55,7 +55,7 @@ Session.prototype.addTransaction = function(transactionGroup) {
     new Response(null, [], '200'))
   let transactions = flattenTransactionGroups(this.transactionGroups).concat([ transaction ])
   this.transactionGroups = groupTransactions(transactions)
-  return transaction.id
+  return transaction
 }
 
 Session.prototype.deleteTransaction = function(transactionId) {

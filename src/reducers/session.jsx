@@ -176,10 +176,12 @@ export default (state = initialState, action) => {
         selectedTransaction: state.selectedTransaction
       }
     case ADD_TRANSACTION:
-      state.activeSession.addTransaction()
+      const transaction = state.activeSession.addTransaction()
       return {
         ...state,
-        session: state.activeSession
+        session: state.activeSession,
+        selectedTransactionId: transaction.id,
+        selectedTransaction: transaction
       }
     case DELETE_TRANSACTION:
       state.activeSession.deleteTransaction(action.transactionId)
