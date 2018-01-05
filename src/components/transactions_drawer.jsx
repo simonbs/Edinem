@@ -75,69 +75,93 @@ class TransactionsDrawer extends React.Component {
           anchor="top"
           open={this.props.open}
           onClose={this.props.onClose}>
-          <List className={this.props.classes.list}>
-            {this.props.session.transactionGroups.map(transactionGroup => (
-              <div key={`section-${transactionGroup.id}`}>
-                <ListItem button onClick={() => { this.toggleTransactionGroup(transactionGroup.id) }}>
-                  <Avatar className={this.props.classes.transactionCount}>
-                    {transactionGroup.transactions.length}
-                  </Avatar>
-                  <ListItemText
-                    primary={transactionGroup.name}
-                    classes={{
-                      text: this.props.classes.headerText
-                    }} />
-                  {this.isTransactionGroupExpanded(transactionGroup.id) ? <ExpandLess /> : <ExpandMore />}
-                </ListItem>
-                <Collapse
-                  component="li"
-                  in={this.isTransactionGroupExpanded(transactionGroup.id)}
-                  timeout="auto"
-                  unmountOnExit>
-                  <List disablePadding>
-                    {transactionGroup.transactions.map((transaction, idx) => (
-                      <ListItem
-                        button
-                        onClick={() => { this.props.onClickItem(transactionGroup.id, idx) }}
-                        key={`item-${transactionGroup.id}-${transaction.id}}`}>
-                        {this.props.selectedTransactionGroupId == transactionGroup.id &&
-                          this.props.selectedTransactionIndex == idx &&
-                          <ListItemIcon>
-                            <DoneIcon />
-                          </ListItemIcon>
-                        }
-                        <ListItemText
-                          inset
-                          primary={this.primaryText(transaction)}
-                          secondary={transactionGroup.name} />
-                        <ListItemSecondaryAction>
-                          <IconButton onClick={() => this.promptDeleteTransaction(
-                            transactionGroup.id,
-                            idx,
-                            transaction.method,
-                            transaction.path
-                          )}>
-                            <DeleteIcon/>
-                          </IconButton>
-                        </ListItemSecondaryAction>
-                      </ListItem>
-                    ))}
-                  </List>
-                </Collapse>
-              </div>
-            ))}
-          </List>
+          {this.renderList()}
         </Drawer>
-        <AlertDialog
-          open={this.state.transactionDeletionTransactionGroupId != null &&
-                this.state.transactionDeletionIndex != null}
-          title={`Delete \"${this.state.transactionDeletionMethod} ${this.state.transactionDeletionPath}\"?`}
-          message="Are you sure you want to delete the request and response?"
-          confirmTitle="Delete"
-          onConfirm={this.deleteTransactionPromptConfirm}
-          onCancel={this.deleteTransactionPromptCancel}
-          destructiveConfirm />
+        {this.renderDeleteDialog()}
       </div>
+    )
+  }
+
+  renderList() {
+    return (
+      <List className={this.props.classes.list}>
+        {this.props.session.transactionGroups.map(transactionGroup => (
+          <div key={`section-${transactionGroup.id}`}>
+            {this.renderHeaderListItem(transactionGroup)}
+            <Collapse
+              component="li"
+              in={this.isTransactionGroupExpanded(transactionGroup.id)}
+              timeout="auto"
+              unmountOnExit>
+              <List disablePadding>
+                {transactionGroup.transactions.map((transaction, idx) => 
+                  this.renderTransactionListItem(transactionGroup, transaction, idx)
+                )}
+              </List>
+            </Collapse>
+          </div>
+        ))}
+      </List>
+    )
+  }
+
+  renderHeaderListItem(transactionGroup) {
+    return (
+      <ListItem button onClick={() => { this.toggleTransactionGroup(transactionGroup.id) }}>
+        <Avatar className={this.props.classes.transactionCount}>
+          {transactionGroup.transactions.length}
+        </Avatar>
+        <ListItemText
+          primary={transactionGroup.name}
+          classes={{
+            text: this.props.classes.headerText
+          }} />
+        {this.isTransactionGroupExpanded(transactionGroup.id) ? <ExpandLess /> : <ExpandMore />}
+      </ListItem>
+    )
+  }
+
+  renderTransactionListItem(transactionGroup, transaction, transactionIndex) {
+    return (
+      <ListItem
+        button
+        onClick={() => { this.props.onClickItem(transactionGroup.id, itransactionIndexdx) }}
+        key={`item-${transactionGroup.id}-${transaction.id}}`}>
+        {this.props.selectedTransactionGroupId == transactionGroup.id &&
+          this.props.selectedTransactionIndex == transactionIndex &&
+          <ListItemIcon>
+            <DoneIcon />
+          </ListItemIcon>
+        }
+        <ListItemText
+          inset
+          primary={this.primaryText(transaction)}
+          secondary={transactionGroup.name} />
+        <ListItemSecondaryAction>
+          <IconButton onClick={() => this.promptDeleteTransaction(
+            transactionGroup.id,
+            transactionIndex,
+            transaction.method,
+            transaction.path
+          )}>
+            <DeleteIcon />
+          </IconButton>
+        </ListItemSecondaryAction>
+      </ListItem>
+    )
+  }
+
+  renderDeleteDialog() {
+    return (
+      <AlertDialog
+        open={this.state.transactionDeletionTransactionGroupId != null &&
+          this.state.transactionDeletionIndex != null}
+        title={`Delete \"${this.state.transactionDeletionMethod} ${this.state.transactionDeletionPath}\"?`}
+        message="Are you sure you want to delete the request and response?"
+        confirmTitle="Delete"
+        onConfirm={this.deleteTransactionPromptConfirm}
+        onCancel={this.deleteTransactionPromptCancel}
+        destructiveConfirm />
     )
   }
 
