@@ -43,4 +43,16 @@ Request.prototype.addQueryParameter = function() {
   this.queryParameters.push(new QueryParameter())
 }
 
+Request.prototype.validHeaders = function() {
+  return this.headers.filter(header => {
+    return header.name != null && header.name != undefined
+  })
+}
+
+Request.prototype.validQueryParameters = function() {
+  return this.queryParameters.filter(queryParameter => {
+    return queryParameter.name != null && queryParameter.name != undefined
+  })
+}
+
 module.exports = Request

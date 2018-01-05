@@ -24,4 +24,10 @@ Response.prototype.addHeader = function() {
   this.headers.push(new Header())
 }
 
+Response.prototype.validHeaders = function() {
+  return this.headers.filter(header => {
+    return header.name != null && header.name != undefined
+  })
+}
+
 module.exports = Response

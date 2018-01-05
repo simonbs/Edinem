@@ -99,7 +99,7 @@ class TransactionsDrawer extends React.Component {
                       <ListItem
                         button
                         onClick={() => { this.props.onClickItem(transactionGroup.id, idx) }}
-                        key={`item-${transactionGroup.id}-${idx}`}>
+                        key={`item-${transactionGroup.id}-${transaction.id}}`}>
                         {this.props.selectedTransactionGroupId == transactionGroup.id &&
                           this.props.selectedTransactionIndex == idx &&
                           <ListItemIcon>
@@ -108,7 +108,7 @@ class TransactionsDrawer extends React.Component {
                         }
                         <ListItemText
                           inset
-                          primary={`${transaction.method} ${transaction.path}`}
+                          primary={this.primaryText(transaction)}
                           secondary={transactionGroup.name} />
                         <ListItemSecondaryAction>
                           <IconButton onClick={() => this.promptDeleteTransaction(
@@ -117,7 +117,7 @@ class TransactionsDrawer extends React.Component {
                             transaction.method,
                             transaction.path
                           )}>
-                            <DeleteIcon />
+                            <DeleteIcon/>
                           </IconButton>
                         </ListItemSecondaryAction>
                       </ListItem>
@@ -139,6 +139,19 @@ class TransactionsDrawer extends React.Component {
           destructiveConfirm />
       </div>
     )
+  }
+
+  primaryText(transaction) {
+    let queryParameters = transaction.request.validQueryParameters()
+    let query = ''
+    if (queryParameters.length > 0) {
+      query += '?'
+      query += queryParameters.map(queryParameter => {
+        let value = (queryParameter.value) ? queryParameter.value : ''
+        return queryParameter.name + "=" + value
+      }).join('&')
+    }
+    return `${transaction.method} ${transaction.path}${query}`
   }
 }
 
