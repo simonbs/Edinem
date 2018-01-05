@@ -1,12 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from 'material-ui/styles'
+import { green } from 'material-ui/colors'
 import Drawer from 'material-ui/Drawer'
 import List, { ListItem, ListItemText, ListItemIcon, ListItemSecondaryAction } from 'material-ui/List'
 import Collapse from 'material-ui/transitions/Collapse'
 import IconButton from 'material-ui/IconButton'
 import Avatar from 'material-ui/Avatar'
 import DoneIcon from 'material-ui-icons/Done'
+import AddIcon from 'material-ui-icons/Add'
 import DeleteIcon from 'material-ui-icons/Delete'
 import ExpandLess from 'material-ui-icons/ExpandLess'
 import ExpandMore from 'material-ui-icons/ExpandMore'
@@ -16,11 +18,11 @@ const styles = (theme) => ({
   list: {
     maxHeight: '600px'
   },
+  add: {
+    backgroundColor: green[500]
+  },
   transactionCount: {
     backgroundColor: theme.palette.primary[500]
-  },
-  headerText: {
-    fontWeight: 'bold'
   }
 })
 
@@ -43,7 +45,7 @@ class TransactionsDrawer extends React.Component {
   }
 
   deleteTransactionPromptConfirm = () => {
-    this.props.onDeleteTransactionClick(
+    this.props.onDeleteTransaction(
       this.state.transactionDeletionTransactionGroupId,
       this.state.transactionDeletionIndex)
     this.setState({
@@ -74,7 +76,7 @@ class TransactionsDrawer extends React.Component {
         <Drawer
           anchor="top"
           open={this.props.open}
-          onClose={this.props.onClose}>
+          onClose={this.props.onClose}>          
           {this.renderList()}
         </Drawer>
         {this.renderDeleteDialog()}
@@ -85,6 +87,7 @@ class TransactionsDrawer extends React.Component {
   renderList() {
     return (
       <List className={this.props.classes.list}>
+        {this.renderAddListItem()}
         {this.props.session.transactionGroups.map(transactionGroup => (
           <div key={`section-${transactionGroup.id}`}>
             {this.renderHeaderListItem(transactionGroup)}
@@ -105,17 +108,24 @@ class TransactionsDrawer extends React.Component {
     )
   }
 
+  renderAddListItem() {
+    return (
+      <ListItem button onClick={this.props.onAddTransaction}>
+        <Avatar className={this.props.classes.add}>
+          <AddIcon/>
+        </Avatar>
+        <ListItemText primary="Add request and response" />
+      </ListItem>
+    )  
+  }
+
   renderHeaderListItem(transactionGroup) {
     return (
       <ListItem button onClick={() => { this.toggleTransactionGroup(transactionGroup.id) }}>
         <Avatar className={this.props.classes.transactionCount}>
           {transactionGroup.transactions.length}
         </Avatar>
-        <ListItemText
-          primary={transactionGroup.name}
-          classes={{
-            text: this.props.classes.headerText
-          }} />
+        <ListItemText primary={transactionGroup.name} />
         {this.isTransactionGroupExpanded(transactionGroup.id) ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
     )
@@ -125,7 +135,7 @@ class TransactionsDrawer extends React.Component {
     return (
       <ListItem
         button
-        onClick={() => { this.props.onClickItem(transactionGroup.id, itransactionIndexdx) }}
+        onClick={() => { this.props.onClickItem(transactionGroup.id, transactionIndex) }}
         key={`item-${transactionGroup.id}-${transaction.id}}`}>
         {this.props.selectedTransactionGroupId == transactionGroup.id &&
           this.props.selectedTransactionIndex == transactionIndex &&
@@ -188,7 +198,8 @@ TransactionsDrawer.propTypes = {
   onClose: PropTypes.func.isRequired,
   onClickHeader: PropTypes.func.isRequired,
   onClickItem: PropTypes.func.isRequired,
-  onDeleteTransactionClick: PropTypes.func.isRequired
+  onAddTransaction: PropTypes.func.isRequired,
+  onDeleteTransaction: PropTypes.func.isRequired
 }
 
 export default withStyles(styles)(TransactionsDrawer)

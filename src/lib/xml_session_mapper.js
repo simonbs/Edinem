@@ -8,6 +8,7 @@ const Response = require('./response')
 const Header = require('./header')
 const QueryParameter = require('./query_parameter')
 const URLParser = require('./url_parser')
+const groupTransactions = require('./group_transactions')
 
 function XMLSessionMapper() {}
 
@@ -28,21 +29,6 @@ function mapXMLSession(xmlSession) {
   const transactions = xmlSession['transaction'].map(mapXMLTransaction)
   const transactionGroups = groupTransactions(transactions)
   return new Session(transactionGroups)
-}
-
-function groupTransactions(transactions) {
-  const groups = {}
-  for (const transaction of transactions) {
-    const baseURL = transaction.getBaseURL()
-    if (baseURL in groups) {
-      groups[baseURL].push(transaction)
-    } else {
-      groups[baseURL] = [ transaction ]
-    }
-  }
-  return Object.keys(groups).map((key) => {
-    return new TransactionGroup(key, groups[key])
-  })
 }
 
 function mapXMLTransaction(xmlTransaction) {

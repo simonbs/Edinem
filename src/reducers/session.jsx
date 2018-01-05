@@ -21,6 +21,7 @@ import {
   ADD_REQUEST_HEADER,
   ADD_REQUEST_QUERY_PARAMETER,
   ADD_RESPONSE_HEADER,
+  ADD_TRANSACTION,
   DELETE_TRANSACTION
 } from '../actions'
 
@@ -181,6 +182,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         selectedTransaction: state.selectedTransaction
+      }
+    case ADD_TRANSACTION:
+      state.activeSession.addTransaction()
+      return {
+        ...state,
+        session: state.activeSession
       }
     case DELETE_TRANSACTION:
       state.activeSession.deleteTransaction(action.transactionGroupId, action.transactionIndex)

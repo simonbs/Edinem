@@ -3,6 +3,7 @@ import {
   closeRequestsDrawer, 
   selectTransaction, 
   toggleTransactionGroupExpanded,
+  addTransaction,
   deleteTransaction
 } from '../actions'
 import TransactionsDrawerUI from '../components/transactions_drawer'
@@ -29,7 +30,10 @@ const mapDispatchToProps = dispatch => {
       dispatch(selectTransaction(transactionGroupId, transactionIndex))
       dispatch(closeRequestsDrawer())
     },
-    onDeleteTransactionClick: (transactionGroupId, transactionIndex) => {
+    onAddTransaction: () => {
+      dispatch(addTransaction())
+    },
+    onDeleteTransaction: (transactionGroupId, transactionIndex) => {
       dispatch(deleteTransaction(transactionGroupId, transactionIndex))
     }
   }
