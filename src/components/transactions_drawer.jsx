@@ -182,7 +182,7 @@ class TransactionsDrawer extends React.Component {
         return queryParameter.name + "=" + value
       }).join('&')
     }
-    return `${transaction.method} ${transaction.path}${query}`
+    return `${transaction.method} ${transaction.path}${query} (${transaction.response.statusCode})`
   }
 }
 
