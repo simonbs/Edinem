@@ -162,8 +162,7 @@ class TransactionsDrawer extends React.Component {
   renderDeleteDialog() {
     return (
       <AlertDialog
-        open={this.state.transactionDeletionTransactionGroupId != null &&
-          this.state.transactionDeletionIndex != null}
+        open={this.state.transactionDeletionId != null}
         title={`Delete \"${this.state.transactionDeletionMethod} ${this.state.transactionDeletionPath}\"?`}
         message="Are you sure you want to delete the request and response?"
         confirmTitle="Delete"

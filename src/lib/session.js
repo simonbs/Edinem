@@ -59,7 +59,9 @@ Session.prototype.addTransaction = function(transactionGroup) {
 }
 
 Session.prototype.deleteTransaction = function(transactionId) {
-  for (const transactionGroup of this.transactionGroups) {
+  let transactionGroupIndexForDeletion = null
+  for (const transactionGroupIdx in this.transactionGroups) {
+    const transactionGroup = this.transactionGroups[transactionGroupIdx]
     const idx = transactionGroup.transactions.findIndex(transaction => {
       return transaction.id == transactionId
     })
@@ -67,12 +69,13 @@ Session.prototype.deleteTransaction = function(transactionId) {
       transactionGroup.transactions.splice(idx, 1)
       // Remove transaction group if it is empty
       if (transactionGroup.transactions.length == 0) {
-        this.transactionGroups = this.transactionGroups.filter((transactionGroup) => {
-          return transactionGroup.id != transactionGroupId
-        })
+        transactionGroupIndexForDeletion = transactionGroupIdx
       }
       break
     }
+  }
+  if (transactionGroupIndexForDeletion != null) {
+    this.transactionGroups.splice(transactionGroupIndexForDeletion, 1)
   }
 }
 
