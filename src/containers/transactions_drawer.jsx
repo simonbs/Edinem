@@ -1,8 +1,9 @@
 import { connect } from 'react-redux'
 import {
   closeRequestsDrawer, 
+  expandTransactionGroup,
+  collapseTransactionGroup,
   selectTransaction, 
-  toggleTransactionGroupExpanded,
   addTransaction,
   deleteTransaction
 } from '../actions'
@@ -13,8 +14,7 @@ const mapStateToProps = state => {
     open: state.transactionsDrawer.open,
     session: state.session.activeSession,
     expandedTransactionGroupIds: state.transactionsDrawer.expandedTransactionGroupIds,
-    selectedTransactionGroupId: state.session.selectedTransactionGroupId,
-    selectedTransactionIndex: state.session.selectedTransactionIndex
+    selectedTransactionId: state.session.selectedTransactionId
   }
 }
 
@@ -23,18 +23,21 @@ const mapDispatchToProps = dispatch => {
     onClose: () => {
       dispatch(closeRequestsDrawer())
     },
-    onClickHeader: (transactionGroupId) => {
-      dispatch(toggleTransactionGroupExpanded(transactionGroupId))
+    onExpandTransactionGroup: (transactionGroupId) => {
+      dispatch(expandTransactionGroup(transactionGroupId))
     },
-    onClickItem: (transactionGroupId, transactionIndex) => {
-      dispatch(selectTransaction(transactionGroupId, transactionIndex))
+    onCollapseTransactionGroup: (transactionGroupId) => {
+      dispatch(collapseTransactionGroup(transactionGroupId))
+    },
+    onSelectTransaction: (transactionId) => {
+      dispatch(selectTransaction(transactionId))
       dispatch(closeRequestsDrawer())
     },
     onAddTransaction: () => {
       dispatch(addTransaction())
     },
-    onDeleteTransaction: (transactionGroupId, transactionIndex) => {
-      dispatch(deleteTransaction(transactionGroupId, transactionIndex))
+    onDeleteTransaction: (transactionId) => {
+      dispatch(deleteTransaction(transactionId))
     }
   }
 }

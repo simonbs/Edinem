@@ -3,7 +3,8 @@ import {
   CLOSE_REQUESTS_DRAWER,
   SUCCEEDED_OPENING_SESSION,
   FAILED_OPENING_SESSION,
-  TOGGLE_TRANSACTION_GROUP_EXPANDED
+  EXPAND_TRANSACTION_GROUP,
+  COLLAPSE_TRANSACTION_GROUP
 } from '../actions'
 
 const initialState = {
@@ -33,18 +34,28 @@ export default (state = initialState, action) => {
         ...state,
         expandedTransactionGroupIds: []
       }
-    case TOGGLE_TRANSACTION_GROUP_EXPANDED:
-      const expandedTransactionGroupIds = state.expandedTransactionGroupIds
+    case EXPAND_TRANSACTION_GROUP: {
+      let expandedTransactionGroupIds = state.expandedTransactionGroupIds
       const idx = expandedTransactionGroupIds.indexOf(action.transactionGroupId)
       if (idx == -1) {
         expandedTransactionGroupIds.push(action.transactionGroupId)
-      } else {
+      }
+      return {
+        ...state,
+        expandedTransactionGroupIds: expandedTransactionGroupIds
+      }
+    }
+    case COLLAPSE_TRANSACTION_GROUP: {
+      let expandedTransactionGroupIds = state.expandedTransactionGroupIds
+      const idx = expandedTransactionGroupIds.indexOf(action.transactionGroupId)
+      if (idx != -1) {        
         expandedTransactionGroupIds.splice(idx, 1)
       }
       return {
         ...state,
         expandedTransactionGroupIds: expandedTransactionGroupIds
       }
+    }
     default:
       return state
   }

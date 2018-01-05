@@ -94,8 +94,9 @@ export const parseSession = (filePath) => {
         dispatch(succeededOpeningSession(session))
         if (session.transactionGroups.length > 0) {
           const transactionGroup = session.transactionGroups[0]
-          dispatch(selectTransaction(transactionGroup.id, 0))
-          dispatch(toggleTransactionGroupExpanded(transactionGroup.id))
+          const transaction = transactionGroup.transactions[0]
+          dispatch(selectTransaction(transaction.id))
+          dispatch(expandTransactionGroup(transactionGroup.id))
         }
       }
       dispatch(finalizeOpeningSession(filePath))
@@ -111,18 +112,25 @@ export const closeOpenSessionError = () => {
 }
 
 export const SELECT_TRANSACTION = 'SELECT_TRANSACTION'
-export const selectTransaction = (transactionGroupId, transactionIndex) => {
+export const selectTransaction = (transactionId) => {
   return {
     type: SELECT_TRANSACTION,
-    transactionGroupId: transactionGroupId,
-    transactionIndex: transactionIndex
+    transactionId: transactionId
   }
 }
 
-export const TOGGLE_TRANSACTION_GROUP_EXPANDED = 'TOGGLE_TRANSACTION_GROUP_EXPANDED'
-export const toggleTransactionGroupExpanded = (transactionGroupId) => {
+export const EXPAND_TRANSACTION_GROUP = 'EXPAND_TRANSACTION_GROUP'
+export const expandTransactionGroup = (transactionGroupId) => {
   return {
-    type: TOGGLE_TRANSACTION_GROUP_EXPANDED,
+    type: EXPAND_TRANSACTION_GROUP,
+    transactionGroupId: transactionGroupId
+  }
+}
+
+export const COLLAPSE_TRANSACTION_GROUP = 'COLLAPSE_TRANSACTION_GROUP'
+export const collapseTransactionGroup = (transactionGroupId) => {
+  return {
+    type: COLLAPSE_TRANSACTION_GROUP,
     transactionGroupId: transactionGroupId
   }
 }
@@ -266,10 +274,9 @@ export const addTransaction = () => {
 }
 
 export const DELETE_TRANSACTION = 'DELETE_TRANSACTION'
-export const deleteTransaction = (transactionGroupId, transactionIndex) => {
+export const deleteTransaction = (transactionId) => {
   return {
     type: DELETE_TRANSACTION,
-    transactionGroupId: transactionGroupId,
-    transactionIndex: transactionIndex
+    transactionId: transactionId
   }
 }

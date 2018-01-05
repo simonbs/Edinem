@@ -29,8 +29,7 @@ const initialState = {
   isOpening: false,
   activeSession: null,
   openError: null,
-  selectedTransactionGroupId: null,
-  selectedTransactionIndex: null,
+  selectedTransactionId: null,
   selectedTransaction: null
 }
 
@@ -52,8 +51,7 @@ export default (state = initialState, action) => {
         ...state,
         activeSession: null,
         openError: action.error,
-        selectedTransactionGroupId: null,
-        selectedTransactionIndex: null,
+        selectedTransactionId: null,
         selectedTransaction: null
       }
     case FINALIZE_OPENING_SESSION:
@@ -68,22 +66,16 @@ export default (state = initialState, action) => {
       }
     case SELECT_TRANSACTION: {
       // Copy currently selected transaction back into session
-      if (state.selectedTransactionGroupId != null
-        && state.selectedTransactionIndex != null
-        && state.selectedTransaction != null) {
+      if (state.selectedTransactionId != null && state.selectedTransaction != null) {
         state.activeSession.replaceTransaction(
-          state.selectedTransactionGroupId,
-          state.selectedTransactionIndex,
+          state.selectedTransactionId,
           state.selectedTransaction)
       }
       // Find new transaction
-      let selectedTransaction = state.activeSession.findTransaction(
-        action.transactionGroupId,
-        action.transactionIndex)
+      let selectedTransaction = state.activeSession.findTransaction(action.transactionId)
       return {
         ...state,
-        selectedTransactionGroupId: action.transactionGroupId,
-        selectedTransactionIndex: action.transactionIndex,
+        selectedTransactionId: action.transactionId,
         selectedTransaction: selectedTransaction
       }
     }
@@ -190,15 +182,13 @@ export default (state = initialState, action) => {
         session: state.activeSession
       }
     case DELETE_TRANSACTION:
-      state.activeSession.deleteTransaction(action.transactionGroupId, action.transactionIndex)
-      let isSelectedTransaction = state.selectedTransactionGroupId == action.transactionGroupId
-        && state.selectedTransactionIndex == action.transactionIndex
+      state.activeSession.deleteTransaction(action.transactionId)
+      let isSelectedTransaction = state.selectedTransactionId == action.transactionId
       if (isSelectedTransaction) {
         return {
           ...state,
           session: state.activeSession,
-          selectedTransactionGroupId: null,
-          selectedTransactionIndex: null,
+          selectedTransactionId: null,
           selectedTransaction: null
         }
       } else {

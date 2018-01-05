@@ -9,48 +9,62 @@ function Session(transactionGroups) {
   this.transactionGroups = transactionGroups
 }
 
-Session.prototype.findTransaction = function(transactionGroupId, transactionIndex) {
+Session.prototype.findTransaction = function(transactionId) {
   for (const transactionGroup of this.transactionGroups) {
-    if (transactionGroup.id == transactionGroupId) {
-      return transactionGroup.transactions[transactionIndex]
+    const idx = transactionGroup.transactions.findIndex(transaction => {
+      return transaction.id == transactionId
+    })    
+    if (idx != -1) {      
+      return transactionGroup.transactions[idx]
     }
   }
 }
 
-Session.prototype.replaceTransaction = function(transactionGroupId, transactionIndex, newTransaction) {
+Session.prototype.replaceTransaction = function(transactionId, newTransaction) {
   for (const transactionGroup of this.transactionGroups) {
-    if (transactionGroup.id == transactionGroupId) {
-      transactionGroup.transactions[transactionIndex] = newTransaction
+    const idx = transactionGroup.transactions.findIndex(transaction => {
+      return transaction.id == transactionId
+    })
+    if (idx != -1) {      
+      transactionGroup.transactions[idx] = newTransaction
       break
     }
   }
 }
 
-Session.prototype.addTransaction = function() {
+Session.prototype.addTransaction = function(transactionGroup) {
   let protocol = 'http'
   let host = 'example.com'
-  const hasTransactionGroup =  this.transactionGroups.length > 0
-  if (hasTransactionGroup) {
+  let port = 80
+  if (transactionGroup != null) {
+    protocol = transactionGroup.transactions[0].protocol
+    host = transactionGroup.transactions[0].host
+    port = transactionGroup.transactions[0].port
+  } else if (this.transactionGroups.length > 0) {
     protocol = this.transactionGroups[0].transactions[0].protocol
     host = this.transactionGroups[0].transactions[0].host
+    port = this.transactionGroups[0].transactions[0].port
   }
   const transaction = new Transaction(
     'GET',
     protocol,
     host,
-    80,
+    port,
     '/',
     new Request(null, [], []),
-    new Response(null, [], 200))
+    new Response(null, [], '200'))
   let transactions = flattenTransactionGroups(this.transactionGroups).concat([ transaction ])
   this.transactionGroups = groupTransactions(transactions)
   return transaction.id
 }
 
-Session.prototype.deleteTransaction = function(transactionGroupId, transactionIndex) {
+Session.prototype.deleteTransaction = function(transactionId) {
   for (const transactionGroup of this.transactionGroups) {
-    if (transactionGroup.id == transactionGroupId) {
-      transactionGroup.transactions.splice(transactionIndex, 1)
+    const idx = transactionGroup.transactions.findIndex(transaction => {
+      return transaction.id == transactionId
+    })
+    if (idx != -1) {
+      transactionGroup.transactions.splice(idx, 1)
       // Remove transaction group if it is empty
       if (transactionGroup.transactions.length == 0) {
         this.transactionGroups = this.transactionGroups.filter((transactionGroup) => {

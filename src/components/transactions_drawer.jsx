@@ -28,36 +28,32 @@ const styles = (theme) => ({
 
 class TransactionsDrawer extends React.Component {
   state = {
-    transactionDeletionTransactionGroupId: null,
-    transactionDeletionIndex: null,
+    transactionDeletionId: null,
     transactionDeletionMethod: null,
     transactionDeletionPath: null
   }
 
-  promptDeleteTransaction = (transactionGroupId, transactionIndex, method, name) => {
+  promptDeleteTransaction = (transactionId, method, name) => {
     this.setState({
       ...this.state,
-      transactionDeletionTransactionGroupId: transactionGroupId,
-      transactionDeletionIndex: transactionIndex,
+      transactionDeletionId: transactionId,
       transactionDeletionMethod: method,
       transactionDeletionPath: name
     })
   }
 
   deleteTransactionPromptConfirm = () => {
-    this.props.onDeleteTransaction(
-      this.state.transactionDeletionTransactionGroupId,
-      this.state.transactionDeletionIndex)
+    this.props.onDeleteTransaction(this.state.transactionDeletionId)
     this.setState({
       ...this.state,
-      transactionDeletionIndex: null
+      transactionDeletionId: null
     })
   }
 
   deleteTransactionPromptCancel = () => {
     this.setState({
       ...this.state,
-      transactionDeletionIndex: null
+      transactionDeletionId: null
     })
   }
 
@@ -66,7 +62,11 @@ class TransactionsDrawer extends React.Component {
   }
 
   toggleTransactionGroup(transactionGroupId) {
-    this.props.onClickHeader(transactionGroupId)
+    if (this.isTransactionGroupExpanded(transactionGroupId)) {
+      this.props.onCollapseTransactionGroup(transactionGroupId)
+    } else {
+      this.props.onExpandTransactionGroup(transactionGroupId)
+    }
     this.forceUpdate()
   }
 
@@ -121,7 +121,7 @@ class TransactionsDrawer extends React.Component {
 
   renderHeaderListItem(transactionGroup) {
     return (
-      <ListItem button onClick={() => { this.toggleTransactionGroup(transactionGroup.id) }}>
+      <ListItem button onClick={() => this.toggleTransactionGroup(transactionGroup.id)}>
         <Avatar className={this.props.classes.transactionCount}>
           {transactionGroup.transactions.length}
         </Avatar>
@@ -131,14 +131,13 @@ class TransactionsDrawer extends React.Component {
     )
   }
 
-  renderTransactionListItem(transactionGroup, transaction, transactionIndex) {
+  renderTransactionListItem(transactionGroup, transaction) {
     return (
       <ListItem
         button
-        onClick={() => { this.props.onClickItem(transactionGroup.id, transactionIndex) }}
+        onClick={() => { this.props.onSelectTransaction(transaction.id) }}
         key={`item-${transactionGroup.id}-${transaction.id}}`}>
-        {this.props.selectedTransactionGroupId == transactionGroup.id &&
-          this.props.selectedTransactionIndex == transactionIndex &&
+        {this.props.selectedTransactionId == transaction.id &&
           <ListItemIcon>
             <DoneIcon />
           </ListItemIcon>
@@ -149,8 +148,7 @@ class TransactionsDrawer extends React.Component {
           secondary={transactionGroup.name} />
         <ListItemSecondaryAction>
           <IconButton onClick={() => this.promptDeleteTransaction(
-            transactionGroup.id,
-            transactionIndex,
+            transaction.id,
             transaction.method,
             transaction.path
           )}>
@@ -193,11 +191,11 @@ TransactionsDrawer.propTypes = {
   open: PropTypes.bool.isRequired,
   session: PropTypes.object.isRequired,
   expandedTransactionGroupIds: PropTypes.array.isRequired,
-  selectedTransactionGroupId: PropTypes.string,
-  selectedTransactionIndex: PropTypes.number,
+  selectedTransactionId: PropTypes.string,
   onClose: PropTypes.func.isRequired,
-  onClickHeader: PropTypes.func.isRequired,
-  onClickItem: PropTypes.func.isRequired,
+  onExpandTransactionGroup: PropTypes.func.isRequired,
+  onCollapseTransactionGroup: PropTypes.func.isRequired,
+  onSelectTransaction: PropTypes.func.isRequired,
   onAddTransaction: PropTypes.func.isRequired,
   onDeleteTransaction: PropTypes.func.isRequired
 }
