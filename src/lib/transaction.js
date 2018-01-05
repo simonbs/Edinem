@@ -1,4 +1,7 @@
+const uuid = require('uuid/v1')
+
 function Transaction(method, protocol, host, port, path, request, response) {
+  this.id = uuid()
   this.method = method
   this.protocol = protocol
   this.host = host

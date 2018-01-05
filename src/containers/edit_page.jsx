@@ -2,7 +2,8 @@ import { connect } from 'react-redux'
 import { 
   changeRequestResponseTabIndex,
   openRequestsDrawer,
-  changeTransactionMethod
+  changeTransactionMethod,
+  changeResponseStatusCode
 } from '../actions'
 import EditPageUI from '../components/edit_page'
 
@@ -10,8 +11,10 @@ const mapStateToProps = state => {
   return {
     requestResponseTabIndex: state.editPage.requestResponseTabIndex,
     requestDetailsTabIndex: state.editPage.requestDetailsTabIndex,
+    transactionId: state.session.selectedTransaction.id,
     method: state.session.selectedTransaction.method,
-    url: state.session.selectedTransaction.getFullURL()
+    url: state.session.selectedTransaction.getFullURL(),
+    statusCode: state.session.selectedTransaction.response.statusCode
   }
 }
 
@@ -28,6 +31,9 @@ const mapDispatchToProps = dispatch => {
     },
     onMethodChange: (method) => {
       dispatch(changeTransactionMethod(method))
+    },
+    onStatusCodeChange: (statusCode) => {
+      dispatch(changeResponseStatusCode(statusCode))
     }
   }
 }

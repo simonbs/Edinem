@@ -39,7 +39,7 @@ const styles = (theme) => ({
     paddingRight: 24,
     backgroundColor: theme.palette.primary[500]
   },
-  methodAndURLContainer: {
+  methodURLAndStatusCodeContainer: {
     display: 'flex',
     flexGrow: 1
   },
@@ -55,11 +55,19 @@ const styles = (theme) => ({
   urlInputContainer: {
     display: 'flex',
     flexGrow: 1,
-    marginLeft: 10
-  },
+    marginLeft: 10,
+    marginRight: 40
+  },  
   urlInput: {
     color: 'white',
     fontSize: '18pt'
+  },
+  statusCodeLabel: {
+    color: 'white'
+  },
+  statusCodeInput: {
+    color: 'white',
+    width: '40px'
   },
   requestAndResponseContainer: {
     display: 'flex',
@@ -84,16 +92,18 @@ class EditPage extends React.Component {
             tabIndex="-1">
             <MenuIcon />
           </IconButton>
-          {this.renderMethodAndURL()}
+          {this.renderMethodURLAndStatusCode()}
         </div>
         {this.renderRequestAndResponse()}
       </div>
     )
   }
 
-  renderMethodAndURL() {
+  renderMethodURLAndStatusCode() {
     return (
-      <div className={this.props.classes.methodAndURLContainer}>
+      <div
+      key={this.props.transactionId}
+      className={this.props.classes.methodURLAndStatusCodeContainer}>
         <InputLabel htmlFor="method"></InputLabel>
         <Select
           value={this.props.method}
@@ -111,12 +121,26 @@ class EditPage extends React.Component {
         <div className={this.props.classes.urlInputContainer}>
           <TextField
             placeholder="URL"
-            value={this.props.url}
-            fullWidth
+            defaultValue={this.props.url}
+            fullWidth            
             InputProps={{
               disableUnderline: true,
               classes: {
                 input: this.props.classes.urlInput
+              }
+            }} />
+        </div>
+        <div className={this.props.classes.statusCodeContainer}>
+          <TextField
+            label="Status"
+            placeholder="200"
+            defaultValue={this.props.statusCode}
+            labelClassName={this.props.classes.statusCodeLabel}
+            onChange={(e) => this.props.onStatusCodeChange(e.target.value)}
+            InputProps={{
+              disableUnderline: true,
+              classes: {
+                input: this.props.classes.statusCodeInput
               }
             }} />
         </div>
@@ -148,12 +172,15 @@ class EditPage extends React.Component {
 }
 
 EditPage.propTypes = {
+  transactionId: PropTypes.string.isRequired,
   requestResponseTabIndex: PropTypes.number.isRequired,
   method: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
+  statusCode: PropTypes.string.isRequired,
   onRequestResponseTabIndexChange: PropTypes.func.isRequired,
   onMenuClick: PropTypes.func.isRequired,
-  onMethodChange: PropTypes.func.isRequired
+  onMethodChange: PropTypes.func.isRequired,
+  onStatusCodeChange: PropTypes.func.isRequired
 }
 
 export default withStyles(styles)(EditPage)

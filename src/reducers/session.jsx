@@ -16,6 +16,7 @@ import {
   CHANGE_RESPONSE_HEADER_VALUE,
   CHANGE_REQUEST_BODY,
   CHANGE_RESPONSE_BODY,
+  CHANGE_RESPONSE_STATUS_CODE,
   CHANGE_TRANSACTION_METHOD,
   ADD_REQUEST_HEADER,
   ADD_REQUEST_QUERY_PARAMETER,
@@ -140,13 +141,19 @@ export default (state = initialState, action) => {
         selectedTransaction: state.selectedTransaction
       }
     case CHANGE_REQUEST_BODY:
-      state.selectedTransaction.request.body = action.newValue
+      state.selectedTransaction.request.body = action.body
       return {
         ...state,
         selectedTransaction: state.selectedTransaction
       }
     case CHANGE_RESPONSE_BODY:
-      state.selectedTransaction.response.body = action.newValue
+      state.selectedTransaction.response.body = action.body
+      return {
+        ...state,
+        selectedTransaction: state.selectedTransaction
+      }
+    case CHANGE_RESPONSE_STATUS_CODE:
+      state.selectedTransaction.response.statusCode = action.statusCode
       return {
         ...state,
         selectedTransaction: state.selectedTransaction

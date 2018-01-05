@@ -206,18 +206,26 @@ export const changeResponseHeaderValue = (idx, newValue) => {
 }
 
 export const CHANGE_REQUEST_BODY = 'CHANGE_REQUEST_BODY'
-export const changeRequestBody = (newValue) => {
+export const changeRequestBody = (body) => {
   return {
     type: CHANGE_REQUEST_BODY,
-    newValue: newValue
+    body: body
   }
 }
 
 export const CHANGE_RESPONSE_BODY = 'CHANGE_RESPONSE_BODY'
-export const changeResponseBody = (newValue) => {
+export const changeResponseBody = (body) => {
   return {
     type: CHANGE_RESPONSE_BODY,
-    newValue: newValue
+    body: body
+  }
+}
+
+export const CHANGE_RESPONSE_STATUS_CODE = 'CHANGE_RESPONSE_STATUS_CODE'
+export const changeResponseStatusCode = (statusCode) => {
+  return {
+    type: CHANGE_RESPONSE_STATUS_CODE,
+    statusCode: statusCode
   }
 }
 

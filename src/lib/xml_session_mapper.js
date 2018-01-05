@@ -67,7 +67,8 @@ function mapXMLRequest(xmlRequest, queryString) {
 function mapXMLResponse(xmlResponse) {
   return new Response(
     bodyFromXMLTransactionPart(xmlResponse),
-    headersFromXMLTransactionPart(xmlResponse))
+    headersFromXMLTransactionPart(xmlResponse),
+    xmlResponse['$']['status'])
 }
 
 function bodyFromXMLTransactionPart(xmlTransactionPart) {

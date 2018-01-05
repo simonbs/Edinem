@@ -1,8 +1,9 @@
 const Header = require('./header')
 
-function Response(body, headers) {
+function Response(body, headers, statusCode) {
   this.body = body
   this.headers = headers
+  this.statusCode = statusCode
 }
 
 Response.prototype.changeHeaderName = function(idx, newValue) {
