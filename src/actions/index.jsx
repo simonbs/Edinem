@@ -245,6 +245,14 @@ export const changeTransactionMethod = (method) => {
   }
 }
 
+export const CHANGE_TRANSACTION_URL = 'CHANGE_TRANSACTION_URL'
+export const changeTransactionURL = (url) => {
+  return {
+    type: CHANGE_TRANSACTION_URL,
+    url: url
+  }
+}
+
 export const ADD_REQUEST_HEADER = 'ADD_REQUEST_HEADER'
 export const addRequestHeader = () => {
   return {

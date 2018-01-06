@@ -58,6 +58,11 @@ Session.prototype.addTransaction = function(transactionGroup) {
   return transaction
 }
 
+Session.prototype.regroupTransactions = function() {
+  let transactions = flattenTransactionGroups(this.transactionGroups)
+  this.transactionGroups = groupTransactions(transactions)
+}
+
 Session.prototype.deleteTransaction = function(transactionId) {
   let transactionGroupIndexForDeletion = null
   for (const transactionGroupIdx in this.transactionGroups) {

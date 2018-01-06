@@ -1,3 +1,4 @@
+const URLParser = require('../lib/url_parser')
 import {
   INITIATE_OPENING_SESSION,
   SUCCEEDED_OPENING_SESSION,
@@ -18,6 +19,7 @@ import {
   CHANGE_RESPONSE_BODY,
   CHANGE_RESPONSE_STATUS_CODE,
   CHANGE_TRANSACTION_METHOD,
+  CHANGE_TRANSACTION_URL,
   ADD_REQUEST_HEADER,
   ADD_REQUEST_QUERY_PARAMETER,
   ADD_RESPONSE_HEADER,
@@ -155,6 +157,23 @@ export default (state = initialState, action) => {
       state.selectedTransaction.method = action.method
       return {
         ...state,
+        selectedTransaction: state.selectedTransaction
+      }
+    case CHANGE_TRANSACTION_URL:
+      const oldComponents = new URLParser().parseURL(state.selectedTransaction.getFullURL())
+      const newComponents = new URLParser().parseURL(action.url)
+      state.selectedTransaction.protocol = newComponents.protocol
+      state.selectedTransaction.host = newComponents.host
+      state.selectedTransaction.port = newComponents.port
+      state.selectedTransaction.path = newComponents.path
+      if (newComponents.protocol != oldComponents.protocol
+        || newComponents.host != oldComponents.host
+        || newComponents.port != oldComponents.port) {
+          state.activeSession.regroupTransactions()
+      }      
+      return {
+        ...state,
+        activeSession: state.activeSession,
         selectedTransaction: state.selectedTransaction
       }
     case ADD_REQUEST_HEADER:

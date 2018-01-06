@@ -3,6 +3,7 @@ import {
   changeRequestResponseTabIndex,
   openRequestsDrawer,
   changeTransactionMethod,
+  changeTransactionURL,
   changeResponseStatusCode
 } from '../actions'
 import EditPageUI from '../components/edit_page'
@@ -31,6 +32,9 @@ const mapDispatchToProps = dispatch => {
     },
     onMethodChange: (method) => {
       dispatch(changeTransactionMethod(method))
+    },
+    onURLChange: (url) => {
+      dispatch(changeTransactionURL(url))
     },
     onStatusCodeChange: (statusCode) => {
       dispatch(changeResponseStatusCode(statusCode))

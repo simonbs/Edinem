@@ -122,7 +122,8 @@ class EditPage extends React.Component {
           <TextField
             placeholder="URL"
             defaultValue={this.props.url}
-            fullWidth            
+            onChange={(e) => this.props.onURLChange(e.target.value)}
+            fullWidth      
             InputProps={{
               disableUnderline: true,
               classes: {
@@ -180,6 +181,7 @@ EditPage.propTypes = {
   onRequestResponseTabIndexChange: PropTypes.func.isRequired,
   onMenuClick: PropTypes.func.isRequired,
   onMethodChange: PropTypes.func.isRequired,
+  onURLChange: PropTypes.func.isRequired,
   onStatusCodeChange: PropTypes.func.isRequired
 }
 
