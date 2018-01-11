@@ -1,7 +1,7 @@
-const { app, shell, BrowserWindow, Menu } = require('electron')
+const { app, shell, BrowserWindow } = require('electron')
 const path = require('path')
 const url = require('url')
-const defaultMenu = require('electron-default-menu')
+const ApplicationMenuManager = require('./src/lib/application_menu_manager')
 
 app.setName('Edinem')
 
@@ -13,7 +13,7 @@ let win
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
-  setMenu()
+  ApplicationMenuManager.createMenu(app, shell)
   createWindow()
 })
 
@@ -31,24 +31,6 @@ app.on('activate', () => {
     createWindow()
   }
 })
-
-function setMenu() {
-  let template = defaultMenu(app, shell)
-  template.splice(1, 0, {
-    label: 'File',
-    submenu: [{
-      label: 'Open...',
-      accelerator: 'ControlOrCmd+O',
-      click: openFile
-    }]
-  })
-  const menu = Menu.buildFromTemplate(template)
-  Menu.setApplicationMenu(menu)
-}
-
-function openFile() {
-  
-}
 
 function createWindow() {
   // Create the browser window.

@@ -29,6 +29,7 @@ import {
 
 const initialState = {
   isOpening: false,
+  filePath: null,
   activeSession: null,
   openError: null,
   selectedTransactionId: null,
@@ -40,7 +41,8 @@ export default (state = initialState, action) => {
     case INITIATE_OPENING_SESSION:
       return {
         ...state,
-        isOpening: true
+        isOpening: true,
+        filePath: action.path
       }
     case SUCCEEDED_OPENING_SESSION:
       return {
@@ -51,6 +53,7 @@ export default (state = initialState, action) => {
     case FAILED_OPENING_SESSION:
       return {
         ...state,
+        filePath: null,
         activeSession: null,
         openError: action.error,
         selectedTransactionId: null,

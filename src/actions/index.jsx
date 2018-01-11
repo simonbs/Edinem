@@ -1,6 +1,7 @@
 const { remote } = require('electron')
-const { dialog } = require('electron').remote
+const { dialog } = remote
 const XMLSessionMapper = require('../lib/xml_session_mapper')
+const ApplicationMenuManager = require('../lib/application_menu_manager')
 
 export const OPEN_REQUESTS_DRAWER = 'OPEN_REQUESTS_DRAWER'
 export const openRequestsDrawer = () => {
@@ -33,25 +34,35 @@ export const changeRequestDetailsTabIndex = (index) => {
 }
 
 export const INITIATE_OPENING_SESSION = 'INITIATE_OPENING_SESSION'
-export const initiateOpeningSession = () => {
-  return {
-    type: INITIATE_OPENING_SESSION,
+export const initiateOpeningSession = (filePath) => {
+  return (dispatch) => {
+    dispatch(applicationMenuSetSaveEnabled(false))
+    return {
+      type: INITIATE_OPENING_SESSION,
+      filePath: filePath
+    }
   }
 }
 
 export const SUCCEEDED_OPENING_SESSION = 'SUCCEEDED_OPENING_SESSION'
 export const succeededOpeningSession = (session) => {
-  return {
-    type: SUCCEEDED_OPENING_SESSION,
-    session: session
+  return (dispatch) => {
+    dispatch(applicationMenuSetSaveEnabled(true))
+    dispatch({
+      type: SUCCEEDED_OPENING_SESSION,
+      session: session
+    })
   }
 }
 
 export const FAILED_OPENING_SESSION = 'FAILED_OPENING_SESSION'
 export const failedOpeningSession = (error) => {
-  return {
-    type: FAILED_OPENING_SESSION,
-    error: error
+  return (dispatch) => {
+    dispatch(applicationMenuSetSaveEnabled(false))
+    dispatch({
+      type: FAILED_OPENING_SESSION,
+      error: error
+    })
   }
 }
 
@@ -85,7 +96,7 @@ export const openSession = () => {
 
 export const parseSession = (filePath) => {
   return (dispatch) => {
-    dispatch(initiateOpeningSession())
+    dispatch(initiateOpeningSession(filePath))
     const xmlSessionMapper = new XMLSessionMapper()
     xmlSessionMapper.map(filePath, (err, session) => {
       if (err) {
@@ -287,5 +298,11 @@ export const deleteTransaction = (transactionId) => {
   return {
     type: DELETE_TRANSACTION,
     transactionId: transactionId
+  }
+}
+
+export const applicationMenuSetSaveEnabled = (enabled) => {
+  return (dispatch) => {
+    ApplicationMenuManager.setSaveEnabled(enabled)
   }
 }
