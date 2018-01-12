@@ -42,13 +42,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isOpening: true,
-        filePath: action.path
+        filePath: action.filePath
       }
     case SUCCEEDED_OPENING_SESSION:
       return {
         ...state,
         activeSession: action.session,
-        openError: null
+        filePath: action.filePath,
+        openError: null      
       }
     case FAILED_OPENING_SESSION:
       return {

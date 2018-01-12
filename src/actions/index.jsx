@@ -45,23 +45,25 @@ export const initiateOpeningSession = (filePath) => {
 }
 
 export const SUCCEEDED_OPENING_SESSION = 'SUCCEEDED_OPENING_SESSION'
-export const succeededOpeningSession = (session) => {
+export const succeededOpeningSession = (session, filePath) => {
   return (dispatch) => {
     dispatch(applicationMenuSetSaveEnabled(true))
     dispatch({
       type: SUCCEEDED_OPENING_SESSION,
-      session: session
+      session: session,
+      filePath: filePath
     })
   }
 }
 
 export const FAILED_OPENING_SESSION = 'FAILED_OPENING_SESSION'
-export const failedOpeningSession = (error) => {
+export const failedOpeningSession = (error, filePath) => {
   return (dispatch) => {
     dispatch(applicationMenuSetSaveEnabled(false))
     dispatch({
       type: FAILED_OPENING_SESSION,
-      error: error
+      error: error,
+      filePath: filePath
     })
   }
 }
@@ -100,9 +102,9 @@ export const parseSession = (filePath) => {
     const charlesSessionDecoder = new CharlesSessionDecoder()
     charlesSessionDecoder.decode(filePath, (err, session) => {
       if (err) {
-        dispatch(failedOpeningSession(err))
+        dispatch(failedOpeningSession(err, filePath))
       } else {
-        dispatch(succeededOpeningSession(session))
+        dispatch(succeededOpeningSession(session, filePath))
         if (session.transactionGroups.length > 0) {
           const transactionGroup = session.transactionGroups[0]
           const transaction = transactionGroup.transactions[0]
@@ -119,6 +121,21 @@ export const CLOSE_OPEN_SESSION_ERROR = 'CLOSE_OPEN_SESSION_ERROR'
 export const closeOpenSessionError = () => {
   return {
     type: CLOSE_OPEN_SESSION_ERROR
+  }
+}
+
+export const saveSession = () => {
+  return (dispatch, getState) => {
+    const state = getState()
+    dispatch(saveSessionToFilePath(state.session.filePath))
+  }
+}
+
+export const saveSessionToFilePath = (filePath) => {
+  return (dispatch, getState) => {
+    const state = getState()
+    console.log(state.session.activeSession)
+    console.log(filePath)
   }
 }
 
