@@ -1,6 +1,6 @@
 const { remote } = require('electron')
 const { dialog } = remote
-const CharlesSessionDecoder = require('../lib/xml_session_decoder')
+const CharlesSessionDecoder = require('../lib/charles_session_decoder')
 const ApplicationMenuManager = require('../lib/application_menu_manager')
 
 export const OPEN_REQUESTS_DRAWER = 'OPEN_REQUESTS_DRAWER'
