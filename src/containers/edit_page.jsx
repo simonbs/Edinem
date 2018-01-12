@@ -21,11 +21,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onRequestResponseTabIndexChange: (event, index) => {
+    onRequestResponseTabIndexChange: (index) => {
       dispatch(changeRequestResponseTabIndex(index))
-    },
-    onRequestDetailsTabIndexChange: (event, index) => {
-      dispatch(changeRequestDetailsTabIndex(index))
     },
     onMenuClick: () => {
       dispatch(openRequestsDrawer())

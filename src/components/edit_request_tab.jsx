@@ -100,7 +100,7 @@ class EditRequestTab extends React.Component {
           <AppBar position="static" color="default" elevation={0}>
             <Tabs
               value={this.props.detailsTabIndex}
-              onChange={this.props.onDetailsTabIndexChange}
+              onChange={(event, idx) => this.props.onDetailsTabIndexChange(idx)}
               centered>
               <Tab label="Headers" tabIndex="-1" />
               <Tab label="Query" tabIndex="-1" />
@@ -131,7 +131,9 @@ class EditRequestTab extends React.Component {
         <div className={this.props.classes.bodyContainer}>
           <Editor
           value={this.props.body || ""}
-          onChange={(newValue, e) => this.props.onBodyChange(newValue)} />
+          onChange={(newValue, e) => this.props.onBodyChange(newValue)}
+          contentTypeTabIndex={this.props.editorContentTypeTabIndex}
+          onContentTypeTabIndexChange={this.props.onEditorContentTypeTabIndexChange} />
         </div>
         <AlertDialog
         open={this.state.headerDeletionIndex != null}
@@ -176,7 +178,9 @@ EditRequestTab.propTypes = {
   onQueryParameterValueChange: PropTypes.func.isRequired,
   onDeleteQueryParameterClick: PropTypes.func.isRequired,
   onAddQueryParameterClick: PropTypes.func.isRequired,
-  onBodyChange: PropTypes.func.isRequired
+  onBodyChange: PropTypes.func.isRequired,
+  editorContentTypeTabIndex: PropTypes.number.isRequired,
+  onEditorContentTypeTabIndexChange: PropTypes.func.isRequired
 }
 
 EditRequestTab.defaultProps = {

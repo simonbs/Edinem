@@ -85,7 +85,9 @@ class EditResponseTab extends React.Component {
         <div className={this.props.classes.bodyContainer}>
           <Editor
           value={this.props.body || ""}
-          onChange={(newValue, e) => this.props.onBodyChange(newValue)} />
+          onChange={(newValue, e) => this.props.onBodyChange(newValue)}
+          contentTypeTabIndex={this.props.editorContentTypeTabIndex}
+          onContentTypeTabIndexChange={this.props.onEditorContentTypeTabIndexChange} />
         </div>
         <AlertDialog
         open={this.state.headerDeletionIndex != null}
@@ -111,7 +113,9 @@ EditResponseTab.propTypes = {
   onHeaderValueChange: PropTypes.func.isRequired,
   onDeleteHeaderClick: PropTypes.func.isRequired,
   onAddHeaderClick: PropTypes.func.isRequired,
-  onBodyChange: PropTypes.func.isRequired
+  onBodyChange: PropTypes.func.isRequired,
+  editorContentTypeTabIndex: PropTypes.number.isRequired,
+  onEditorContentTypeTabIndexChange: PropTypes.func.isRequired
 }
 
 EditResponseTab.defaultProps = {

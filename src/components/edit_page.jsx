@@ -156,7 +156,7 @@ class EditPage extends React.Component {
           <AppBar position="static" elevation={0}>
             <Tabs
               value={this.props.requestResponseTabIndex}
-              onChange={this.props.onRequestResponseTabIndexChange}
+              onChange={(e, idx) => this.props.onRequestResponseTabIndexChange(idx)}
               centered>
               <Tab label="Request" tabIndex="-1" />
               <Tab label="Response" tabIndex="-1" />

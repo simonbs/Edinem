@@ -36,6 +36,22 @@ export const changeRequestDetailsTabIndex = (index) => {
   }
 }
 
+export const CHANGE_REQUEST_EDITOR_CONTENT_TYPE_TAB_INDEX = 'CHANGE_REQUEST_EDITOR_CONTENT_TYPE_TAB_INDEX'
+export const changeRequestEditorContentTypeTabIndex = (index) => {
+  return {
+    type: CHANGE_REQUEST_EDITOR_CONTENT_TYPE_TAB_INDEX,
+    index: index
+  }
+}
+
+export const CHANGE_RESPONSE_EDITOR_CONTENT_TYPE_TAB_INDEX = 'CHANGE_RESPONSE_EDITOR_CONTENT_TYPE_TAB_INDEX'
+export const changeResponseEditorContentTypeTabIndex = (index) => {
+  return {
+    type: CHANGE_RESPONSE_EDITOR_CONTENT_TYPE_TAB_INDEX,
+    index: index
+  }
+}
+
 export const INITIATE_OPENING_SESSION = 'INITIATE_OPENING_SESSION'
 export const initiateOpeningSession = (filePath) => {
   return (dispatch) => {

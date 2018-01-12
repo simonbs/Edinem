@@ -5,7 +5,8 @@ import {
   addResponseHeader,
   changeResponseHeaderName,
   changeResponseHeaderValue,
-  changeResponseBody
+  changeResponseBody,
+  changeResponseEditorContentTypeTabIndex
 } from '../actions'
 import EditResponseTabUI from '../components/edit_response_tab'
 
@@ -18,7 +19,8 @@ const mapStateToProps = state => {
         key: header.name,
         value: header.value
       }
-    })
+    }),
+    editorContentTypeTabIndex: state.editPage.responseEditorContentTypeTabIndex
   }
 }
 
@@ -38,6 +40,9 @@ const mapDispatchToProps = dispatch => {
     },
     onBodyChange: (newValue) => {
       dispatch(changeResponseBody(newValue))
+    },
+    onEditorContentTypeTabIndexChange: (index) => {
+      dispatch(changeResponseEditorContentTypeTabIndex(index))
     }
   }
 }

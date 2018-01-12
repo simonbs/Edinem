@@ -9,7 +9,8 @@ import {
   changeRequestQueryParameterValue,
   deleteRequestQueryParameter,
   addRequestQueryParameter,
-  changeRequestBody
+  changeRequestBody,
+  changeRequestEditorContentTypeTabIndex
 } from '../actions'
 import EditRequestTabUI from '../components/edit_request_tab'
 
@@ -30,13 +31,14 @@ const mapStateToProps = state => {
         key: queryParameter.name,
         value: queryParameter.value
       }
-    })
+    }),
+    editorContentTypeTabIndex: state.editPage.requestEditorContentTypeTabIndex
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onDetailsTabIndexChange: (event, index) => {
+    onDetailsTabIndexChange: (index) => {
       dispatch(changeRequestDetailsTabIndex(index))
     },
     onHeaderNameChange: (idx, newValue) => {
@@ -65,6 +67,9 @@ const mapDispatchToProps = dispatch => {
     },
     onBodyChange: (newValue) => {
       dispatch(changeRequestBody(newValue))
+    },
+    onEditorContentTypeTabIndexChange: (index) => {
+      dispatch(changeRequestEditorContentTypeTabIndex(index))
     }
   }
 }
