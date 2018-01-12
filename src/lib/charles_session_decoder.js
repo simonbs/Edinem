@@ -10,9 +10,9 @@ const QueryParameter = require('./query_parameter')
 const URLParser = require('./url_parser')
 const groupTransactions = require('./group_transactions')
 
-function XMLSessionDecoder() {}
+function CharlesSessionDecoder() {}
 
-XMLSessionDecoder.prototype.decode = (xmlPath, callback) => {
+CharlesSessionDecoder.prototype.decode = (xmlPath, callback) => {
   const parser = new xml2js.Parser({ async: true })
   fs.readFile(xmlPath, (err, data) => {
     parser.parseString(data, (err, result) => {
@@ -77,4 +77,4 @@ function mapXMLHeader(xmlHeader) {
   return new Header(xmlHeader['name'][0], xmlHeader['value'][0])
 }
 
-module.exports = XMLSessionDecoder
+module.exports = CharlesSessionDecoder

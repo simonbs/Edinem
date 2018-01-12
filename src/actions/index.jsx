@@ -1,6 +1,6 @@
 const { remote } = require('electron')
 const { dialog } = remote
-const XMLSessionDecoder = require('../lib/xml_session_decoder')
+const CharlesSessionDecoder = require('../lib/xml_session_decoder')
 const ApplicationMenuManager = require('../lib/application_menu_manager')
 
 export const OPEN_REQUESTS_DRAWER = 'OPEN_REQUESTS_DRAWER'
@@ -97,8 +97,8 @@ export const openSession = () => {
 export const parseSession = (filePath) => {
   return (dispatch) => {
     dispatch(initiateOpeningSession(filePath))
-    const xmlSessionDecoder = new XMLSessionDecoder()
-    xmlSessionDecoder.decode(filePath, (err, session) => {
+    const charlesSessionDecoder = new CharlesSessionDecoder()
+    charlesSessionDecoder.decode(filePath, (err, session) => {
       if (err) {
         dispatch(failedOpeningSession(err))
       } else {

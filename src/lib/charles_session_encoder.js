@@ -2,16 +2,16 @@ const fs = require('fs')
 const xml2js = require('xml2js')
 const flattenTransactionGroups = require('./flatten_transaction_groups')
 
-function XMLSessionEncoder() {}
+function CharlesSessionEncoder() {}
 
-XMLSessionEncoder.prototype.encode = function(session, filePath, callback) {
+CharlesSessionEncoder.prototype.encode = function(session, filePath, callback) {
   const root = this.mapSession(session)
   const builder = new xml2js.Builder()
   const encoded = builder.buildObject(root)
   fs.writeFile(filePath, encoded, callback)
 }
 
-XMLSessionEncoder.prototype.mapSession = function(session) {
+CharlesSessionEncoder.prototype.mapSession = function(session) {
   const encoder = this
   const transactions = flattenTransactionGroups(session.transactionGroups)
   return {
@@ -96,4 +96,4 @@ function mapHeader(header) {
   }
 }
 
-module.exports = XMLSessionEncoder
+module.exports = CharlesSessionEncoder
