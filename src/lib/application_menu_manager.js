@@ -1,5 +1,6 @@
 const { BrowserWindow, Menu } = require('electron')
 const defaultMenu = require('electron-default-menu')
+const isDev = require('electron-is-dev')
 
 module.exports = {
   createMenu: (app, shell) => {
@@ -39,6 +40,16 @@ module.exports = {
         enabled: false
       }]
     })
+    if (!isDev) {
+      let viewMenu = template[3]
+      let helpMenu = template[template.length - 1]
+      // Remove "Reload" item
+      viewMenu.submenu.splice(0, 1)
+      // Remove "Toggle Developer Tools" item
+      viewMenu.submenu.splice(1, 1)
+      // Remove "Learn more" item
+      helpMenu.submenu.splice(0, 1)
+    }
     const menu = Menu.buildFromTemplate(template)
     Menu.setApplicationMenu(menu)
   },
