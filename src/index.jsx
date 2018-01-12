@@ -6,7 +6,11 @@ import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import rootReducer from './reducers'
 import App from './containers/app'
-import { openSession, saveSession } from './actions'
+import { 
+  openSession,
+  saveSession,
+  saveSessionAs
+} from './actions'
 
 let store = createStore(
   rootReducer,
@@ -24,4 +28,8 @@ ipcRenderer.on('open-file', () => {
 
 ipcRenderer.on('save-file', () => {
   store.dispatch(saveSession())
+})
+
+ipcRenderer.on('save-file-as', () => {
+  store.dispatch(saveSessionAs())
 })

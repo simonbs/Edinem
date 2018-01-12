@@ -27,6 +27,16 @@ module.exports = {
             .send('save-file')
         },
         enabled: false
+      }, {
+        label: 'Save As...',
+        accelerator: 'Shift+CommandOrControl+S',
+        click: () => {
+          BrowserWindow
+            .getFocusedWindow()
+            .webContents
+            .send('save-file-as')
+        },
+        enabled: false
       }]
     })
     const menu = Menu.buildFromTemplate(template)
@@ -39,5 +49,6 @@ module.exports = {
       .getApplicationMenu()
       .items[1]
     fileMenu.submenu.items[2].enabled = enabled
+    fileMenu.submenu.items[3].enabled = enabled
   }
 }

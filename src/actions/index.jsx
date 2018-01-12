@@ -73,8 +73,7 @@ export const failedOpeningSession = (error, filePath) => {
 
 export const FINALIZE_OPENING_SESSION = 'FINALIZE_OPENING_SESSION'
 export const finalizeOpeningSession = (filePath) => {
-  var filename = filePath.replace(/^.*[\\\/]/, '')
-  remote.getCurrentWindow().setTitle(filename) 
+  setWindowNameFromFilePath(filePath)
   return {
     type: FINALIZE_OPENING_SESSION
   }
@@ -86,13 +85,16 @@ export const openSession = () => {
       filters: [{
         name: 'XML',
         extensions: ['xml']
+      }, {
+        name: 'Charles Session',
+        extensions: ['chlsx']
       }],
       properties: ['openFile']
     }
     const parentWindow = (process.platform == 'darwin') ? null : BrowserWindow.getFocusedWindow()
-    dialog.showOpenDialog(parentWindow, options, (f) => {
-      if (f !== undefined) {
-        const filePath = f[0]
+    dialog.showOpenDialog(parentWindow, options, (filePaths) => {
+      if (filePaths !== undefined) {
+        const filePath = filePaths[0]
         dispatch(parseSession(filePath))
       }
     })
@@ -156,14 +158,30 @@ export const saveSession = () => {
   }
 }
 
+export const saveSessionAs = () => {
+  return (dispatch, getState) => {
+    const state = getState()
+    const options = {
+      defaultPath: state.session.filePath
+    }
+    const parentWindow = (process.platform == 'darwin') ? null : BrowserWindow.getFocusedWindow()
+    dialog.showSaveDialog(parentWindow, options, (filePath) => {
+      if (filePath !== undefined) {
+        dispatch(saveSessionToFilePath(filePath))
+      }
+    })
+  }
+}
+
 export const saveSessionToFilePath = (filePath) => {
   return (dispatch, getState) => {
     const state = getState()
     const session = state.session.activeSession
     saveQueue.queue(session, filePath, (err) => {
       if (err) {
-        dispatch(failedSavingSession(error))
+        dispatch(failedSavingSession(err))
       } else {
+        setWindowNameFromFilePath(filePath)
         dispatch(succeededSavingSession())
       }
     })
@@ -353,4 +371,9 @@ export const applicationMenuSetSaveEnabled = (enabled) => {
   return (dispatch) => {
     ApplicationMenuManager.setSaveEnabled(enabled)
   }
+}
+
+function setWindowNameFromFilePath(filePath) {
+  var filename = filePath.replace(/^.*[\\\/]/, '')
+  remote.getCurrentWindow().setTitle(filename) 
 }
