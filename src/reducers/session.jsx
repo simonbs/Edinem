@@ -5,6 +5,9 @@ import {
   FAILED_OPENING_SESSION,
   FINALIZE_OPENING_SESSION,
   CLOSE_OPEN_SESSION_ERROR,
+  SUCCEEDED_SAVING_SESSION,
+  FAILED_SAVING_SESSION,
+  CLOSE_SAVE_SESSION_ERROR,
   SELECT_TRANSACTION,
   DELETE_REQUEST_HEADER,
   DELETE_REQUEST_QUERY_PARAMETER,
@@ -32,6 +35,7 @@ const initialState = {
   filePath: null,
   activeSession: null,
   openError: null,
+  saveError: null,
   selectedTransactionId: null,
   selectedTransaction: null
 }
@@ -69,6 +73,21 @@ export default (state = initialState, action) => {
       return {
         ...state,
         openError: null
+      }
+    case SUCCEEDED_SAVING_SESSION:
+      return {
+        ...state,
+        saveError: null
+      }
+    case FAILED_SAVING_SESSION:
+      return {
+        ...state,
+        saveError: action.error
+      }
+    case CLOSE_SAVE_SESSION_ERROR:
+      return {
+        ...state,
+        saveError: null
       }
     case SELECT_TRANSACTION: {
       // Copy currently selected transaction back into session

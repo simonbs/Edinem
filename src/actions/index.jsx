@@ -1,7 +1,10 @@
 const { remote } = require('electron')
 const { dialog } = remote
 const CharlesSessionDecoder = require('../lib/charles_session_decoder')
+const SaveQueue = require('../lib/save_queue')
 const ApplicationMenuManager = require('../lib/application_menu_manager')
+
+const saveQueue = new SaveQueue()
 
 export const OPEN_REQUESTS_DRAWER = 'OPEN_REQUESTS_DRAWER'
 export const openRequestsDrawer = () => {
@@ -124,6 +127,28 @@ export const closeOpenSessionError = () => {
   }
 }
 
+export const SUCCEEDED_SAVING_SESSION = 'FAILED_SAVING_SESSION'
+export const failedSavingSession = (error) => {
+  return {
+    type: FAILED_SAVING_SESSION,
+    error: error
+  }
+}
+
+export const FAILED_SAVING_SESSION = 'SUCCEEDED_SAVING_SESSION'
+export const succeededSavingSession = () => {
+  return {
+    type: SUCCEEDED_SAVING_SESSION
+  }
+}
+
+export const CLOSE_SAVE_SESSION_ERROR = 'CLOSE_SAVE_SESSION_ERROR'
+export const closeSaveSessionError = () => {
+  return {
+    type: CLOSE_SAVE_SESSION_ERROR
+  }
+}
+
 export const saveSession = () => {
   return (dispatch, getState) => {
     const state = getState()
@@ -134,8 +159,14 @@ export const saveSession = () => {
 export const saveSessionToFilePath = (filePath) => {
   return (dispatch, getState) => {
     const state = getState()
-    console.log(state.session.activeSession)
-    console.log(filePath)
+    const session = state.session.activeSession
+    saveQueue.queue(session, filePath, (err) => {
+      if (err) {
+        dispatch(failedSavingSession(error))
+      } else {
+        dispatch(succeededSavingSession())
+      }
+    })
   }
 }
 

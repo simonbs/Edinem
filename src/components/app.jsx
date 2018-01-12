@@ -29,6 +29,10 @@ class App extends React.Component {
             open={this.props.showOpenSessionError}
             onClose={this.props.onCloseOpenSessionError}
             text="The session could not be opened."/>
+             <ErrorDialog 
+            open={this.props.showSaveSessionError}
+            onClose={this.props.onCloseSaveSessionError}
+            text="The session could not be saved. Please try again."/>
           </div>
         </div>
       </MuiThemeProvider>
@@ -39,8 +43,10 @@ class App extends React.Component {
 App.propTypes = {
   showOpenSessionPage: PropTypes.bool.isRequired,
   showOpenSessionError: PropTypes.bool.isRequired,
+  showSaveSessionError: PropTypes.bool.isRequired,
   showLoadingPage: PropTypes.bool.isRequired,
   onCloseOpenSessionError: PropTypes.func.isRequired,
+  onCloseSaveSessionError: PropTypes.func.isRequired,
   showEditPage: PropTypes.bool.isRequired,
   showTransactionUnavailablePage: PropTypes.bool.isRequired
 }

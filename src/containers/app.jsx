@@ -1,6 +1,10 @@
 import { connect } from 'react-redux'
 import AppUI from '../components/app'
-import { closeOpenSessionError, parseSession } from '../actions'
+import { 
+  closeOpenSessionError,
+  closeSaveSessionError,
+  parseSession
+} from '../actions'
 const isDev = require('electron-is-dev')
 
 const mapStateToProps = state => {
@@ -8,6 +12,7 @@ const mapStateToProps = state => {
     showOpenSessionPage: !state.session.isOpening && state.session.activeSession == null,        
     showLoadingPage: state.session.isOpening,
     showOpenSessionError: state.session.openError != null,
+    showSaveSessionError: state.session.saveError != null,
     showEditPage: !state.session.isOpening 
       && state.session.activeSession != null 
       && state.session.selectedTransaction != null,
@@ -24,6 +29,9 @@ const mapDispatchToProps = dispatch => {
   return {
     onCloseOpenSessionError: () => {
       dispatch(closeOpenSessionError())
+    },
+    onCloseSaveSessionError: () => {
+      dispatch(closeSaveSessionError())
     }
   }
 }
