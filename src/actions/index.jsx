@@ -98,7 +98,7 @@ export const parseSession = (filePath) => {
   return (dispatch) => {
     dispatch(initiateOpeningSession(filePath))
     const xmlSessionDecoder = new XMLSessionDecoder()
-    xmlSessionDecoder.map(filePath, (err, session) => {
+    xmlSessionDecoder.decode(filePath, (err, session) => {
       if (err) {
         dispatch(failedOpeningSession(err))
       } else {

@@ -12,7 +12,7 @@ const groupTransactions = require('./group_transactions')
 
 function XMLSessionDecoder() {}
 
-XMLSessionDecoder.prototype.map = (xmlPath, callback) => {
+XMLSessionDecoder.prototype.decode = (xmlPath, callback) => {
   const parser = new xml2js.Parser({ async: true })
   fs.readFile(xmlPath, (err, data) => {
     parser.parseString(data, (err, result) => {
