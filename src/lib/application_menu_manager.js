@@ -8,7 +8,7 @@ module.exports = {
       label: 'File',
       submenu: [{
         label: 'Open...',
-        accelerator: 'ControlOrCmd+O',
+        accelerator: 'CommandOrControl+O',
         click: () => {
           BrowserWindow
             .getFocusedWindow()
@@ -19,7 +19,7 @@ module.exports = {
         type: 'separator'
       }, {
         label: 'Save',
-        accelerator: 'ControlOrCmd+S',
+        accelerator: 'CommandOrControl+S',
         click: () => {
           BrowserWindow
             .getFocusedWindow()
