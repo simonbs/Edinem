@@ -59,7 +59,19 @@ function mapXMLResponse(xmlResponse) {
 
 function bodyFromXMLTransactionPart(xmlTransactionPart) {
   if ('body' in xmlTransactionPart) {
-    return xmlTransactionPart['body'][0]
+    const body = xmlTransactionPart['body'][0]
+    let bodyText = null
+    if (typeof body === 'string' || body instanceof String) {
+      bodyText = body
+    } else {
+      bodyText = body['_']
+    }
+    try {
+      let jsonObj = JSON.parse(bodyText)
+      return JSON.stringify(jsonObj, null, 2)
+    } catch(e) {
+      return bodyText
+    }
   } else {
     return null
   }
