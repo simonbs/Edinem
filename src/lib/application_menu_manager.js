@@ -11,10 +11,7 @@ module.exports = {
         label: 'Open...',
         accelerator: 'CommandOrControl+O',
         click: () => {
-          BrowserWindow
-            .getFocusedWindow()
-            .webContents
-            .send('open-file')
+          sendIPC('open-file')
         }
       }, {
         type: 'separator'
@@ -61,5 +58,18 @@ module.exports = {
       .items[1]
     fileMenu.submenu.items[2].enabled = enabled
     fileMenu.submenu.items[3].enabled = enabled
+  }
+}
+
+function sendIPC(app, message) {
+  if (BrowserWindow.getFocusedWindow()) {
+    BrowserWindow
+      .getFocusedWindow()
+      .webContents
+      .send(message)
+  } else {
+    app.windowManager.createWindow(null, function(win) {
+      win.webContents.send(message)
+    })
   }
 }

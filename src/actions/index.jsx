@@ -1,5 +1,5 @@
 const { remote } = require('electron')
-const { dialog } = remote
+const { app, dialog } = remote
 const CharlesSessionDecoder = require('../lib/charles_session_decoder')
 const SaveQueue = require('../lib/save_queue')
 const ApplicationMenuManager = require('../lib/application_menu_manager')
@@ -95,8 +95,8 @@ export const finalizeOpeningSession = (filePath) => {
   }
 }
 
-export const openSession = () => {
-  return (dispatch) => {
+export const openSession = () => {  
+  return (dispatch, getState) => {
     const options = {
       filters: [{
         name: 'XML',
@@ -110,8 +110,13 @@ export const openSession = () => {
     const parentWindow = (process.platform == 'darwin') ? null : BrowserWindow.getFocusedWindow()
     dialog.showOpenDialog(parentWindow, options, (filePaths) => {
       if (filePaths !== undefined) {
+        const state = getState()
         const filePath = filePaths[0]
-        dispatch(parseSession(filePath))
+        if (state.session.activeSession) {
+          app.windowManager.createWindow(filePath)
+        } else {
+          dispatch(parseSession(filePath))
+        }
       }
     })
   }

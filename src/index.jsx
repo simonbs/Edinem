@@ -6,10 +6,12 @@ import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import rootReducer from './reducers'
 import App from './containers/app'
+import url from 'url'
 import { 
   openSession,
   saveSession,
-  saveSessionAs
+  saveSessionAs,
+  parseSession
 } from './actions'
 
 let store = createStore(
@@ -33,3 +35,8 @@ ipcRenderer.on('save-file', () => {
 ipcRenderer.on('save-file-as', () => {
   store.dispatch(saveSessionAs())
 })
+
+const queryParams = url.parse(window.location.href, true).query
+if (queryParams.sessionFilePath) {
+  store.dispatch(parseSession(queryParams.sessionFilePath))
+}
