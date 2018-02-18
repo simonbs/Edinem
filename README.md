@@ -2,6 +2,8 @@
 
 Editor for Charles session files built on Electron using React.
 
+![](https://github.com/simonbs/Edinem/blob/master/icon.png)
+
 ## Features
 
 - Edit existing requests and responses
