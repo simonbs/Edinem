@@ -34,6 +34,12 @@ function mapXMLSession(xmlSession) {
 function mapXMLTransaction(xmlTransaction) {
   const metadata = xmlTransaction['$']
   return new Transaction(
+    metadata["startTime"],
+    metadata["startTimeMillis"],
+    metadata["responseTime"],
+    metadata["responseTimeMillis"],
+    metadata["endTime"],
+    metadata["endTimeMillis"],
     metadata['method'],
     metadata['protocol'],
     metadata['host'],

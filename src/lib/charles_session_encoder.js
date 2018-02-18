@@ -22,8 +22,6 @@ CharlesSessionEncoder.prototype.mapSession = function(session) {
 }
 
 function mapTransaction(transaction) {
-  const jsonDate = new Date().toJSON()
-  const millisDate = new Date().getTime()
   let metadata = {
     'method': transaction.method,
     'protocolVersion': 'HTTP/1.1',
@@ -34,12 +32,12 @@ function mapTransaction(transaction) {
     'path': transaction.path,    
     'remoteAddress': transaction.host,
     'clientAddress': 'localhost',
-    'startTime': jsonDate,
-    'startTimeMillis': millisDate,
-    'responseTime': jsonDate,
-    'responseTimeMillis': millisDate,
-    'endTime': jsonDate,
-    'endTimeMillis': millisDate,
+    'startTime': transaction.startTime,
+    'startTimeMillis': transaction.startTimeMillis,
+    'responseTime': transaction.responseTime,
+    'responseTimeMillis': transaction.responseTimeMillis,
+    'endTime': transaction.endTime,
+    'endTimeMillis': transaction.endTimeMillis,
     'status': 'COMPLETE'
   }
   const queryParameters = transaction.request.queryParameters
@@ -83,6 +81,7 @@ function mapResponse(response) {
       'body': (response.body || '').length
     },
     'headers': {
+      'first-line': 'HTTP/1.1 ' + response.statusCode,
       'header': response.headers.map(mapHeader)
     },
     'body': [ response.body ]
