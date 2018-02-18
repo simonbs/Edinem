@@ -23,9 +23,9 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-  // if (isDev) {
-  //   dispatch(parseSession('/Users/simonbs/Downloads/charles.xml'))
-  // }
+  if (isDev) {
+    dispatch(parseSession('/Users/simonbs/Downloads/charles.xml'))
+  }
   return {
     onCloseOpenSessionError: () => {
       dispatch(closeOpenSessionError())

@@ -1,7 +1,13 @@
 const uuid = require('uuid/v1')
 
-function Transaction(method, protocol, host, port, path, request, response) {
+function Transaction(startTime, startTimeMillis, endTime, endTimeMillis, responseTime, responseTimeMillis, method, protocol, host, port, path, request, response) {
   this.id = uuid()
+  this.startTime = startTime
+  this.startTimeMillis = startTimeMillis
+  this.endTime = endTime
+  this.endTimeMillis = endTimeMillis
+  this.responseTime = responseTime
+  this.responseTimeMillis = responseTimeMillis
   this.method = method
   this.protocol = protocol
   this.host = host
