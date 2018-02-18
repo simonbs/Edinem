@@ -11,9 +11,9 @@ module.exports = function(transactions) {
     }
   }
   return Object.keys(groups).map((key) => {
-    const transactions = groups[key].sort(function(a, b) {
-      if(a.path < b.path) return -1
-      if(a.path > b.path) return 1
+    const transactions = groups[key].sort(function(a, b) {   
+      if (a.startTimeMillis < b.startTimeMillis) return -1
+      if (a.startTimeMillis > b.startTimeMillis) return 1
       return 0
     })
     return new TransactionGroup(key, transactions)
