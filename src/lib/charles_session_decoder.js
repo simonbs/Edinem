@@ -84,11 +84,18 @@ function bodyFromXMLTransactionPart(xmlTransactionPart) {
 }
 
 function headersFromXMLTransactionPart(xmlTransactionPart) {
-  if ('headers' in xmlTransactionPart) {
-    return xmlTransactionPart['headers'][0]['header'].map(mapXMLHeader)
-  } else {
+  if (!('headers' in xmlTransactionPart)) {
     return []
   }
+  const headersWrapper = xmlTransactionPart['headers']
+  if (!(headersWrapper instanceof Array)) {
+    return []
+  }
+  const allHeaders = headersWrapper[0]['header']
+  if (allHeaders == null || allHeaders.length == 0) {
+    return []
+  }  
+  return allHeaders.map(mapXMLHeader)
 } 
 
 function mapXMLHeader(xmlHeader) {
