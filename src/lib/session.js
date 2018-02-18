@@ -45,7 +45,7 @@ Session.prototype.addTransaction = function(transactionGroup) {
     host = this.transactionGroups[0].transactions[0].host
     port = this.transactionGroups[0].transactions[0].port
   }
-  const date = JSON.stringify(new Date())
+  const date = new Date().toJSON()
   const dateMillis = new Date().getTime()
   const transaction = new Transaction(
     date,

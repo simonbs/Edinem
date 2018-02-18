@@ -21,7 +21,7 @@ CharlesSessionEncoder.prototype.mapSession = function(session) {
   }
 }
 
-function mapTransaction(transaction) {
+function mapTransaction(transaction) {  
   let metadata = {
     'method': transaction.method,
     'protocolVersion': 'HTTP/1.1',
