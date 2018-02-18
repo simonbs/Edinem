@@ -17,7 +17,7 @@
     "babel-loader": "^7.1.2",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.7",
-    "electron": "^1.7.10",
+    "electron": "^1.8.2",
     "electron-builder": "^19.49.2",
     "file-loader": "^1.1.6",
     "style-loader": "^0.19.1"
